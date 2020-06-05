@@ -9,7 +9,7 @@ app.config['SESSION_TYPE'] = 'filesystem'
 
 Session(app)
 
-auth_manager = spotipy.oauth2.SpotifyOAuth()
+auth_manager = spotipy.oauth2.SpotifyOAuth(username="defaultUser")
 spotify = spotipy.Spotify(auth_manager=auth_manager)
 
 
