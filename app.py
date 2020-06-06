@@ -10,8 +10,8 @@ app.config.from_object(settings)
 
 Session(app)
 
-# auth_manager = spotipy.oauth2.SpotifyOAuth(username="defaultUser")
-# spotify = spotipy.Spotify(auth_manager=auth_manager)
+if not os.path.exists('cache'):
+    os.makedirs('cache')
 
 
 @app.route('/')
