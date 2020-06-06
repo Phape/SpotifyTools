@@ -12,13 +12,17 @@ These Links should help you understandig this project and help you to get to rel
 * [Azure Portal](https://portal.azure.com/)
 * [GitHub Repo](https://github.com/Phape/SpotifyTools)
 
-### Read The Docs
+### Docs & CheatSheets
 
 * [Flask](https://flask.palletsprojects.com)
 * [spotipy](https://spotipy.readthedocs.io)
 * [Flask-Session](https://flask-session.readthedocs.io)
+* [redis in python](https://docs.redislabs.com/latest/rs/references/client_references/client_python/)
+* [markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 
 ## How to set up the project locally
+
+If you're using VS Code and new to Flask, I recommend reading the [Flask Tutorial in Visual Studio Code](https://code.visualstudio.com/docs/python/tutorial-flask). It can help with step 2 and 3 of the following list.
 
 1. Clone the repository from GitHub
 2. Create a virtual environment with `python -m venv venv`
