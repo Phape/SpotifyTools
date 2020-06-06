@@ -27,10 +27,12 @@ These Links should help you understandig this project and help you to get to rel
    2. with the VS Code Command 'Terminal: Create New Integrated Terminal', create a new terminal for your virtual environment
    3. Install the requirements from that terminal
 4. Set the environment Variables: If you chose to work with VS Code and use PowerShell as your Terminal, you can set the environment variables by modifying the [Activate.ps1](venv/Scripts/Activate.ps1) Skript. If you don't use PS, just adapt the [activate (bash)](venv/Scripts/activate) or [activate.bat (cmd)](venv/Scripts/activate.bat). I suggest setting the environment variables after the "VIRTUAL_ENV" Variable has been set (l. 215). It could look like this:
-      :::powershell
-      \# Section from Phape to set credentials from Spotify
-      $env:SPOTIPY_CLIENT_ID = "your_client_id_here"
-      $env:SPOTIPY_CLIENT_SECRET = "your_client_secret_here"
-      $env:SPOTIPY_REDIRECT_URI = "http://127.0.0.1:5000"
-      $env:REDIS_HOST = "your.redis.host.here"
-      $env:REDIS_PASSWORD = "your_redis_password_here"
+
+    ```powershell
+    # Environment Variables for the SpotifyTools app
+    $env:SPOTIPY_CLIENT_ID = "your_client_id_here"
+    $env:SPOTIPY_CLIENT_SECRET = "your_client_secret_here"
+    $env:SPOTIPY_REDIRECT_URI = "http://127.0.0.1:5000"
+    $env:REDIS_HOST = "your.redis.host.here"
+    $env:REDIS_PASSWORD = "your_redis_password_here"
+    ```
