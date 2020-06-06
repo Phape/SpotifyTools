@@ -2,10 +2,10 @@ import os
 from flask import Flask, session, request, redirect
 from flask_session import Session
 import spotipy
+import settings
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.urandom(64)
-app.config['SESSION_TYPE'] = 'filesystem'
+app.config.from_object(settings)
 
 Session(app)
 
