@@ -16,12 +16,8 @@ Session(app)
 def index():
     if 'uuid' not in session:
         return render_template('sign_in.html')
-    else:
-        auth_manager = spotipy.oauth2.SpotifyOAuth(username=session.get(
-            'uuid'), cache_path="cache/{0}".format(session.get('uuid')))
-        spotify = spotipy.Spotify(auth_manager=auth_manager)
 
-    return render_template('index.html', spotify=spotify)
+    return render_template('index.html', spotify=session.get('SPOTIFY'))
 
 
 @app.route('/sign_in')
@@ -30,9 +26,9 @@ def sign_in():
         session['uuid'] = uuid.uuid4()
 
     if 'token_info' not in session:
-        auth_manager = spotipy.oauth2.SpotifyOAuth(username=session.get(
+        session['AUTH_MANAGER'] = spotipy.oauth2.SpotifyOAuth(username=session.get(
             'uuid'), cache_path="cache/{0}".format(session.get('uuid')))
-        auth_url = auth_manager.get_authorize_url()
+        auth_url = session.get('AUTH_MANAGER').get_authorize_url()
         return redirect(auth_url)
 
     return redirect('/')
@@ -41,10 +37,11 @@ def sign_in():
 @app.route('/authorize')
 def authorize():
     if request.args.get("code"):
-        auth_manager = spotipy.oauth2.SpotifyOAuth(username=session.get(
-            'uuid'), cache_path="cache/{0}".format(session.get('uuid')))
-        session['token_info'] = auth_manager.get_access_token(
+        session['token_info'] = session.get('AUTH_MANAGER').get_access_token(
             code=request.args['code'], as_dict=False)
+
+        session['SPOTIFY'] = spotipy.Spotify(
+            auth_manager=session.get('AUTH_MANAGER'))
         return redirect('/')
 
 
@@ -61,11 +58,8 @@ def sign_out():
 def playlists():
     if not session.get('token_info'):
         return redirect('/')
-    else:
-        auth_manager = spotipy.oauth2.SpotifyOAuth(username=session.get(
-            'uuid'), cache_path="cache/{0}".format(session.get('uuid')))
-        spotify = spotipy.Spotify(auth_manager=auth_manager)
-        return spotify.current_user_playlists()
+
+    return session.get('SPOTIFY').current_user_playlists()
 
 
 # Initialize Cache
