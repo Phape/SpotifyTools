@@ -1,0 +1,29 @@
+{% extends '_base.html' %}
+{% block head %}
+    <title>Found Genres</title>
+{% endblock %}
+{% block body %}
+<p>Name of Current Track: {{current_track_name}}</p>
+<table>
+    <tr>
+        <th>Artist</th>
+        <th>Genres</th>
+    </tr>
+        {% for artist in current_artists['artists'] %}
+            <tr>
+                <td><a href="{{artist['external_urls']['spotify']}}" target="blank">{{artist['name']}}</a></td>
+                <td>
+                    {% if artist['genres']|length %}
+                        <ul>
+                            {% for genre in artist['genres'] %}
+                                <li>{{genre}}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>Spotify currently has no genres listed for {{artist['name']}}.</p>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+</table>
+{% endblock %}
