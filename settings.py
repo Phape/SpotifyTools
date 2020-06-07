@@ -12,3 +12,6 @@ SESSION_REDIS = redis.Redis(
     db=0,
     password = os.environ.get('REDIS_PASSWORD'),
     ssl=True)
+
+# Cache Settings
+cache_path = 'cache'
