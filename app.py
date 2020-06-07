@@ -11,6 +11,7 @@ app.config.from_object(settings)
 
 Session(app)
 
+
 @app.route('/')
 def index():
     if 'uuid' not in session:
@@ -25,13 +26,10 @@ def index():
 
 @app.route('/sign_in')
 def sign_in():
-    print("am in sign_in")
     if 'uuid' not in session:
-        print("creating uuid for session")
         session['uuid'] = uuid.uuid4()
 
     if 'token_info' not in session:
-        print("creating token_info for session")
         auth_manager = spotipy.oauth2.SpotifyOAuth(username=session.get(
             'uuid'), cache_path="cache/{0}".format(session.get('uuid')))
         auth_url = auth_manager.get_authorize_url()
@@ -43,7 +41,6 @@ def sign_in():
 @app.route('/authorize')
 def authorize():
     if request.args.get("code"):
-        print("getting token_info for session with uuid", session['uuid'])
         auth_manager = spotipy.oauth2.SpotifyOAuth(username=session.get(
             'uuid'), cache_path="cache/{0}".format(session.get('uuid')))
         session['token_info'] = auth_manager.get_access_token(
@@ -53,8 +50,9 @@ def authorize():
 
 @app.route('/sign_out')
 def sign_out():
-    if(os.path.exists('cache/{0}'.format(session.get('uuid')))):
-        os.remove('cache/{0}'.format(session.get('uuid')))
+    cache_file = os.path.join(settings.cache_path, str(session.get('uuid')))
+    if(os.path.exists(cache_file)):
+        os.remove(cache_file)
     session.clear()
     return redirect('/')
 
@@ -82,7 +80,6 @@ for f in os.listdir(settings.cache_path):
     # remove cache that is older than x days
     if (current_time - creation_time) // (24 * 3600) >= 1:
         os.remove(f)
-        print('{} removed'.format(f))
 
 
 if __name__ == "__main__":
