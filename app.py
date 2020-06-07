@@ -5,7 +5,7 @@ import spotipy
 import settings
 import uuid
 import time
-from spotify_api import SpotifyApi
+from spotify_api import NoCurrentTrackException, SpotifyApi
 
 app = Flask(__name__)
 app.config.from_object(settings)
@@ -68,7 +68,10 @@ def playlists():
 
 @app.route('/current_genres')
 def current_genres():
-    current_track_name = spotifyApi.get_current_track(session.get('SPOTIFY'))['item']['name']
+    try:
+        current_track_name = spotifyApi.get_current_track(session.get('SPOTIFY'))['item']['name']
+    except NoCurrentTrackException:
+        current_track_name = "No Current Track, check whether you are listenig to Spotify with this account: " + session.get('SPOTIFY').me()['id']
     current_artists = spotifyApi.get_current_artists(session.get('SPOTIFY'))
     return render_template('current_genres.html', current_track_name=current_track_name, current_artists=current_artists)
 
