@@ -9,40 +9,35 @@ a {
     color: white;
 }
 
-table {
-    width: 50%;
+.content-table thead tr{
+    background-color: rgb(29, 185, 84);
+    color: black;
 }
 
-th, td {
+.content-table th, .content-table tr {
+    padding: 12px 15px;
+    border: 1px solid white;
+}
+
+.content-table tbody td {
+    padding: 12px 15px;
     border: 1px solid white;
 }
 
 .centered {
-    /* height: 90vh; */
     display: flex;
-    /* position: fixed; */
-    /* top: 20%; */
-    /* left: 50%; */
     padding: 100px;
-    /* transform: translate(-50%); */
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* width: 100%; */
 }
 
 .spotify-login-button{
-    /* display: flex; */
-    /* position: absolute; */
     top: 50%;
-    /* left: 50%; */
-    /* justify-content: center; */
-    /* align-items: center; */
     padding: 16px 14px 18px;
     color: rgb(255, 255, 255);
     background-color: rgb(29, 185, 84);
     font-size: 14px;
-    /* line-height: 1; */
     border-radius: 500px;
     transition-property: background-color,border-color,color,box-shadow,filter;
     transition-duration: .3s;
@@ -51,12 +46,7 @@ th, td {
     min-width: 160px;
     text-transform: uppercase;
     white-space: normal;
-    /* width: 50%; */
-    /* max-width: 50%; */
     font-weight: 700;
     touch-action: manipulation;
     cursor: pointer;
-    /* box-sizing: border-box; */
-    /* align-items: flex-start; */
-    /* user-select: none; */
 }
