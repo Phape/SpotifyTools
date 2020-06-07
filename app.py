@@ -22,7 +22,7 @@ def index():
     spotify = spotipy.Spotify(auth_manager=auth_manager)
 
     if request.args.get("code"):
-        session['token_info'] = auth_manager.get_access_token(request.args["code"])
+        session['token_info'] = auth_manager.get_access_token(code=request.args["code"], as_dict=False)
         return redirect('/')
 
     if not session.get('token_info'):
