@@ -27,7 +27,7 @@
                 {% if artist['genres']|length %}
                 <ul>
                     {% for genre in artist['genres'] %}
-                    <li><a href="https://open.spotify.com/search/genre:{{genre}}/tracks" target="blank">{{genre}}</a></li>
+                    <li><a href="https://open.spotify.com/search/genre:{{genre}}" target="blank">{{genre}}</a></li>
                     {% endfor %}
                 </ul>
                 {% else %}
