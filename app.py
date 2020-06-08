@@ -71,7 +71,7 @@ def current_genres():
     # Handler for the toggle auto_refresh_button
     if request.method == 'POST':
         if request.form['auto_refresh_button']:
-            if 'REFRESH_AFTER_SECONDS' in session:
+            if session.get('REFRESH_AFTER_SECONDS'):
                 session['REFRESH_AFTER_SECONDS'] = None
             else:
                 session['REFRESH_AFTER_SECONDS'] = settings.refresh_after_seconds
