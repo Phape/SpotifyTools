@@ -5,7 +5,7 @@ import spotipy
 import settings
 import uuid
 import time
-from spotify_api import NoCurrentTrackException, SpotifyApi
+from spotify_api import SpotifyApi
 
 app = Flask(__name__)
 app.config.from_object(settings)
@@ -77,26 +77,21 @@ def current_genres():
                 session['REFRESH_AFTER_SECONDS'] = settings.refresh_after_seconds
 
     last_current_track = session.get('CURRENT_TRACK')
-    try:
-        session['CURRENT_TRACK'] = spotifyApi.get_current_track(
-            session.get('SPOTIFY'))
-    except NoCurrentTrackException:
-        session['CURRENT_TRACK'] = "No Current Track, check whether you are listenig to Spotify with this account: " + \
-            session.get('SPOTIFY').me()['display_name']
+    session['CURRENT_TRACK'] = spotifyApi.get_current_track(session.get('SPOTIFY'))
+    if not session.get('CURRENT_TRACK'):
+        current_track_name = "No Current Track, check whether you are listenig to Spotify with this account: " + session.get('SPOTIFY').me()['display_name']
+    else:
+        current_track_name = session['CURRENT_TRACK']['item']['name']
 
     # Only get new artist info from Spotify if current_track has changed
-    if not last_current_track or session.get('CURRENT_TRACK')['item'] != last_current_track['item']:
-        session['CURRENT_ARTISTS'] = spotifyApi.get_current_artists(
-            spotify=session.get('SPOTIFY'), current_track=session.get('CURRENT_TRACK'))
-    return render_template('current_genres.html', current_track_name=session['CURRENT_TRACK']['item']['name'], current_artists=session.get('CURRENT_ARTISTS'), refresh_after_seconds=session.get('REFRESH_AFTER_SECONDS'))
-
-
-# @app.before_request
-# def before_request():
-#     if app.config.get('ENV') != 'development' and request.url.startswith('http://'):
-#         url = request.url.replace('http://', 'https://', 1)
-#         code = 301
-#         return redirect(url, code=code)
+    if session.get('CURRENT_TRACK'):
+        if not last_current_track or session.get('CURRENT_TRACK')['item'] != last_current_track['item']:
+            session['CURRENT_ARTISTS'] = spotifyApi.get_current_artists(
+                spotify=session.get('SPOTIFY'), current_track=session.get('CURRENT_TRACK'))
+    else:
+        session['CURRENT_ARTISTS'] = []
+    
+    return render_template('current_genres.html', current_track_name=current_track_name, current_artists=session.get('CURRENT_ARTISTS'), refresh_after_seconds=session.get('REFRESH_AFTER_SECONDS'))
 
 
 # Initialize Cache

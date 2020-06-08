@@ -6,8 +6,6 @@ class SpotifyApi:
 
     def get_current_track(self, spotify):
         current_track = spotify.currently_playing()
-        if not current_track:
-            raise NoCurrentTrackException()
         return spotify.currently_playing()
 
     def get_current_artists(self, spotify, current_track):
@@ -16,8 +14,3 @@ class SpotifyApi:
             artist_ids.append(artist['id'])
             current_artists = spotify.artists(artist_ids)
         return current_artists
-
-class NoCurrentTrackException(Exception):
-    def __init__(self, message="No Current Track (check whether you are listening to music with your Spotify Account)"):
-        self.message = message
-        super().__init__(self.message)
