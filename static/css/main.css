@@ -94,3 +94,9 @@ a {
     touch-action: manipulation;
     cursor: pointer;
 }
+
+.wiki-logo {
+    height: 1em;
+    /* fill: white; */
+    filter: invert(100%);
+}

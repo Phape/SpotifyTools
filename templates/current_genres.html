@@ -17,7 +17,7 @@
 {% if refresh_after_seconds %}
 <p>This page reloads every {{refresh_after_seconds}} seconds.</p>
 {% endif %}
-<p>Name of Current Track: {{current_track_name}}</>
+<p>Name of Current Track: {{current_track_name}}</p>
 <table class="content-table">
     <thead>
         <tr>
@@ -33,7 +33,7 @@
                 {% if artist['genres']|length %}
                 <ul>
                     {% for genre in artist['genres'] %}
-                    <li><a href="spotify:search:genre:{{genre}}" target="blank">{{genre}}</a></li>
+                    <li><a href="spotify:search:genre:{{genre}}" target="blank">{{genre}}</a> <a href="https://en.wikipedia.org/wiki/{{genre}}" target="_blank"><img src="/static/images/wiki.svg" alt="wiki logo" class="wiki-logo"></a></li>
                     {% endfor %}
                 </ul>
                 {% else %}
