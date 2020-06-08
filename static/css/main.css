@@ -12,7 +12,6 @@ body {
     margin:0px;
     padding: 0px;
     min-width: 60%;
-    /* max-width: 80%; */
     font-family: sans-serif;
     background-color: black;
     color: white;
@@ -29,19 +28,13 @@ body {
     padding: 8px;
     list-style: none;
     display: flex;
-    /* flex-direction: row; */
     justify-content: space-between;
 }
 
 .body-content {
     margin: 10px;
     display: flex;
-    /* align-items: center; */
     flex-direction: column;
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* justify-content: center; */
-    /* max-width: 500px; */
 }
 
 a {
