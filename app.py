@@ -66,14 +66,29 @@ def playlists():
     return session.get('SPOTIFY').current_user_playlists()
 
 
-@app.route('/current_genres')
+@app.route('/current_genres', methods=['GET', 'POST'])
 def current_genres():
+    # Handler for the toggle auto_refresh_button
+    if request.method == 'POST':
+        if request.form['auto_refresh_button']:
+            if 'REFRESH_AFTER_SECONDS' in session:
+                session['REFRESH_AFTER_SECONDS'] = None
+            else:
+                session['REFRESH_AFTER_SECONDS'] = settings.refresh_after_seconds
+
+    last_current_track = session.get('CURRENT_TRACK')
     try:
-        current_track_name = spotifyApi.get_current_track(session.get('SPOTIFY'))['item']['name']
+        session['CURRENT_TRACK'] = spotifyApi.get_current_track(
+            session.get('SPOTIFY'))
     except NoCurrentTrackException:
-        current_track_name = "No Current Track, check whether you are listenig to Spotify with this account: " + session.get('SPOTIFY').me()['id']
-    current_artists = spotifyApi.get_current_artists(session.get('SPOTIFY'))
-    return render_template('current_genres.html', current_track_name=current_track_name, current_artists=current_artists)
+        session['CURRENT_TRACK'] = "No Current Track, check whether you are listenig to Spotify with this account: " + \
+            session.get('SPOTIFY').me()['display_name']
+
+    # Only get new artist info from Spotify if current_track has changed
+    if not last_current_track or session.get('CURRENT_TRACK')['item'] != last_current_track['item']:
+        session['CURRENT_ARTISTS'] = spotifyApi.get_current_artists(
+            spotify=session.get('SPOTIFY'), current_track=session.get('CURRENT_TRACK'))
+    return render_template('current_genres.html', current_track_name=session['CURRENT_TRACK']['item']['name'], current_artists=session.get('CURRENT_ARTISTS'), refresh_after_seconds=session.get('REFRESH_AFTER_SECONDS'))
 
 
 # Initialize Cache
@@ -91,4 +106,4 @@ for f in os.listdir(settings.cache_path):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

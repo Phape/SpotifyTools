@@ -15,3 +15,6 @@ SESSION_REDIS = redis.Redis(
 
 # Cache Settings
 cache_path = 'cache'
+
+# Other Settings
+refresh_after_seconds = 30

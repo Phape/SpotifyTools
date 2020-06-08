@@ -10,12 +10,7 @@ class SpotifyApi:
             raise NoCurrentTrackException()
         return spotify.currently_playing()
 
-    def get_current_artists(self, spotify):
-        try:
-            current_track = self.get_current_track(spotify)
-        except NoCurrentTrackException:
-            return [] #Todo check how to properly handle this exception
-
+    def get_current_artists(self, spotify, current_track):
         artist_ids = []
         for artist in current_track['item']['artists']:
             artist_ids.append(artist['id'])

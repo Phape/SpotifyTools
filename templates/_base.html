@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     {% block head %}{% endblock %}
 </head>
+
 <body>
-    <a href="/">&#8962; Home</a>
-    <a href="/sign_out">Sign out</a>
-    {% block body %}{% endblock %}
+    <div class="navi">
+        <ul>
+            <li><a href="/" class="home-button">&#8962; Home</a></li>
+            <li><a href="/sign_out" class="sign-out-button">Sign out</a></li>
+    </ul>
+    </div>
+    <div class="body-content">
+        {% block body %}{% endblock %}
+    </div>
 </body>
+
 </html>

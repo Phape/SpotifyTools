@@ -1,10 +1,17 @@
 {% extends '_base.html' %}
 {% block head %}
-<meta http-equiv="refresh" content="15">
+<meta http-equiv="refresh" content='{{refresh_after_seconds}}'>
 <title>Found Genres</title>
 {% endblock %}
 {% block body %}
-<p>Name of Current Track: {{current_track_name}}</p>
+<a href="/current_genres"><button>refresh</button></a>
+<form action="/current_genres" method="post">
+    <input type="submit" name="auto_refresh_button" , value="toggle auto refresh">
+</form>
+{% if refresh_after_seconds %}
+<p>This page reloads every {{refresh_after_seconds}} seconds.</p>
+{% endif %}
+<p>Name of Current Track: {{current_track_name}}</>
 <table class="content-table">
     <thead>
         <tr>
