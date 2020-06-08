@@ -91,6 +91,14 @@ def current_genres():
     return render_template('current_genres.html', current_track_name=session['CURRENT_TRACK']['item']['name'], current_artists=session.get('CURRENT_ARTISTS'), refresh_after_seconds=session.get('REFRESH_AFTER_SECONDS'))
 
 
+@app.before_request
+def before_request():
+    if app.config.get('ENV') != 'development' and request.url.startswith('http://'):
+        url = request.url.replace('http://', 'https://', 1)
+        code = 301
+        return redirect(url, code=code)
+
+
 # Initialize Cache
 if not os.path.exists(settings.cache_path):
     os.makedirs(settings.cache_path)
