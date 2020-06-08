@@ -4,10 +4,16 @@
 <title>Current Genres | SpotifyTools</title>
 {% endblock %}
 {% block body %}
-<a href="/current_genres"><button>refresh</button></a>
-<form action="/current_genres" method="post">
-    <input type="submit" name="auto_refresh_button" , value="toggle auto refresh">
-</form>
+<div class="button-left-right">
+    <ul>
+        <li>
+            <form action="/current_genres" method="post">
+                <input type="submit" name="auto_refresh_button" , value="toggle auto refresh" class="spotify-button">
+            </form>
+        </li>
+        <li><a href="/current_genres"><button class="spotify-button">refresh</button></a></li>
+    </ul>
+</div>
 {% if refresh_after_seconds %}
 <p>This page reloads every {{refresh_after_seconds}} seconds.</p>
 {% endif %}

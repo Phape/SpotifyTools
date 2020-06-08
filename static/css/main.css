@@ -18,7 +18,7 @@ body {
 .navi {
     margin: 0px;
     padding:0px;
-    background-color: gray;
+    background-color: rgb(29, 185, 84);
 }
 
 .navi ul {
@@ -27,6 +27,12 @@ body {
     list-style: none;
     display: flex;
     justify-content: space-between;
+}
+
+.navi a {
+    color: black;
+    font-size: large;
+    font-weight: bold;
 }
 
 .body-content {
@@ -62,8 +68,16 @@ a {
     justify-content: center;
 }
 
-.spotify-login-button{
-    top: 50%;
+.button-left-right ul {
+    margin: 0px;
+    padding: 8px;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.spotify-button{
+    top: 50%; /* only for sign_in page */
     padding: 16px 14px 18px;
     color: rgb(255, 255, 255);
     background-color: rgb(29, 185, 84);
