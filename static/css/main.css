@@ -105,6 +105,10 @@ a {
 }
 
 @media (max-width: 768px) {
+    body {
+        width: 100%;
+    }
+
     .spotify-button {
         padding: 10px 8px 10px;
         font-size: 10px;
