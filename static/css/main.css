@@ -45,6 +45,10 @@ a {
     color: white;
 }
 
+.content-table {
+    width: 100%;
+}
+
 .content-table thead tr{
     background-color: rgb(29, 185, 84);
     color: black;
@@ -97,6 +101,14 @@ a {
 
 .wiki-logo {
     height: 1em;
-    /* fill: white; */
     filter: invert(100%);
+}
+
+@media (max-width: 768px) {
+    .spotify-button {
+        padding: 10px 8px 10px;
+        font-size: 10px;
+        letter-spacing: 1px;
+        min-width: 75px;
+    }
 }
