@@ -101,12 +101,7 @@ a, p {
     cursor: pointer;
 }
 
-.genre-spotify-wiki {
-    width: 100%;
-    display: flex;
-}
-
-.genre-spotify-wiki .icon {
+.inline-icon-invert-color {
     height: 1em;
     filter: invert(100%);
 }
@@ -124,10 +119,21 @@ a, p {
         width: 100%;
     }
 
+    .smallpadding {
+        padding: 0px !important;
+        margin: 0px !important;
+     }
+
     .spotify-button {
         padding: 10px 8px 10px;
         font-size: 10px;
         letter-spacing: 1px;
         min-width: 75px;
+    }
+}
+
+@media (min-width: 768px) {
+    body {
+        min-width: 768px;
     }
 }
