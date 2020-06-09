@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgb(0, 0, 0); display: block;" width="228px" height="228px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+    <g transform="rotate(180 50 50)">
+        <rect x="9.166666666666668" y="23.375" width="15" height="40" fill="#ffffff">
+            <animate attributeName="height" calcMode="spline" values="35.5;53.25;7.1000000000000005;35.5" times="0;0.33;0.66;1" dur="2.3255813953488373s" keySplines="0.5 0 0.5 1;0.5 0 0.5 1;0.5 0 0.5 1" repeatCount="indefinite" begin="-1.86046511627907s"></animate>
+        </rect>
+        <rect x="25.833333333333336" y="23.375" width="15" height="40" fill="#ffffff">
+            <animate attributeName="height" calcMode="spline" values="35.5;53.25;7.1000000000000005;35.5" times="0;0.33;0.66;1" dur="2.3255813953488373s" keySplines="0.5 0 0.5 1;0.5 0 0.5 1;0.5 0 0.5 1" repeatCount="indefinite" begin="-1.3953488372093024s"></animate>
+        </rect>
+        <rect x="42.5" y="23.375" width="15" height="40" fill="#ffffff">
+            <animate attributeName="height" calcMode="spline" values="35.5;53.25;7.1000000000000005;35.5" times="0;0.33;0.66;1" dur="2.3255813953488373s" keySplines="0.5 0 0.5 1;0.5 0 0.5 1;0.5 0 0.5 1" repeatCount="indefinite" begin="-0.930232558139535s"></animate>
+        </rect>
+        <rect x="59.16666666666667" y="23.375" width="15" height="40" fill="#ffffff">
+            <animate attributeName="height" calcMode="spline" values="35.5;53.25;7.1000000000000005;35.5" times="0;0.33;0.66;1" dur="2.3255813953488373s" keySplines="0.5 0 0.5 1;0.5 0 0.5 1;0.5 0 0.5 1" repeatCount="indefinite" begin="0s"></animate>
+        </rect>
+        <rect x="75.83333333333333" y="23.375" width="15" height="40" fill="#ffffff">
+            <animate attributeName="height" calcMode="spline" values="35.5;53.25;7.1000000000000005;35.5" times="0;0.33;0.66;1" dur="2.3255813953488373s" keySplines="0.5 0 0.5 1;0.5 0 0.5 1;0.5 0 0.5 1" repeatCount="indefinite" begin="-0.4651162790697675s"></animate>
+        </rect>
+    </g>
+</svg>

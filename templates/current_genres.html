@@ -17,7 +17,10 @@
 {% if refresh_after_seconds %}
 <p>This page reloads every {{refresh_after_seconds}} seconds.</p>
 {% endif %}
-<p>Name of Current Track: {{current_track_name}}</p>
+<div class="now-playing">
+    <p><img src="/static/images/equalizer-3.svg" alt="animated equalizer, now playing:" class="icon">
+        {{current_track_name}}</p>
+</div>
 <table class="content-table">
     <thead>
         <tr>
@@ -28,14 +31,27 @@
     <tbody>
         {% for artist in current_artists['artists'] %}
         <tr>
-            <td><a href="{{artist['uri']}}" target="blank">{{artist['name']}}</a></td>
+            <td>
+                <!-- <a href="{{artist['uri']}}" target="blank">{{artist['name']}}</a> -->
+                <div class="genre-spotify-wiki">
+                    <p class="col-md-10">{{artist['name']}}</p>
+                    <a href="{{artist['uri']}}" class="col-md-1" target="blank"><img src="static/images/spotify.svg"
+                            alt="spotify icon" class="icon"></a>
+                    <a href="https://en.wikipedia.org/wiki/{{artist['name']}}" class="col-md-1" target="_blank"><img
+                            src="/static/images/wiki.svg" alt="wiki logo" class="icon"></a>
+                </div>
+            </td>
             <td>
                 {% if artist['genres']|length %}
-                <ul>
-                    {% for genre in artist['genres'] %}
-                    <li><a href="spotify:search:genre:{{genre}}" target="blank">{{genre}}</a> <a href="https://en.wikipedia.org/wiki/{{genre}}" target="_blank"><img src="/static/images/wiki.svg" alt="wiki logo" class="wiki-logo"></a></li>
-                    {% endfor %}
-                </ul>
+                {% for genre in artist['genres'] %}
+                <div class="genre-spotify-wiki">
+                    <p class="col-md-10">{{genre}}</p>
+                    <a href="spotify:search:genre:{{genre}}" class="col-md-1" target="blank"><img
+                            src="static/images/spotify.svg" alt="spotify icon" class="icon"></a>
+                    <a href="https://en.wikipedia.org/wiki/{{genre}}" class="col-md-1" target="_blank"><img
+                            src="/static/images/wiki.svg" alt="wiki logo" class="icon"></a>
+                </div>
+                {% endfor %}
                 {% else %}
                 <p>Spotify currently has no genres listed for {{artist['name']}}.</p>
                 {% endif %}
