@@ -150,6 +150,18 @@ a, p {
     float: right;
 }
 
+.progress {
+    height: 5px;
+    background-color: white;
+    -webkit-animation: progressBar 30s linear reverse;
+}
+
+@-webkit-keyframes progressBar {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+
+
 
 @media (max-width: 768px) {
     body {

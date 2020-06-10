@@ -2,12 +2,23 @@
 
 ## todo's
 
+* update design of homepage
+* redirects when user visits link directly
+  * eg: user is not logged in, but tries to visit the site spotifytools.azurewebsites.net/current_genres
+  * user should be redirected to login page and then back to where he / she initially wanted to go
+* the number of followers should be displayed like this: 4 587 229 instead of this: 4587229
+* the progress bar which indicates when the site refreshes next should automatically adapt the time (curr. 30s)
+  * time is set in settings.py
+
 ## fixme's
+
+* app crashes when user listens to a podcast on spotify
+  * check if type is track
+* app crashes when user listens to local music
+* if the user had turned on auto refresh and turned it off again, then reloads the page, the form is submitted again and auto refresh is active again --> it should be off
 
 ## ideas
 
-* A white animated bar below the navi-bar that indicates when the site will refresh next
-  * to replace the text "This site refreshes every x seconds."
 * possibility to display song lyrics (good api for that?)
 
 ## third party issues

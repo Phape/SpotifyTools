@@ -1,9 +1,15 @@
 {% extends '_base.html' %}
+
 {% block head %}
 <meta http-equiv="refresh" content='{{refresh_after_seconds}}'>
 <title>Current Genres | SpotifyTools</title>
 {% endblock %}
+
 {% block body %}
+{% if refresh_after_seconds %}
+<span class="progress"></span>
+{% endif %}
+
 <div class="button-left-right">
     <ul>
         <li>
@@ -14,9 +20,7 @@
         <li><a href="/current_genres"><button class="spotify-button">refresh</button></a></li>
     </ul>
 </div>
-{% if refresh_after_seconds %}
-<p>This page reloads every {{refresh_after_seconds}} seconds.</p>
-{% endif %}
+
 <div class="now-playing">
     <p><img src="/static/images/equalizer-3.svg" alt="animated equalizer, now playing:" class="icon">
         {{current_track_name}}</p>
