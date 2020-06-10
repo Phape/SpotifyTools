@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="icon" type="image/png" href="static/images/spotify-tools-icon.png">
     {% block head %}{% endblock %}
 </head>
 
@@ -14,7 +15,7 @@
         <ul>
             <li><a href="/" class="home-button">&#8962; Home</a></li>
             <li><a href="/sign_out" class="sign-out-button">Sign out</a></li>
-    </ul>
+        </ul>
     </div>
     <div class="body-content">
         {% block body %}{% endblock %}
