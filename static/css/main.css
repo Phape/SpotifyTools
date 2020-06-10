@@ -114,6 +114,29 @@ a, p {
     height: 1.5em;
 }
 
+.artists-section {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.card {
+    background-color: black;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+.card .list-group-item {
+    background-color: black;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(29, 185, 84, 0.2);
+}
+
+
 @media (max-width: 768px) {
     body {
         width: 100%;
