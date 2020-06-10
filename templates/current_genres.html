@@ -24,7 +24,7 @@
 
 <div class="artists-section">
     {% for artist in current_artists['artists'] %}
-    <div class="card" style="width: 18rem;">
+    <div class="card">
         <img class="card-img-top" src="{{artist['images'][1]['url']}}" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title">{{artist['name']}}</h5>
@@ -35,10 +35,13 @@
             {% if artist['genres']|length %}
             {% for genre in artist['genres'] %}
             <li class="list-group-item">{{genre}}
-                <a href="spotify:search:genre:{{genre}}" target="blank"><img src="static/images/spotify.svg"
-                        alt="spotify icon" class="inline-icon-invert-color"></a>
-                <a href="https://en.wikipedia.org/wiki/{{genre}}" target="_blank"><img src="/static/images/wiki.svg"
-                        alt="wiki logo" class="inline-icon-invert-color"></a></li>
+                <div class="icons">
+                    <a href="spotify:search:genre:{{genre}}" target="blank"><img src="static/images/spotify.svg"
+                            alt="spotify icon" class="inline-icon invert-color"></a>
+                    <a href="https://en.wikipedia.org/wiki/{{genre}}" target="_blank"><img src="/static/images/wiki.svg"
+                            alt="wiki logo" class="inline-icon invert-color"></a>
+                </div>
+            </li>
             {% endfor %}
             {% else %}
             <li class="list-group-item">Spotify currently has no genres listed for {{artist['name']}}.</li>
@@ -46,9 +49,9 @@
         </ul>
         <div class="card-body">
             <a href="{{artist['uri']}}" class="card-link" target="blank"><img src="static/images/spotify.svg"
-                    alt="spotify icon" class="inline-icon-invert-color"> Artist</a>
+                    alt="spotify icon" class="inline-icon invert-color"> Artist</a>
             <a href="https://en.wikipedia.org/wiki/{{artist['name']}}" class="card-link" target="_blank"><img
-                    src="/static/images/wiki.svg" alt="wiki logo" class="inline-icon-invert-color"> Artist</a>
+                    src="/static/images/wiki.svg" alt="wiki logo" class="inline-icon invert-color"> Artist</a>
         </div>
     </div>
     {% endfor %}
