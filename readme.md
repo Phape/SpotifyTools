@@ -39,4 +39,7 @@ If you're using VS Code and new to Flask, I recommend reading the [Flask Tutoria
     $env:SPOTIPY_REDIRECT_URI = "http://127.0.0.1:5000"
     $env:REDIS_HOST = "your.redis.host.here"
     $env:REDIS_PASSWORD = "your_redis_password_here"
+    # The following lines are only for the development environment (debugging)
+    $env:FLASK_ENV="development"
+    $env:FLASK_DEBUG="True"
     ```
