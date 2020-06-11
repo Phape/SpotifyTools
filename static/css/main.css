@@ -6,10 +6,12 @@ html {
 }
 
 body {
+    display: flex;
     flex-direction: column;
+    align-items: center;
     margin:0px;
     padding: 0px;
-    min-width: 60%;
+    width: 100%;
     font-family: sans-serif;
     background-color: black;
     color: white;
@@ -24,6 +26,7 @@ a, p {
 .navi {
     margin: 0px;
     padding:0px;
+    width: 100%;
     background-color: rgb(29, 185, 84);
 }
 
@@ -128,8 +131,14 @@ a, p {
 .card {
     background-color: black;
     border: 1px solid rgba(255, 255, 255, 0.125);
-    max-width: 400px;
+    width: 300px;
     margin: 10px;
+}
+
+.card .card-img-top {
+    border-radius: .25rem;
+    max-height: 300px;
+    object-fit: cover;
 }
 
 .card .list-group-item {
@@ -161,7 +170,11 @@ a, p {
   100% { width: 100%; }
 }
 
-
+@media (max-width: 544px) {
+    .card {
+        width: 100%;
+    }
+}
 
 @media (max-width: 768px) {
     body {
@@ -184,5 +197,9 @@ a, p {
 @media (min-width: 768px) {
     body {
         min-width: 768px;
+    }
+
+    .body-content {
+        min-width: 500px;
     }
 }
