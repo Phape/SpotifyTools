@@ -9,6 +9,15 @@ class SpotifyApi:
         return spotify.currently_playing()
 
     def get_current_artists(self, spotify, current_track):
+        """Gets the Spotify IDs of the artists of the current song.
+
+        Args:
+            spotify: the spotify object from spotipy
+            current_track (dict): a track retrieved from the Spotify API (via spotipy)
+
+        Returns:
+            dict: The Spotify IDs of the current artists
+        """
         artist_ids = []
         for artist in current_track['item']['artists']:
             artist_ids.append(artist['id'])

@@ -16,10 +16,16 @@
   * check if type is track
 * app crashes when user listens to local music
 * if the user had turned on auto refresh and turned it off again, then reloads the page, the form is submitted again and auto refresh is active again --> it should be off
+* When making too many requests to spotify, it gives a timeout --> Handle the timeout
 
 ## ideas
 
 * possibility to display song lyrics (good api for that?)
+* Use the Spotify API endpoint "Get User's Followed Artists" to find out which genres the user might like
+  * Same thing can be done with this endpoint: "Get a User's Top Artists and Tracks"
+* Use Spotify search API to display top songs of a genre on the website
+* deactivate auto refresh if the user switches the tab
+  * activate auto refresh again if user comes back to the tab
 
 ## third party issues
 
