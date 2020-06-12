@@ -93,10 +93,10 @@ def current_genres():
     # Handler for the toggle auto_refresh_button
     if request.method == 'POST':
         if request.form['auto_refresh_button']:
-            if session.get('REFRESH_AFTER_SECONDS'):
-                session['REFRESH_AFTER_SECONDS'] = None
+            if not session.get('IS_AUTOREFRESH') or session.get('IS_AUTOREFRESH') == False:
+                session['IS_AUTOREFRESH'] = True
             else:
-                session['REFRESH_AFTER_SECONDS'] = settings.refresh_after_seconds
+                session['IS_AUTOREFRESH'] = False
 
     last_current_track = session.get('CURRENT_TRACK')
     session['CURRENT_TRACK'] = spotifyApi.get_current_track(
@@ -119,7 +119,12 @@ def current_genres():
     else:
         session['CURRENT_ARTISTS'] = []
 
-    return render_template('current_genres.html', current_track_name=current_track_name, current_artists=session.get('CURRENT_ARTISTS'), refresh_after_seconds=session.get('REFRESH_AFTER_SECONDS'))
+    if session.get('IS_AUTOREFRESH') == True:
+        refresh_after_seconds = settings.refresh_after_seconds
+    else:
+        refresh_after_seconds = None
+
+    return render_template('current_genres.html', current_track_name=current_track_name, current_artists=session.get('CURRENT_ARTISTS'), refresh_after_seconds=refresh_after_seconds)
 
 
 @app.errorhandler(404)

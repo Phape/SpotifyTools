@@ -1,3 +1,8 @@
+$bgcolor: black;
+$textcolor: white;
+// $fontsize: 18px;
+$spotifycolor: rgb(29, 185, 84);
+
 html {
     width: 100%;
     height: 100%;
@@ -9,64 +14,45 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin:0px;
+    margin: 0px;
     padding: 0px;
     width: 100%;
     font-family: sans-serif;
-    background-color: black;
-    color: white;
+    background-color: $bgcolor;
+    color: $textcolor;
 }
 
-a, p {
-    color: white;
+a,
+p {
+    color: $textcolor;
     padding: 0;
     margin: 0;
 }
 
 .navi {
     margin: 0px;
-    padding:0px;
+    padding: 0px;
     width: 100%;
-    background-color: rgb(29, 185, 84);
-}
+    background-color: $spotifycolor;
 
-.navi ul {
-    margin: 0px;
-    padding: 8px;
-    list-style: none;
-    display: flex;
-    justify-content: space-between;
-}
-
-.navi a {
-    color: black;
-    font-size: large;
-    font-weight: bold;
+    ul {
+        margin: 0px;
+        padding: 8px;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+    }
+    a {
+        color: black;
+        font-size: large;
+        font-weight: bold;
+    }
 }
 
 .body-content {
     margin: 10px;
     display: flex;
     flex-direction: column;
-}
-
-.content-table {
-    width: 100%;
-}
-
-.content-table thead tr{
-    background-color: rgb(29, 185, 84);
-    color: black;
-}
-
-.content-table th, .content-table tr {
-    padding: 12px 15px;
-    border: 1px solid white;
-}
-
-.content-table tbody td {
-    padding: 12px 15px;
-    border: 1px solid white;
 }
 
 .centered {
@@ -85,15 +71,15 @@ a, p {
     justify-content: space-between;
 }
 
-.spotify-button{
+.spotify-button {
     top: 50%; /* only for sign_in page */
     padding: 16px 14px 18px;
-    color: rgb(255, 255, 255);
-    background-color: rgb(29, 185, 84);
+    color: white;
+    background-color: rgb($spotifycolor;
     font-size: 14px;
     border-radius: 500px;
-    transition-property: background-color,border-color,color,box-shadow,filter;
-    transition-duration: .3s;
+    transition-property: background-color, border-color, color, box-shadow, filter;
+    transition-duration: 0.3s;
     border-width: 0;
     letter-spacing: 2px;
     min-width: 160px;
@@ -112,10 +98,10 @@ a, p {
     font-size: 20px;
     display: flex;
     justify-content: center;
-}
 
-.now-playing .icon {
-    height: 1.5em;
+    .icon {
+        height: 1.5em;
+    }
 }
 
 .artists-section {
@@ -128,46 +114,46 @@ a, p {
     align-items: flex-start;
 }
 
-.card {
-    background-color: black;
+.card{
+    background-color: $bgcolor;
     border: 1px solid rgba(255, 255, 255, 0.125);
     width: 300px;
     margin: 10px;
-}
 
-.card .card-img-top {
-    border-radius: .25rem;
-    height: 300px;
-    object-fit: cover;
-}
-
-.card .list-group-item {
-    background-color: black;
-    border: 1px solid rgba(255, 255, 255, 0.125);
-}
-
-.card:hover {
-    box-shadow: 0 8px 16px 0 rgba(29, 185, 84, 0.2);
-}
-
-.card .inline-icon {
-    height: 1em;
-    margin: 5px;
-}
-
-.card .list-group .icons {
-    float: right;
+    &:hover {
+        box-shadow: 0 8px 16px 0 rgba(29, 185, 84, 0.2);
+    }
+    .card-img-top {
+        border-radius: 0.25rem;
+        height: 300px;
+        object-fit: cover;
+    }
+    .list-group-item {
+        background-color: $bgcolor;
+        border: 1px solid rgba(255, 255, 255, 0.125);
+    }
+    .inline-icon {
+        height: 1em;
+        margin: 5px;
+    }
+    .list-group .icons {
+        float: right;
+    }
 }
 
 .progress {
     height: 5px;
     background-color: white;
-    -webkit-animation: progressBar 30s linear reverse;
+    -webkit-animation: progressBar REFRESH_TIMEs linear reverse; //is set in html via script
 }
 
 @-webkit-keyframes progressBar {
-  0% { width: 0; }
-  100% { width: 100%; }
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
 }
 
 @media (max-width: 544px) {
@@ -184,7 +170,7 @@ a, p {
     .smallpadding {
         padding: 0px !important;
         margin: 0px !important;
-     }
+    }
 
     .spotify-button {
         padding: 10px 8px 10px;

@@ -25,126 +25,103 @@ html {
         padding: 0px;
         width: 100%;
         background-color: #1db954; }
-
         .navi ul {
           margin: 0px;
           padding: 8px;
           list-style: none;
           display: flex;
           justify-content: space-between; }
-
           .navi a {
             color: black;
             font-size: large;
             font-weight: bold; }
 
-            .body-content {
-              margin: 10px;
-              display: flex;
-              flex-direction: column; }
+.body-content {
+  margin: 10px;
+  display: flex;
+  flex-direction: column; }
 
-              .content-table {
-                width: 100%; }
+  .centered {
+    display: flex;
+    padding: 100px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; }
 
-                .content-table thead tr {
-                  background-color: #1db954;
-                  color: black; }
+    .button-left-right ul {
+      margin: 0px;
+      padding: 8px 0px 8px;
+      list-style: none;
+      display: flex;
+      justify-content: space-between; }
 
-                  .content-table th, .content-table tr {
-                    padding: 12px 15px;
-                    border: 1px solid white; }
+      .spotify-button {
+        top: 50%;
+        padding: 16px 14px 18px;
+        color: white;
+        background-color: #1db954;
+        font-size: 14px;
+        border-radius: 500px;
+        transition-property: background-color, border-color, color, box-shadow, filter;
+        transition-duration: 0.3s;
+        border-width: 0;
+        letter-spacing: 2px;
+        min-width: 160px;
+        text-transform: uppercase;
+        white-space: normal;
+        font-weight: 700;
+        touch-action: manipulation;
+        cursor: pointer; }
 
-                    .content-table tbody td {
-                      padding: 12px 15px;
-                      border: 1px solid white; }
+        .invert-color {
+          filter: invert(100%); }
 
-                      .centered {
-                        display: flex;
-                        padding: 100px;
-                        flex-direction: column;
-                        align-items: center;
-                        justify-content: center; }
+          .now-playing {
+            font-size: 20px;
+            display: flex;
+            justify-content: center; }
+            .now-playing .icon {
+              height: 1.5em; }
 
-                        .button-left-right ul {
-                          margin: 0px;
-                          padding: 8px 0px 8px;
-                          list-style: none;
-                          display: flex;
-                          justify-content: space-between; }
+.artists-section {
+  width: 100%;
+  padding: -5px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-start; }
 
-                          .spotify-button {
-                            top: 50%;
-                            padding: 16px 14px 18px;
-                            color: white;
-                            background-color: #1db954;
-                            font-size: 14px;
-                            border-radius: 500px;
-                            transition-property: background-color, border-color, color, box-shadow, filter;
-                            transition-duration: 0.3s;
-                            border-width: 0;
-                            letter-spacing: 2px;
-                            min-width: 160px;
-                            text-transform: uppercase;
-                            white-space: normal;
-                            font-weight: 700;
-                            touch-action: manipulation;
-                            cursor: pointer; }
+  .card {
+    background-color: black;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    width: 300px;
+    margin: 10px; }
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(29, 185, 84, 0.2); }
+      .card .card-img-top {
+        border-radius: 0.25rem;
+        height: 300px;
+        object-fit: cover; }
+        .card .list-group-item {
+          background-color: black;
+          border: 1px solid rgba(255, 255, 255, 0.125); }
+          .card .inline-icon {
+            height: 1em;
+            margin: 5px; }
+            .card .list-group .icons {
+              float: right; }
 
-                            .invert-color {
-                              filter: invert(100%); }
+.progress {
+  height: 5px;
+  background-color: white;
+  -webkit-animation: progressBar REFRESH_TIMEs linear reverse; }
 
-                              .now-playing {
-                                font-size: 20px;
-                                display: flex;
-                                justify-content: center; }
-
-                                .now-playing .icon {
-                                  height: 1.5em; }
-
-                                  .artists-section {
-                                    width: 100%;
-                                    padding: -5px;
-                                    display: flex;
-                                    flex-direction: row;
-                                    flex-wrap: wrap;
-                                    justify-content: space-around;
-                                    align-items: flex-start; }
-
-                                    .card {
-                                      background-color: black;
-                                      border: 1px solid rgba(255, 255, 255, 0.125);
-                                      width: 300px;
-                                      margin: 10px; }
-
-                                      .card .card-img-top {
-                                        border-radius: 0.25rem;
-                                        height: 300px;
-                                        object-fit: cover; }
-
-                                        .card .list-group-item {
-                                          background-color: black;
-                                          border: 1px solid rgba(255, 255, 255, 0.125); }
-
-                                          .card:hover {
-                                            box-shadow: 0 8px 16px 0 rgba(29, 185, 84, 0.2); }
-
-                                            .card .inline-icon {
-                                              height: 1em;
-                                              margin: 5px; }
-
-                                              .card .list-group .icons {
-                                                float: right; }
-
-                                                .progress {
-                                                  height: 5px;
-                                                  background-color: white;
-                                                  -webkit-animation: progressBar 30s linear reverse; }
-
-                                                  @-webkit-keyframes progressBar {
-                                                    0% {
-                                                      width: 0;   }
-                                                      100% {
-                                                        width: 100%;   }
+  @-webkit-keyframes progressBar {
+    0% {
+      width: 0;   }
+      100% {
+        width: 100%;   }
 }
 
 @media (max-width: 544px) {
