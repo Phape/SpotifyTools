@@ -1,6 +1,7 @@
 import os
 from flask import Flask, session, request, redirect, render_template, url_for
 from flask_session import Session
+from flask_assets import Environment, Bundle
 import spotipy
 import settings
 import uuid
@@ -9,6 +10,11 @@ from spotify_api import SpotifyApi
 
 app = Flask(__name__)
 app.config.from_object(settings)
+
+assets = Environment(app)
+assets.url = app.static_url_path
+scss = Bundle('css/main.scss', filters='pyscss', output='css/main.css')
+assets.register('scss_all', scss)
 
 Session(app)
 spotifyApi = SpotifyApi()
@@ -114,6 +120,10 @@ def current_genres():
         session['CURRENT_ARTISTS'] = []
 
     return render_template('current_genres.html', current_track_name=current_track_name, current_artists=session.get('CURRENT_ARTISTS'), refresh_after_seconds=session.get('REFRESH_AFTER_SECONDS'))
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('404.html'), 404
 
 
 # Initialize Cache

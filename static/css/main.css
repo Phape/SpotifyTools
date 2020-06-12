@@ -1,205 +1,173 @@
 html {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-}
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center; }
 
-body {
+  body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin:0px;
+    margin: 0px;
     padding: 0px;
     width: 100%;
     font-family: sans-serif;
     background-color: black;
-    color: white;
-}
+    color: white; }
 
-a, p {
-    color: white;
-    padding: 0;
-    margin: 0;
-}
+    a, p {
+      color: white;
+      padding: 0;
+      margin: 0; }
 
-.navi {
-    margin: 0px;
-    padding:0px;
-    width: 100%;
-    background-color: rgb(29, 185, 84);
-}
+      .navi {
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+        background-color: #1db954; }
 
-.navi ul {
-    margin: 0px;
-    padding: 8px;
-    list-style: none;
-    display: flex;
-    justify-content: space-between;
-}
+        .navi ul {
+          margin: 0px;
+          padding: 8px;
+          list-style: none;
+          display: flex;
+          justify-content: space-between; }
 
-.navi a {
-    color: black;
-    font-size: large;
-    font-weight: bold;
-}
+          .navi a {
+            color: black;
+            font-size: large;
+            font-weight: bold; }
 
-.body-content {
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-}
+            .body-content {
+              margin: 10px;
+              display: flex;
+              flex-direction: column; }
 
-.content-table {
-    width: 100%;
-}
+              .content-table {
+                width: 100%; }
 
-.content-table thead tr{
-    background-color: rgb(29, 185, 84);
-    color: black;
-}
+                .content-table thead tr {
+                  background-color: #1db954;
+                  color: black; }
 
-.content-table th, .content-table tr {
-    padding: 12px 15px;
-    border: 1px solid white;
-}
+                  .content-table th, .content-table tr {
+                    padding: 12px 15px;
+                    border: 1px solid white; }
 
-.content-table tbody td {
-    padding: 12px 15px;
-    border: 1px solid white;
-}
+                    .content-table tbody td {
+                      padding: 12px 15px;
+                      border: 1px solid white; }
 
-.centered {
-    display: flex;
-    padding: 100px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
+                      .centered {
+                        display: flex;
+                        padding: 100px;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center; }
 
-.button-left-right ul {
-    margin: 0px;
-    padding: 8px 0px 8px;
-    list-style: none;
-    display: flex;
-    justify-content: space-between;
-}
+                        .button-left-right ul {
+                          margin: 0px;
+                          padding: 8px 0px 8px;
+                          list-style: none;
+                          display: flex;
+                          justify-content: space-between; }
 
-.spotify-button{
-    top: 50%; /* only for sign_in page */
-    padding: 16px 14px 18px;
-    color: rgb(255, 255, 255);
-    background-color: rgb(29, 185, 84);
-    font-size: 14px;
-    border-radius: 500px;
-    transition-property: background-color,border-color,color,box-shadow,filter;
-    transition-duration: .3s;
-    border-width: 0;
-    letter-spacing: 2px;
-    min-width: 160px;
-    text-transform: uppercase;
-    white-space: normal;
-    font-weight: 700;
-    touch-action: manipulation;
-    cursor: pointer;
-}
+                          .spotify-button {
+                            top: 50%;
+                            padding: 16px 14px 18px;
+                            color: white;
+                            background-color: #1db954;
+                            font-size: 14px;
+                            border-radius: 500px;
+                            transition-property: background-color, border-color, color, box-shadow, filter;
+                            transition-duration: 0.3s;
+                            border-width: 0;
+                            letter-spacing: 2px;
+                            min-width: 160px;
+                            text-transform: uppercase;
+                            white-space: normal;
+                            font-weight: 700;
+                            touch-action: manipulation;
+                            cursor: pointer; }
 
-.invert-color {
-    filter: invert(100%);
-}
+                            .invert-color {
+                              filter: invert(100%); }
 
-.now-playing {
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-}
+                              .now-playing {
+                                font-size: 20px;
+                                display: flex;
+                                justify-content: center; }
 
-.now-playing .icon {
-    height: 1.5em;
-}
+                                .now-playing .icon {
+                                  height: 1.5em; }
 
-.artists-section {
-    width: 100%;
-    padding: -5px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: flex-start;
-}
+                                  .artists-section {
+                                    width: 100%;
+                                    padding: -5px;
+                                    display: flex;
+                                    flex-direction: row;
+                                    flex-wrap: wrap;
+                                    justify-content: space-around;
+                                    align-items: flex-start; }
 
-.card {
-    background-color: black;
-    border: 1px solid rgba(255, 255, 255, 0.125);
-    width: 300px;
-    margin: 10px;
-}
+                                    .card {
+                                      background-color: black;
+                                      border: 1px solid rgba(255, 255, 255, 0.125);
+                                      width: 300px;
+                                      margin: 10px; }
 
-.card .card-img-top {
-    border-radius: .25rem;
-    height: 300px;
-    object-fit: cover;
-}
+                                      .card .card-img-top {
+                                        border-radius: 0.25rem;
+                                        height: 300px;
+                                        object-fit: cover; }
 
-.card .list-group-item {
-    background-color: black;
-    border: 1px solid rgba(255, 255, 255, 0.125);
-}
+                                        .card .list-group-item {
+                                          background-color: black;
+                                          border: 1px solid rgba(255, 255, 255, 0.125); }
 
-.card:hover {
-    box-shadow: 0 8px 16px 0 rgba(29, 185, 84, 0.2);
-}
+                                          .card:hover {
+                                            box-shadow: 0 8px 16px 0 rgba(29, 185, 84, 0.2); }
 
-.card .inline-icon {
-    height: 1em;
-    margin: 5px;
-}
+                                            .card .inline-icon {
+                                              height: 1em;
+                                              margin: 5px; }
 
-.card .list-group .icons {
-    float: right;
-}
+                                              .card .list-group .icons {
+                                                float: right; }
 
-.progress {
-    height: 5px;
-    background-color: white;
-    -webkit-animation: progressBar 30s linear reverse;
-}
+                                                .progress {
+                                                  height: 5px;
+                                                  background-color: white;
+                                                  -webkit-animation: progressBar 30s linear reverse; }
 
-@-webkit-keyframes progressBar {
-  0% { width: 0; }
-  100% { width: 100%; }
+                                                  @-webkit-keyframes progressBar {
+                                                    0% {
+                                                      width: 0;   }
+                                                      100% {
+                                                        width: 100%;   }
 }
 
 @media (max-width: 544px) {
-    .card {
-        width: 100%;
-    }
+  .card {
+    width: 100%;   }
 }
 
 @media (max-width: 768px) {
-    body {
-        width: 100%;
-    }
-
+  body {
+    width: 100%;   }
     .smallpadding {
-        padding: 0px !important;
-        margin: 0px !important;
-     }
-
-    .spotify-button {
+      padding: 0px !important;
+      margin: 0px !important;   }
+      .spotify-button {
         padding: 10px 8px 10px;
         font-size: 10px;
         letter-spacing: 1px;
-        min-width: 75px;
-    }
+        min-width: 75px;   }
 }
 
 @media (min-width: 768px) {
-    body {
-        min-width: 768px;
-    }
-
+  body {
+    min-width: 768px;   }
     .body-content {
-        min-width: 500px;
-    }
+      min-width: 500px;   }
 }

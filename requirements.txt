@@ -3,5 +3,7 @@
 # $ pip install -r requirements.txt
 flask
 flask_session
+flask_assets
+pyScss
 redis
 spotipy
