@@ -1,5 +1,5 @@
 import os
-from flask import Flask, session, request, redirect, render_template
+from flask import Flask, session, request, redirect, render_template, url_for
 from flask_session import Session
 import spotipy
 import settings
@@ -17,6 +17,7 @@ spotifyApi = SpotifyApi()
 @app.route('/')
 def index():
     if 'uuid' not in session:
+        session['NEXT_URL'] = url_for('index')
         return render_template('sign_in.html')
 
     return render_template('index.html', spotify=session.get('SPOTIFY'))
@@ -35,7 +36,10 @@ def sign_in():
         auth_url = session.get('AUTH_MANAGER').get_authorize_url()
         return redirect(auth_url)
 
-    return redirect('/')
+    # if session.get('NEXT_URL'):
+    #     return redirect(session.get('NEXT_URL'))
+
+    # return redirect(url_for('index'))
 
 
 @app.route('/authorize')
@@ -46,7 +50,13 @@ def authorize():
 
         session['SPOTIFY'] = spotipy.Spotify(
             auth_manager=session.get('AUTH_MANAGER'))
-        return redirect('/')
+
+        if session.get('NEXT_URL'):
+            return redirect(session.get('NEXT_URL'))
+        return redirect(url_for('index'))
+
+    else:
+        f"Didn't get a token from Spotify."
 
 
 @app.route('/sign_out')
@@ -55,7 +65,7 @@ def sign_out():
     if(os.path.exists(cache_file)):
         os.remove(cache_file)
     session.clear()
-    return redirect('/')
+    return redirect(url_for('index'))
 
 
 @app.route('/playlists')
@@ -68,6 +78,12 @@ def playlists():
 
 @app.route('/current_genres', methods=['GET', 'POST'])
 def current_genres():
+    # Check if user is signed in
+    if not session.get('uuid'):
+        print("request url:", request.url)
+        session['NEXT_URL'] = url_for('current_genres')
+        return render_template('sign_in.html')
+
     # Handler for the toggle auto_refresh_button
     if request.method == 'POST':
         if request.form['auto_refresh_button']:
@@ -77,9 +93,11 @@ def current_genres():
                 session['REFRESH_AFTER_SECONDS'] = settings.refresh_after_seconds
 
     last_current_track = session.get('CURRENT_TRACK')
-    session['CURRENT_TRACK'] = spotifyApi.get_current_track(session.get('SPOTIFY'))
+    session['CURRENT_TRACK'] = spotifyApi.get_current_track(
+        session.get('SPOTIFY'))
     if not session.get('CURRENT_TRACK'):
-        current_track_name = "No Current Track, check whether you are listenig to Spotify with this account: " + session.get('SPOTIFY').me()['display_name']
+        current_track_name = "No Current Track, check whether you are listenig to Spotify with this account: " + \
+            session.get('SPOTIFY').me()['display_name']
     else:
         current_track_name = session['CURRENT_TRACK']['item']['name']
 
@@ -90,7 +108,7 @@ def current_genres():
                 spotify=session.get('SPOTIFY'), current_track=session.get('CURRENT_TRACK'))
     else:
         session['CURRENT_ARTISTS'] = []
-    
+
     return render_template('current_genres.html', current_track_name=current_track_name, current_artists=session.get('CURRENT_ARTISTS'), refresh_after_seconds=session.get('REFRESH_AFTER_SECONDS'))
 
 
