@@ -95,14 +95,18 @@ def current_genres():
     last_current_track = session.get('CURRENT_TRACK')
     session['CURRENT_TRACK'] = spotifyApi.get_current_track(
         session.get('SPOTIFY'))
+
     if not session.get('CURRENT_TRACK'):
         current_track_name = "No Current Track, check whether you are listenig to Spotify with this account: " + \
             session.get('SPOTIFY').me()['display_name']
+
+    if session.get('CURRENT_TRACK')['currently_playing_type'] != 'track':
+        current_track_name = "You are not listening to a track. Make shure you don't listen to a podcast or something similar."
     else:
         current_track_name = session['CURRENT_TRACK']['item']['name']
 
-    # Only get new artist info from Spotify if current_track has changed
-    if session.get('CURRENT_TRACK'):
+    # Only get new artist info from Spotify if current_track has changed and if playback type is 'track'
+    if session.get('CURRENT_TRACK') and session.get('CURRENT_TRACK')['currently_playing_type'] == 'track':
         if not last_current_track or session.get('CURRENT_TRACK')['item'] != last_current_track['item']:
             session['CURRENT_ARTISTS'] = spotifyApi.get_current_artists(
                 spotify=session.get('SPOTIFY'), current_track=session.get('CURRENT_TRACK'))

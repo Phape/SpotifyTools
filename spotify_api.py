@@ -21,5 +21,9 @@ class SpotifyApi:
         artist_ids = []
         for artist in current_track['item']['artists']:
             artist_ids.append(artist['id'])
+
+        if artist_ids == [None]:    #Happens when listenig to local music
+            return []
+        else:
             current_artists = spotify.artists(artist_ids)
-        return current_artists
+            return current_artists
