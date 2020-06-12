@@ -105,11 +105,11 @@ def current_genres():
     if not session.get('CURRENT_TRACK'):
         current_track_name = "No Current Track, check whether you are listenig to Spotify with this account: " + \
             session.get('SPOTIFY').me()['display_name']
-
-    if session.get('CURRENT_TRACK')['currently_playing_type'] != 'track':
-        current_track_name = "You are not listening to a track. Make shure you don't listen to a podcast or something similar."
     else:
-        current_track_name = session['CURRENT_TRACK']['item']['name']
+        if session.get('CURRENT_TRACK')['currently_playing_type'] != 'track':
+            current_track_name = "You are not listening to a track. Make shure you don't listen to a podcast or something similar."
+        else:
+            current_track_name = session['CURRENT_TRACK']['item']['name']
 
     # Only get new artist info from Spotify if current_track has changed and if playback type is 'track'
     if session.get('CURRENT_TRACK') and session.get('CURRENT_TRACK')['currently_playing_type'] == 'track':
@@ -120,6 +120,7 @@ def current_genres():
         session['CURRENT_ARTISTS'] = []
 
     return render_template('current_genres.html', current_track_name=current_track_name, current_artists=session.get('CURRENT_ARTISTS'), refresh_after_seconds=session.get('REFRESH_AFTER_SECONDS'))
+
 
 @app.errorhandler(404)
 def not_found_error(error):
