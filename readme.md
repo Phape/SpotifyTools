@@ -1,6 +1,6 @@
 # Phapes Spotify Tools
 
-A Website that uses the Spotify API to get additional information for your favourite songs on Spotify.
+A Website that uses the Spotify API to get additional information for your favorite songs on Spotify.
 
 ## Links
 

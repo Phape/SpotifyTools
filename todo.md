@@ -3,7 +3,6 @@
 ## todo's
 
 * update design of homepage
-* the number of followers should be displayed like this: 4 587 229 instead of this: 4587229
 
 ## fixme's
 

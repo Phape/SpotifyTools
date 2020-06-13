@@ -24,20 +24,21 @@ html {
         margin: 0px;
         padding: 0px;
         width: 100%;
-        background-color: #1db954; }
+        background: linear-gradient(to bottom, #1db954, black); }
         .navi ul {
           margin: 0px;
-          padding: 8px;
+          padding: 12px;
           list-style: none;
           display: flex;
           justify-content: space-between; }
           .navi a {
-            color: black;
+            color: white;
             font-size: large;
             font-weight: bold; }
 
 .body-content {
-  margin: 10px;
+  width: 100%;
+  margin-top: 3px;
   display: flex;
   flex-direction: column; }
 
@@ -50,7 +51,7 @@ html {
 
     .button-left-right ul {
       margin: 0px;
-      padding: 8px 0px 8px;
+      padding: 10px 0px 8px;
       list-style: none;
       display: flex;
       justify-content: space-between; }
@@ -79,17 +80,18 @@ html {
           .now-playing {
             font-size: 20px;
             display: flex;
-            justify-content: center; }
+            justify-content: center;
+            padding: 3px; }
             .now-playing .icon {
               height: 1.5em; }
 
 .artists-section {
   width: 100%;
-  padding: -5px;
+  padding: 5px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
   align-items: flex-start; }
 
   .card {
@@ -113,7 +115,7 @@ html {
               float: right; }
 
 .progress {
-  height: 5px;
+  height: 3px;
   background-color: white;
   -webkit-animation: progressBar REFRESH_TIMEs linear reverse;
   animation: progressBar 30s reverse; }
