@@ -8,7 +8,7 @@ These Links should help you understandig this project and help you to get to rel
 
 ### Project Links
 
-* [Website](https://spotifytools.azurewebsites.net/)
+* [Website](https://spotifytools.phape.de/)
 * [Azure Portal](https://portal.azure.com/)
 * [GitHub Repo](https://github.com/Phape/SpotifyTools)
 
