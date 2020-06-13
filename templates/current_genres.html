@@ -3,12 +3,14 @@
 {% block head %}
 <meta http-equiv="refresh" content='{{refresh_after_seconds}}'>
 <title>Current Genres | SpotifyTools</title>
+{% if refresh_after_seconds %}
 <script>
-    function change()  {
-    document.getElementById("progress_bar").style.webkitAnimation = 'progressBar {{refresh_after_seconds}}s linear reverse'
+    function change() {
+        document.getElementById("progress_bar").style.webkitAnimation = 'progressBar {{refresh_after_seconds}}s linear reverse'
     }
     window.setTimeout(change, 0);
 </script>
+{% endif %}
 {% endblock %}
 
 {% block body %}
@@ -38,7 +40,12 @@
         <img class="card-img-top" src="{{artist['images'][1]['url']}}" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title">{{artist['name']}}</h5>
-            <p class="card-text">Followers: {{artist['followers']['total']}}</p>
+            <p>
+                <script type="text/javascript">
+                    var num = new Number("{{artist['followers']['total']}}");
+                    document.write("Followers: ", num.toLocaleString()); 
+                </script>
+            </p>
             <p class="card-text">Popularity: {{artist['popularity']}}</p>
         </div>
         <ul class="list-group list-group-flush">

@@ -75,7 +75,7 @@ p {
     top: 50%; /* only for sign_in page */
     padding: 16px 14px 18px;
     color: white;
-    background-color: rgb($spotifycolor;
+    background-color: $spotifycolor;
     font-size: 14px;
     border-radius: 500px;
     transition-property: background-color, border-color, color, box-shadow, filter;
@@ -145,9 +145,19 @@ p {
     height: 5px;
     background-color: white;
     -webkit-animation: progressBar REFRESH_TIMEs linear reverse; //is set in html via script
+    animation: progressBar 30s reverse;
 }
 
 @-webkit-keyframes progressBar {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes progressBar {
     0% {
         width: 0;
     }

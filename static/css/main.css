@@ -115,13 +115,21 @@ html {
 .progress {
   height: 5px;
   background-color: white;
-  -webkit-animation: progressBar REFRESH_TIMEs linear reverse; }
+  -webkit-animation: progressBar REFRESH_TIMEs linear reverse;
+  animation: progressBar 30s reverse; }
 
   @-webkit-keyframes progressBar {
     0% {
       width: 0;   }
       100% {
         width: 100%;   }
+}
+
+@keyframes progressBar {
+  0% {
+    width: 0;   }
+    100% {
+      width: 100%;   }
 }
 
 @media (max-width: 544px) {
