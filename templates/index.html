@@ -1,12 +1,40 @@
 {% extends '_base.html' %}
 
 {% block head %}
-    <title>Home | SpotifyTools</title>
+<title>Home | SpotifyTools</title>
 {% endblock %}
 
 {% block body %}
-    <h1>Hi {{spotify.me()['display_name']}}! Welcome to Phape's SpotifyTools!</h1>
-    <p>At the Moment, there are only two functionalities:</p>
-    <a href="/current_genres">Genres Of Current Track</a> <br>
-    <a href="/playlists">My Playlists (JSON)</a>
+<h1 class="page-heading">Hi {{spotify.me()['display_name']}}</h1>
+
+<div class="overview-btns">
+    <div class="row">
+        <div class="col-md-4">
+            <input type="button" onclick="location.href='/current_genres';" value="Genres Of Current Track"
+                class="spotify-button" />
+        </div>
+        <div class="col-md-4">
+            <input type="button" onclick="location.href='/playlists';" value="My Playlists (json)"
+                class="spotify-button" />
+        </div>
+        <div class="col-md-4">
+            <input type="button" onclick="location.href='/current_genres';" value="Genres Of Current Track"
+                class="spotify-button" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <input type="button" onclick="location.href='/current_genres';" value="Genres Of Current Track"
+                class="spotify-button" />
+        </div>
+        <div class="col-md-4">
+            <input type="button" onclick="location.href='/playlists';" value="My Playlists (json)"
+                class="spotify-button" />
+        </div>
+        <div class="col-md-4">
+            <input type="button" onclick="location.href='/current_genres';" value="Genres Of Current Track"
+                class="spotify-button" />
+        </div>
+    </div>
+</div>
 {% endblock %}

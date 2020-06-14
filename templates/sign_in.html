@@ -1,13 +1,11 @@
 {% extends '_base.html' %}
 
 {% block head %}
-    <title>Sign In | SpotifyTools</title>
+<title>Sign In | SpotifyTools</title>
 {% endblock %}
 
 {% block body %}
-    <div class="centered">
-        <a href="/sign_in">
-            <button class="spotify-button">Log in with Spotify</button>
-        </a>
-    </div>
+<div class="centered">
+    <input type="button" onclick="location.href='/sign_in';" value="Log in with Spotify" class="spotify-button" />
+</div>
 {% endblock %}

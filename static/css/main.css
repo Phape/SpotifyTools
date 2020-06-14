@@ -21,7 +21,7 @@ html {
       margin: 0; }
 
       .navi {
-        margin: 0px;
+        margin: 0 0 10px 0;
         padding: 0px;
         width: 100%;
         background: linear-gradient(to bottom, #1db954, black); }
@@ -36,54 +36,65 @@ html {
             font-size: large;
             font-weight: bold; }
 
-.body-content {
-  width: 100%;
-  margin-top: 3px;
-  display: flex;
-  flex-direction: column; }
+.page-heading {
+  margin-left: 20%; }
 
-  .centered {
+  .body-content {
+    width: 100%;
+    margin-top: 3px;
     display: flex;
-    padding: 100px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; }
+    flex-direction: column; }
 
-    .button-left-right ul {
-      margin: 0px;
-      padding: 10px 0px 8px;
-      list-style: none;
+    .centered {
       display: flex;
-      justify-content: space-between; }
+      padding-top: 100px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center; }
 
-      .spotify-button {
-        top: 50%;
-        padding: 16px 14px 18px;
-        color: white;
-        background-color: #1db954;
-        font-size: 14px;
-        border-radius: 500px;
-        transition-property: background-color, border-color, color, box-shadow, filter;
-        transition-duration: 0.3s;
-        border-width: 0;
-        letter-spacing: 2px;
-        min-width: 160px;
-        text-transform: uppercase;
-        white-space: normal;
-        font-weight: 700;
-        touch-action: manipulation;
-        cursor: pointer; }
+      .button-left-right ul {
+        margin: 0 3px 0;
+        padding: 10px 0 8px;
+        list-style: none;
+        display: flex;
+        justify-content: space-between; }
 
-        .invert-color {
-          filter: invert(100%); }
+        .spotify-button {
+          padding: 16px 14px 18px;
+          color: white;
+          background-color: #1db954;
+          font-size: 14px;
+          border-radius: 500px;
+          transition-property: background-color, border-color, color, box-shadow, filter;
+          transition-duration: 0.3s;
+          border-width: 0;
+          letter-spacing: 2px;
+          min-width: 160px;
+          text-transform: uppercase;
+          white-space: normal;
+          font-weight: 700;
+          touch-action: manipulation;
+          cursor: pointer; }
 
-          .now-playing {
-            font-size: 20px;
-            display: flex;
-            justify-content: center;
-            padding: 3px; }
-            .now-playing .icon {
-              height: 1.5em; }
+          .overview-btns {
+            margin-top: 70px; }
+            .overview-btns .row {
+              width: 100%; }
+              .overview-btns .col-md-4 {
+                display: flex;
+                justify-content: center;
+                padding-bottom: 10px; }
+
+.invert-color {
+  filter: invert(100%); }
+
+  .now-playing {
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    padding: 3px; }
+    .now-playing .icon {
+      height: 1.5em; }
 
 .artists-section {
   width: 100%;

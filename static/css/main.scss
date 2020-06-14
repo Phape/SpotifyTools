@@ -30,7 +30,7 @@ p {
 }
 
 .navi {
-    margin: 0px;
+    margin: 0 0 10px 0;
     padding: 0px;
     width: 100%;
     background: linear-gradient(to bottom, $spotifycolor 0%, $bgcolor 100%);
@@ -49,6 +49,10 @@ p {
     }
 }
 
+.page-heading {
+    margin-left: 20%;;
+}
+
 .body-content {
     width: 100%;
     margin-top: 3px;
@@ -58,22 +62,21 @@ p {
 
 .centered {
     display: flex;
-    padding: 100px;
+    padding-top: 100px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
 .button-left-right ul {
-    margin: 0px;
-    padding: 10px 0px 8px;
+    margin: 0 3px 0;
+    padding: 10px 0 8px;
     list-style: none;
     display: flex;
     justify-content: space-between;
 }
 
 .spotify-button {
-    top: 50%; /* only for sign_in page */
     padding: 16px 14px 18px;
     color: white;
     background-color: $spotifycolor;
@@ -89,6 +92,19 @@ p {
     font-weight: 700;
     touch-action: manipulation;
     cursor: pointer;
+}
+
+.overview-btns {
+    margin-top: 70px;
+    
+    .row {
+        width: 100%;
+    }
+    .col-md-4 {
+        display: flex;
+        justify-content: center;
+        padding-bottom: 10px;
+    }
 }
 
 .invert-color {
@@ -116,7 +132,7 @@ p {
     align-items: flex-start;
 }
 
-.card{
+.card {
     background-color: $bgcolor;
     border: 1px solid rgba(255, 255, 255, 0.125);
     width: 300px;
