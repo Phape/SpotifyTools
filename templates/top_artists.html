@@ -1,0 +1,22 @@
+{% extends '_base.html' %}
+
+{% block head %}
+<title>Home | SpotifyTools</title>
+{% endblock %}
+
+{% block body %}
+<h1 class="page-heading">My Top Artists</h1>
+
+<ol>
+    {% for artist in top_artists['items'] %}
+    <li>{{ artist['name'] }}</li>
+    {% endfor %}
+</ol>
+
+<ul>
+    {% for genre, rank in genre_rank %}
+    <li>{{ genre }} {{ rank }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

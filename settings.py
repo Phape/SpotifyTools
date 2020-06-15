@@ -13,8 +13,8 @@ SESSION_REDIS = redis.Redis(
     password = os.environ.get('REDIS_PASSWORD'),
     ssl=True)
 
-# Cache Settings
-cache_path = 'cache'
+# App Settings
+scopes = 'user-read-currently-playing user-top-read'
 
-# Other Settings
+cache_path = 'cache'
 refresh_after_seconds = 30

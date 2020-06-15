@@ -38,14 +38,9 @@ def sign_in():
         cache_path = os.path.join(
             settings.cache_path, str(session.get('uuid')))
         session['AUTH_MANAGER'] = spotipy.oauth2.SpotifyOAuth(username=session.get(
-            'uuid'), cache_path=cache_path, scope='user-read-currently-playing')
+            'uuid'), cache_path=cache_path, scope=settings.scopes)
         auth_url = session.get('AUTH_MANAGER').get_authorize_url()
         return redirect(auth_url)
-
-    # if session.get('NEXT_URL'):
-    #     return redirect(session.get('NEXT_URL'))
-
-    # return redirect(url_for('index'))
 
 
 @app.route('/authorize')
@@ -114,7 +109,7 @@ def current_genres():
     # Only get new artist info from Spotify if current_track has changed and if playback type is 'track'
     if session.get('CURRENT_TRACK') and session.get('CURRENT_TRACK')['currently_playing_type'] == 'track':
         if not last_current_track or session.get('CURRENT_TRACK')['item'] != last_current_track['item']:
-            session['CURRENT_ARTISTS'] = spotifyApi.get_current_artists(
+            session['CURRENT_ARTISTS'] = spotifyApi.get_current_artists_ids(
                 spotify=session.get('SPOTIFY'), current_track=session.get('CURRENT_TRACK'))
     else:
         session['CURRENT_ARTISTS'] = []
@@ -126,6 +121,12 @@ def current_genres():
 
     return render_template('current_genres.html', current_track_name=current_track_name, current_artists=session.get('CURRENT_ARTISTS'), refresh_after_seconds=refresh_after_seconds)
 
+
+@app.route('/top_artists')
+def top_artists():
+    top_artists = spotifyApi.get_top_artists(session.get('SPOTIFY'), limit=50)
+    genre_rank = spotifyApi.get_genre_rank_by_top_artists(top_artists)
+    return render_template('top_artists.html', top_artists=top_artists, genre_rank=genre_rank)
 
 @app.errorhandler(404)
 def not_found_error(error):

@@ -2,7 +2,7 @@
 
 ## todo's
 
-* update design of homepage
+* make it possible to choose or see all 3 possible time_ranges for the top 50 artists
 
 ## fixme's
 
@@ -30,8 +30,8 @@ Best case would be:
 
 There are two possibilities for a link to Spotify:
 
-* The URI: eg. <spotify:search:genre:pop>
-* The URL: eg. open.spotify.com/search/genre:pop
+* The URI: eg. <spotify:search:genre:pop> (Deeplink)
+* The URL: eg. open.spotify.com/search/genre:pop (Universial Link)
 
 You can try reproducing the error yourself. For best result, view this file in your browser and click the two links above.
 
