@@ -68,7 +68,12 @@ p {
     justify-content: center;
 }
 
-.button-left-right ul {
+.inline-icon {
+    height: 1em;
+    margin: 5px;
+}
+
+.button-row {
     margin: 0 3px 0;
     padding: 10px 0 8px;
     list-style: none;
@@ -111,18 +116,14 @@ p {
     filter: invert(100%);
 }
 
-.now-playing {
-    font-size: 20px;
+.centered-info {
     display: flex;
     justify-content: center;
     padding: 3px;
-
-    .icon {
-        height: 1.5em;
-    }
+    margin: 10px 5px;
 }
 
-.artists-section {
+.content {
     width: 100%;
     padding: 5px;
     display: flex;
@@ -149,10 +150,6 @@ p {
     .list-group-item {
         background-color: $bgcolor;
         border: 1px solid rgba(255, 255, 255, 0.125);
-    }
-    .inline-icon {
-        height: 1em;
-        margin: 5px;
     }
     .list-group .icons {
         float: right;
@@ -185,14 +182,14 @@ p {
 }
 
 .ranking {
-    width: 450px;
-    margin: 100px auto 0;
+    margin: 10px;
     list-style: none;
     counter-reset: rank-counter;
+    padding-inline-start: 0;
+    width: 350px;
 
     li {
         counter-increment: rank-counter;
-        display: flex;
         background-color: rgba($spotifycolor, 0.1);
         padding: 10px 40px;
         margin: 5px 0;
@@ -219,6 +216,10 @@ p {
     .card {
         width: 100%;
     }
+
+    .ranking {
+        width: 100%;
+    }
 }
 
 @media (max-width: 768px) {
@@ -226,14 +227,9 @@ p {
         width: 100%;
     }
 
-    .smallpadding {
-        padding: 0px !important;
-        margin: 0px !important;
-    }
-
     .spotify-button {
         padding: 10px 8px 10px;
-        font-size: 10px;
+        font-size: 12px;
         letter-spacing: 1px;
         min-width: 75px;
     }

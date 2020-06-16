@@ -34,7 +34,6 @@ class SpotifyApi:
         # read more about time ranges on Spotify docs, currently:
         # long_term: years, medium_term: 6mo, short_term: 4w
         top_artists = spotify.current_user_top_artists(limit, offset, time_range)
-        # top_artists = spotify.current_user_top_artists()
         return top_artists
 
     def get_genre_rank_by_top_artists(self, top_artists):

@@ -128,7 +128,13 @@ def top_artists():
     offset = request.args.get('offset', default=0)
     top_artists = spotifyApi.get_top_artists(session.get('SPOTIFY'), limit=50, time_range=time_range, offset=offset)
     genre_rank = spotifyApi.get_genre_rank_by_top_artists(top_artists)
-    return render_template('top_artists.html', top_artists=top_artists, genre_rank=genre_rank)
+    time_range_dict = {
+        "short_term": "last 4 weeks",
+        "medium_term": "last 6 months",
+        "long_term": "total"
+    }
+    time_range_text = time_range_dict[time_range]
+    return render_template('top_artists.html', top_artists=top_artists, genre_rank=genre_rank, chosen_time_range=time_range_text)
 
 @app.errorhandler(404)
 def not_found_error(error):

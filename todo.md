@@ -2,12 +2,11 @@
 
 ## todo's
 
-* make it possible to choose or see all 3 possible time_ranges for the top 50 artists
-
 ## fixme's
 
 * if the user had turned on auto refresh and turned it off again, then reloads the page, the form is submitted again and auto refresh is active again --> it should be off
 * When making too many requests to spotify, it gives a timeout --> Handle the timeout
+* Make the transitions of the list items in a ranking work every time, not only when hard-reloading
 
 ## ideas
 

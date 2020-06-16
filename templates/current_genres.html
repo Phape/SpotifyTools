@@ -18,23 +18,22 @@
 <span class="progress" id="progress_bar"></span>
 {% endif %}
 
-<div class="button-left-right">
-    <ul>
-        <li>
-            <form action="/current_genres" method="post">
-                <input type="submit" name="auto_refresh_button" , value="toggle auto refresh" class="spotify-button">
-            </form>
-        </li>
-        <li><a href="/current_genres"><button class="spotify-button">refresh</button></a></li>
-    </ul>
+<div class="button-row">
+    <form action="/current_genres" method="post">
+        <input type="submit" name="auto_refresh_button" , value="toggle auto refresh" class="spotify-button">
+    </form>
+
+    <a href="/current_genres"><button class="spotify-button">refresh</button></a>
 </div>
 
-<div class="now-playing">
-    <p><img src="/static/images/equalizer-3.svg" alt="animated equalizer, now playing:" class="icon">
-        {{current_track_name}}</p>
-</div>
 
-<div class="artists-section">
+<h4 class="centered-info">
+    <img src="/static/images/equalizer-3.svg" alt="animated equalizer, now playing:" class="inline-icon">
+    {{current_track_name}}
+</h4>
+
+
+<div class="content">
     {% for artist in current_artists['artists'] %}
     <div class="card">
         <img class="card-img-top" src="{{artist['images'][1]['url']}}" alt="Card image cap">
@@ -57,8 +56,8 @@
                             alt="spotify icon" class="inline-icon invert-color"></a>
                     <a href="https://en.wikipedia.org/wiki/{{genre}}" target="_blank"><img src="/static/images/wiki.svg"
                             alt="wiki logo" class="inline-icon invert-color"></a>
-                    <a href="https://www.urbandictionary.com/define.php?term={{genre}}" target="_blank"><img src="/static/images/ud.svg"
-                            alt="urban dictionary logo" class="inline-icon"></a>
+                    <a href="https://www.urbandictionary.com/define.php?term={{genre}}" target="_blank"><img
+                            src="/static/images/ud.svg" alt="urban dictionary logo" class="inline-icon"></a>
                 </div>
             </li>
             {% endfor %}

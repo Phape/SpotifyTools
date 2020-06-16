@@ -7,20 +7,28 @@
 {% block body %}
 <h1 class="page-heading">My Top Artists</h1>
 
-<a href="/top_artists?time_range=short_term&offset=0">Letzer Monat, 1-50</a>
-<a href="/top_artists?time_range=mid_term&offset=0">Letzte 6 Monate, 1-50</a>
-<a href="/top_artists?time_range=long_term&offset=0">Gesamt, 1-50</a>
+<div class="button-row">
+    <a href="/top_artists?time_range=short_term"><button class="spotify-button">Last 4 Weeks</button></a>
+    <a href="/top_artists?time_range=medium_term"><button class="spotify-button">Last 6 Months</button></a>
+    <a href="/top_artists?time_range=long_term"><button class="spotify-button">Total</button></a>
+</div>
 
-<ol class="ranking">
-    {% for artist in top_artists['items'] %}
-    <li>{{ artist['name'] }}</li>
-    {% endfor %}
-</ol>
+<h4 class="centered-info">Viewing results for time range: {{ chosen_time_range }}</h4>
 
-<ol class="ranking">
-    {% for genre, rank in genre_rank %}
-    <li>{{ genre }} ({{ rank }}x)</li>
-    {% endfor %}
-</ol>
+<div class="content">
+    <ol class="ranking">
+        <h2>Top Artists</h2>
+        {% for artist in top_artists['items'] %}
+        <li>{{ artist['name'] }}</li>
+        {% endfor %}
+    </ol>
+
+    <ol class="ranking">
+        <h2>Genres of those Artists</h2>
+        {% for genre, rank in genre_rank %}
+        <li>{{ genre }} ({{ rank }}x)</li>
+        {% endfor %}
+    </ol>
+</div>
 
 {% endblock %}
