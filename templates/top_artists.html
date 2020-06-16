@@ -7,16 +7,20 @@
 {% block body %}
 <h1 class="page-heading">My Top Artists</h1>
 
-<ol>
+<a href="/top_artists?time_range=short_term&offset=0">Letzer Monat, 1-50</a>
+<a href="/top_artists?time_range=mid_term&offset=0">Letzte 6 Monate, 1-50</a>
+<a href="/top_artists?time_range=long_term&offset=0">Gesamt, 1-50</a>
+
+<ol class="ranking">
     {% for artist in top_artists['items'] %}
     <li>{{ artist['name'] }}</li>
     {% endfor %}
 </ol>
 
-<ul>
+<ol class="ranking">
     {% for genre, rank in genre_rank %}
-    <li>{{ genre }} {{ rank }}</li>
+    <li>{{ genre }} ({{ rank }}x)</li>
     {% endfor %}
-</ul>
+</ol>
 
 {% endblock %}

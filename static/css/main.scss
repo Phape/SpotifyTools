@@ -50,7 +50,7 @@ p {
 }
 
 .page-heading {
-    margin-left: 20%;;
+    margin-left: 20%;
 }
 
 .body-content {
@@ -96,7 +96,7 @@ p {
 
 .overview-btns {
     margin-top: 70px;
-    
+
     .row {
         width: 100%;
     }
@@ -181,6 +181,37 @@ p {
     }
     100% {
         width: 100%;
+    }
+}
+
+.ranking {
+    width: 450px;
+    margin: 100px auto 0;
+    list-style: none;
+    counter-reset: rank-counter;
+
+    li {
+        counter-increment: rank-counter;
+        display: flex;
+        background-color: rgba($spotifycolor, 0.1);
+        padding: 10px 40px;
+        margin: 5px 0;
+        transition: 0.5s;
+
+        &::before {
+            content: counter(rank-counter);
+            margin: 0 20px 0 0;
+        }
+
+        &:nth-child(1) {
+            background-color: rgba($spotifycolor, 0.6);
+        }
+        &:nth-child(2) {
+            background-color: rgba($spotifycolor, 0.4);
+        }
+        &:nth-child(3) {
+            background-color: rgba($spotifycolor, 0.2);
+        }
     }
 }
 
