@@ -14,7 +14,7 @@ SESSION_REDIS = redis.Redis(
     ssl=True)
 
 # App Settings
-scopes = 'user-read-currently-playing user-top-read'
+scopes = 'user-read-currently-playing user-top-read user-read-recently-played'
 
 cache_path = 'cache'
 refresh_after_seconds = 30

@@ -2,6 +2,10 @@
 
 ## todo's
 
+* on the top artists page: make the numbers smaller which indicate how often a genre has been found
+* on mobile: fix overlapping texts (especially the center-info headings) --> use the headings in the right order
+* when a scope (Spotify API) is added, an internal server error comes up, until the user clears the cookies --> not good :/
+
 ## fixme's
 
 * if the user had turned on auto refresh and turned it off again, then reloads the page, the form is submitted again and auto refresh is active again --> it should be off

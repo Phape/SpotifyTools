@@ -136,6 +136,14 @@ def top_artists():
     time_range_text = time_range_dict[time_range]
     return render_template('top_artists.html', top_artists=top_artists, genre_rank=genre_rank, chosen_time_range=time_range_text)
 
+
+@app.route('/recently_played')
+#not yet linked on the website
+def recently_played():
+    recently_played = session.get('SPOTIFY').current_user_recently_played() #move this to the spotifyApi class
+    return recently_played
+
+
 @app.errorhandler(404)
 def not_found_error(error):
     return render_template('404.html'), 404

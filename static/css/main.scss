@@ -1,6 +1,13 @@
+//font sizes
+$page-heading-fs: 40px;
+$header-fs: 20px;
+$centered-info-fs: 20px;
+$text-fs: 16px;
+$button-fs: 14px;
+$button-fs-mobile: 12px;
+//colors
 $bgcolor: black;
 $textcolor: white;
-// $fontsize: 18px;
 $spotifycolor: rgb(29, 185, 84);
 
 html {
@@ -27,6 +34,7 @@ p {
     color: $textcolor;
     padding: 0;
     margin: 0;
+    font-size: $text-fs;
 }
 
 .navi {
@@ -44,13 +52,14 @@ p {
     }
     a {
         color: $textcolor;
-        font-size: large;
+        font-size: $header-fs;
         font-weight: bold;
     }
 }
 
 .page-heading {
     margin-left: 20%;
+    font-size: $page-heading-fs;
 }
 
 .body-content {
@@ -75,7 +84,7 @@ p {
 
 .button-row {
     margin: 0 3px 0;
-    padding: 10px 0 8px;
+    padding: 10px 0;
     list-style: none;
     display: flex;
     justify-content: space-between;
@@ -85,7 +94,7 @@ p {
     padding: 16px 14px 18px;
     color: white;
     background-color: $spotifycolor;
-    font-size: 14px;
+    font-size: $button-fs;
     border-radius: 500px;
     transition-property: background-color, border-color, color, box-shadow, filter;
     transition-duration: 0.3s;
@@ -121,6 +130,7 @@ p {
     justify-content: center;
     padding: 3px;
     margin: 10px 5px;
+    font-size: $centered-info-fs;
 }
 
 .content {
@@ -140,7 +150,7 @@ p {
     margin: 10px;
 
     &:hover {
-        box-shadow: 0 8px 16px 0 rgba(29, 185, 84, 0.2);
+        box-shadow: 0 8px 16px 0 rgba($spotifycolor, 0.2);
     }
     .card-img-top {
         border-radius: 0.25rem;
@@ -229,7 +239,7 @@ p {
 
     .spotify-button {
         padding: 10px 8px 10px;
-        font-size: 12px;
+        font-size: $button-fs-mobile;
         letter-spacing: 1px;
         min-width: 75px;
     }

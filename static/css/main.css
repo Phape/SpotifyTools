@@ -18,7 +18,8 @@ html {
     a, p {
       color: white;
       padding: 0;
-      margin: 0; }
+      margin: 0;
+      font-size: 16px; }
 
       .navi {
         margin: 0 0 10px 0;
@@ -33,11 +34,12 @@ html {
           justify-content: space-between; }
           .navi a {
             color: white;
-            font-size: large;
+            font-size: 20px;
             font-weight: bold; }
 
 .page-heading {
-  margin-left: 20%; }
+  margin-left: 20%;
+  font-size: 40px; }
 
   .body-content {
     width: 100%;
@@ -58,7 +60,7 @@ html {
 
         .button-row {
           margin: 0 3px 0;
-          padding: 10px 0 8px;
+          padding: 10px 0;
           list-style: none;
           display: flex;
           justify-content: space-between; }
@@ -96,7 +98,8 @@ html {
     display: flex;
     justify-content: center;
     padding: 3px;
-    margin: 10px 5px; }
+    margin: 10px 5px;
+    font-size: 20px; }
 
     .content {
       width: 100%;
