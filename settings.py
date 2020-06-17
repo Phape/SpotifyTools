@@ -1,9 +1,12 @@
 import os
 import redis
+import datetime
 
 # Flask Settings
 SECRET_KEY = os.urandom(64)
 SESSION_TYPE = 'redis'
+session_permanent = False
+permanent_session_lifetime = datetime.timedelta(days=30) #becomes effective when session_permanent is True
 
 # Redis Settings
 SESSION_REDIS = redis.Redis(

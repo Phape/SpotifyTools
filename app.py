@@ -144,6 +144,11 @@ def recently_played():
     return recently_played
 
 
+@app.before_request
+def make_session_permanent():
+    session.permanent = settings.session_permanent
+    app.permanent_session_lifetime = settings.permanent_session_lifetime
+
 @app.errorhandler(404)
 def not_found_error(error):
     return render_template('404.html'), 404
