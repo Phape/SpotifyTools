@@ -130,7 +130,9 @@ p {
     justify-content: center;
     padding: 3px;
     margin: 10px 5px;
-    font-size: $centered-info-fs;
+    p {
+        font-size: $centered-info-fs;
+    }
 }
 
 .content {
