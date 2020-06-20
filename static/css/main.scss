@@ -3,6 +3,7 @@ $page-heading-fs: 40px;
 $header-fs: 20px;
 $centered-info-fs: 20px;
 $text-fs: 16px;
+$small-text-fs: 10px;
 $button-fs: 14px;
 $button-fs-mobile: 12px;
 //colors
@@ -193,6 +194,10 @@ p {
     }
 }
 
+.list {
+    flex-direction: column;
+}
+
 .ranking {
     margin: 10px;
     list-style: none;
@@ -213,14 +218,18 @@ p {
         }
 
         &:nth-child(1) {
-            background-color: rgba($spotifycolor, 0.6);
+            background-color: rgba($spotifycolor, 0.4);
         }
         &:nth-child(2) {
-            background-color: rgba($spotifycolor, 0.4);
+            background-color: rgba($spotifycolor, 0.3);
         }
         &:nth-child(3) {
             background-color: rgba($spotifycolor, 0.2);
         }
+    }
+    .hit-count {
+        font-size: $small-text-fs;
+        color: gray;
     }
 }
 

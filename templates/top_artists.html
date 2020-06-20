@@ -18,19 +18,23 @@
 </div>
 
 <div class="content">
-    <ol class="ranking">
+    <div class="list">
         <h2>Top Artists</h2>
-        {% for artist in top_artists['items'] %}
-        <li>{{ artist['name'] }}</li>
-        {% endfor %}
-    </ol>
+        <ol class="ranking">
+            {% for artist in top_artists['items'] %}
+            <li>{{ artist['name'] }}</li>
+            {% endfor %}
+        </ol>
+    </div>
 
-    <ol class="ranking">
+    <div class="list">
         <h2>Genres of those Artists</h2>
-        {% for genre, rank in genre_rank %}
-        <li>{{ genre }} ({{ rank }}x)</li>
-        {% endfor %}
-    </ol>
+        <ol class="ranking">
+            {% for genre, hit_count in genre_rank %}
+            <li>{{ genre }} <span class="hit-count">({{ hit_count }}x)</span></li>
+            {% endfor %}
+        </ol>
+    </div>
 </div>
 
 {% endblock %}
