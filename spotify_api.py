@@ -33,7 +33,8 @@ class SpotifyApi:
     def get_top_artists(self, spotify, limit=20, offset=0, time_range='medium_term'):
         # read more about time ranges on Spotify docs, currently:
         # long_term: years, medium_term: 6mo, short_term: 4w
-        top_artists = spotify.current_user_top_artists(limit, offset, time_range)
+        top_artists = spotify.current_user_top_artists(
+            limit, offset, time_range)
         return top_artists
 
     def get_genre_rank_by_top_artists(self, top_artists):
@@ -45,3 +46,9 @@ class SpotifyApi:
         genre_rank = Counter(top_genres).most_common()
         return genre_rank
 
+    def get_top_tracks(self, spotify, limit=20, offset=0, time_range='medium_term'):
+        # read more about time ranges on Spotify docs, currently:
+        # long_term: years, medium_term: 6mo, short_term: 4w
+        top_tracks = spotify.current_user_top_tracks(
+            limit, offset, time_range)
+        return top_tracks

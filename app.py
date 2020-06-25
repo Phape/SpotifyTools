@@ -124,23 +124,32 @@ def current_genres():
 
 @app.route('/top_artists')
 def top_artists():
-    time_range = request.args.get('time_range', default='medium_term')
+    time_range = request.args.get('time_range', default='short_term')
     offset = request.args.get('offset', default=0)
-    top_artists = spotifyApi.get_top_artists(session.get('SPOTIFY'), limit=50, time_range=time_range, offset=offset)
+    top_artists = spotifyApi.get_top_artists(session.get(
+        'SPOTIFY'), limit=50, time_range=time_range, offset=offset)
     genre_rank = spotifyApi.get_genre_rank_by_top_artists(top_artists)
-    time_range_dict = {
-        "short_term": "last 4 weeks",
-        "medium_term": "last 6 months",
-        "long_term": "total"
-    }
-    time_range_text = time_range_dict[time_range]
+
+    time_range_text = settings.time_range_dict[time_range]
     return render_template('top_artists.html', top_artists=top_artists, genre_rank=genre_rank, chosen_time_range=time_range_text)
 
 
+@app.route('/top_tracks')
+def top_tracks():
+    time_range = request.args.get('time_range', default='short_term')
+    offset = request.args.get('offset', default=0)
+    top_tracks = spotifyApi.get_top_tracks(session.get(
+        'SPOTIFY'), limit=50, time_range=time_range, offset=offset)
+
+    time_range_text = settings.time_range_dict[time_range]
+    return render_template('top_tracks.html', top_tracks=top_tracks, chosen_time_range=time_range_text)
+
+
 @app.route('/recently_played')
-#not yet linked on the website
+# not yet linked on the website
 def recently_played():
-    recently_played = session.get('SPOTIFY').current_user_recently_played() #move this to the spotifyApi class
+    # move this to the spotifyApi class
+    recently_played = session.get('SPOTIFY').current_user_recently_played()
     return recently_played
 
 
@@ -148,6 +157,7 @@ def recently_played():
 def make_session_permanent():
     session.permanent = settings.session_permanent
     app.permanent_session_lifetime = settings.permanent_session_lifetime
+
 
 @app.errorhandler(404)
 def not_found_error(error):
