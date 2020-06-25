@@ -23,7 +23,7 @@ spotifyApi = SpotifyApi()
 @app.route('/')
 def index():
     if 'uuid' not in session:
-        session['NEXT_URL'] = url_for('index')
+        session['NEXT_URL'] = request.url
         return render_template('sign_in.html')
 
     return render_template('index.html', spotify=session.get('SPOTIFY'))
@@ -71,8 +71,10 @@ def sign_out():
 
 @app.route('/playlists')
 def playlists():
-    if not session.get('token_info'):
-        return redirect('/')
+     # Check if user is signed in
+    if not session.get('uuid'):
+        session['NEXT_URL'] = request.url
+        return render_template('sign_in.html')
 
     return session.get('SPOTIFY').current_user_playlists()
 
@@ -81,8 +83,7 @@ def playlists():
 def current_genres():
     # Check if user is signed in
     if not session.get('uuid'):
-        print("request url:", request.url)
-        session['NEXT_URL'] = url_for('current_genres')
+        session['NEXT_URL'] = request.url
         return render_template('sign_in.html')
 
     # Handler for the toggle auto_refresh_button
@@ -126,8 +127,7 @@ def current_genres():
 def top_artists():
     # Check if user is signed in
     if not session.get('uuid'):
-        print("request url:", request.url)
-        session['NEXT_URL'] = url_for('current_genres')
+        session['NEXT_URL'] = request.url
         return render_template('sign_in.html')
 
     time_range = request.args.get('time_range', default='short_term')
@@ -144,8 +144,7 @@ def top_artists():
 def top_tracks():
     # Check if user is signed in
     if not session.get('uuid'):
-        print("request url:", request.url)
-        session['NEXT_URL'] = url_for('current_genres')
+        session['NEXT_URL'] = request.url
         return render_template('sign_in.html')
 
     time_range = request.args.get('time_range', default='short_term')
@@ -162,10 +161,9 @@ def top_tracks():
 def recently_played():
     # Check if user is signed in
     if not session.get('uuid'):
-        print("request url:", request.url)
-        session['NEXT_URL'] = url_for('current_genres')
+        session['NEXT_URL'] = request.url
         return render_template('sign_in.html')
-        
+
     # move this to the spotifyApi class
     recently_played = session.get('SPOTIFY').current_user_recently_played()
     return recently_played
