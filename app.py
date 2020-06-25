@@ -158,14 +158,14 @@ def top_tracks():
 
 
 @app.route('/recently_played')
-# Check if user is signed in
+# not yet linked on the website
+def recently_played():
+    # Check if user is signed in
     if not session.get('uuid'):
         print("request url:", request.url)
         session['NEXT_URL'] = url_for('current_genres')
         return render_template('sign_in.html')
         
-# not yet linked on the website
-def recently_played():
     # move this to the spotifyApi class
     recently_played = session.get('SPOTIFY').current_user_recently_played()
     return recently_played
