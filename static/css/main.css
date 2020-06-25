@@ -180,9 +180,9 @@ html {
 
 @media (max-width: 544px) {
   .card {
-    width: 100%;   }
+    width: inherit;   }
     .list {
-      width: 100%;   }
+      width: inherit;   }
 }
 
 @media (max-width: 768px) {
