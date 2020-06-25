@@ -32,7 +32,7 @@
         <ol class="ranking">
             {% for genre, hit_count in genre_rank %}
             <li>
-                <a href="https://open.spotify.com/search/genre:{{genre}}" target="spotify-tab">
+                <a href='spotify:search:genre:"{{genre}}"' target="spotify-tab">
                     {{ genre }} <span class="hit-count">({{ hit_count }}x)</span>
                 </a>
             </li>

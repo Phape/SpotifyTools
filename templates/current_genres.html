@@ -53,7 +53,7 @@
             {% for genre in artist['genres'] %}
             <li class="list-group-item">{{genre}}
                 <div class="icons">
-                    <a href="https://open.spotify.com/search/genre:{{genre}}" target="spotify-tab"><img src="static/images/spotify.svg"
+                    <a href='spotify:search:genre:"{{genre}}"' target="spotify-tab"><img src="static/images/spotify.svg"
                             alt="spotify icon" class="inline-icon invert-color"></a>
                     <a href="https://en.wikipedia.org/wiki/{{genre}}" target="wiki-tab"><img src="/static/images/wiki.svg"
                             alt="wiki logo" class="inline-icon invert-color"></a>
