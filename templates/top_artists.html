@@ -22,7 +22,7 @@
         <h2>Top Artists</h2>
         <ol class="ranking">
             {% for artist in top_artists['items'] %}
-            <li>{{ artist['name'] }}</li>
+            <li><a href="{{ artist['uri'] }}">{{ artist['name'] }}</a></li>
             {% endfor %}
         </ol>
     </div>
@@ -31,7 +31,11 @@
         <h2>Genres of those Artists</h2>
         <ol class="ranking">
             {% for genre, hit_count in genre_rank %}
-            <li>{{ genre }} <span class="hit-count">({{ hit_count }}x)</span></li>
+            <li>
+                <a href="https://open.spotify.com/search/genre:{{genre}}" target="spotify-tab">
+                    {{ genre }} <span class="hit-count">({{ hit_count }}x)</span>
+                </a>
+            </li>
             {% endfor %}
         </ol>
     </div>

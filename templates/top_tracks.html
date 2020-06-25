@@ -22,7 +22,7 @@
         <h2>Top Tracks</h2>
         <ol class="ranking">
             {% for track in top_tracks['items'] %}
-            <li>{{ track['name'] }}</li>
+            <li><a href="{{ track['uri'] }}:play">{{ track['name'] }}</a></li>
             {% endfor %}
         </ol>
     </div>

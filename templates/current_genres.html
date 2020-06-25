@@ -53,11 +53,11 @@
             {% for genre in artist['genres'] %}
             <li class="list-group-item">{{genre}}
                 <div class="icons">
-                    <a href="spotify:search:genre:{{genre}}" target="blank"><img src="static/images/spotify.svg"
+                    <a href="https://open.spotify.com/search/genre:{{genre}}" target="spotify-tab"><img src="static/images/spotify.svg"
                             alt="spotify icon" class="inline-icon invert-color"></a>
-                    <a href="https://en.wikipedia.org/wiki/{{genre}}" target="_blank"><img src="/static/images/wiki.svg"
+                    <a href="https://en.wikipedia.org/wiki/{{genre}}" target="wiki-tab"><img src="/static/images/wiki.svg"
                             alt="wiki logo" class="inline-icon invert-color"></a>
-                    <a href="https://www.urbandictionary.com/define.php?term={{genre}}" target="_blank"><img
+                    <a href="https://www.urbandictionary.com/define.php?term={{genre}}" target="ud-tab"><img
                             src="/static/images/ud.svg" alt="urban dictionary logo" class="inline-icon"></a>
                 </div>
             </li>
@@ -67,9 +67,9 @@
             {% endif %}
         </ul>
         <div class="card-body">
-            <a href="{{artist['uri']}}" class="card-link" target="blank"><img src="static/images/spotify.svg"
+            <a href="{{artist['uri']}}" class="card-link" target="spotify-tab"><img src="static/images/spotify.svg"
                     alt="spotify icon" class="inline-icon invert-color"> Artist</a>
-            <a href="https://en.wikipedia.org/wiki/{{artist['name']}}" class="card-link" target="_blank"><img
+            <a href="https://en.wikipedia.org/wiki/{{artist['name']}}" class="card-link" target="wiki-tab"><img
                     src="/static/images/wiki.svg" alt="wiki logo" class="inline-icon invert-color"> Artist</a>
         </div>
     </div>
