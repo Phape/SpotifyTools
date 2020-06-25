@@ -124,6 +124,12 @@ def current_genres():
 
 @app.route('/top_artists')
 def top_artists():
+    # Check if user is signed in
+    if not session.get('uuid'):
+        print("request url:", request.url)
+        session['NEXT_URL'] = url_for('current_genres')
+        return render_template('sign_in.html')
+
     time_range = request.args.get('time_range', default='short_term')
     offset = request.args.get('offset', default=0)
     top_artists = spotifyApi.get_top_artists(session.get(
@@ -136,6 +142,12 @@ def top_artists():
 
 @app.route('/top_tracks')
 def top_tracks():
+    # Check if user is signed in
+    if not session.get('uuid'):
+        print("request url:", request.url)
+        session['NEXT_URL'] = url_for('current_genres')
+        return render_template('sign_in.html')
+
     time_range = request.args.get('time_range', default='short_term')
     offset = request.args.get('offset', default=0)
     top_tracks = spotifyApi.get_top_tracks(session.get(
@@ -146,6 +158,12 @@ def top_tracks():
 
 
 @app.route('/recently_played')
+# Check if user is signed in
+    if not session.get('uuid'):
+        print("request url:", request.url)
+        session['NEXT_URL'] = url_for('current_genres')
+        return render_template('sign_in.html')
+        
 # not yet linked on the website
 def recently_played():
     # move this to the spotifyApi class
