@@ -31,6 +31,8 @@ class SpotifyApi:
             return current_artists
 
     def get_current_track_features(self, spotify, current_track):
+        if current_track == None or current_track['item']['id'] == None:
+            return []
         track_id = current_track['item']['id']
         current_track_features = spotify.audio_features(track_id)
         print(current_track_features)
