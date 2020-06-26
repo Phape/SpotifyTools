@@ -199,6 +199,10 @@ p {
 
 .list {
     flex-direction: column;
+    .li-small-text {
+        font-size: $small-text-fs;
+        color: gray;
+    }
 }
 
 .ranking {
@@ -229,10 +233,6 @@ p {
         &:nth-child(3) {
             background-color: rgba($spotifycolor, 0.2);
         }
-    }
-    .hit-count {
-        font-size: $small-text-fs;
-        color: gray;
     }
 }
 

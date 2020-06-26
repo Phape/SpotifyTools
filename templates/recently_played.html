@@ -1,0 +1,25 @@
+{% extends '_base.html' %}
+
+{% block head %}
+<title>Recently Played | SpotifyTools</title>
+{% endblock %}
+
+{% block body %}
+<h1 class="page-heading">Recently Played Tracks</h1>
+
+<!-- <div class="centered-info">
+    <p>Viewing results for time range: {{ chosen_time_range }}</p>
+</div> -->
+
+<div class="content">
+    <div class="list">
+        <ol>
+            {% for item in recently_played['items'] %}
+            <li><a href="{{ item['track']['uri'] }}">{{ item['track']['name'] }}</a><br>
+                <span class="li-small-text">{{ item['played_at']}}</span></li>
+            {% endfor %}
+        </ol>
+    </div>
+</div>
+
+{% endblock %}

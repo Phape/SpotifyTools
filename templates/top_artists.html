@@ -33,7 +33,7 @@
             {% for genre, hit_count in genre_rank %}
             <li>
                 <a href='spotify:search:genre:"{{genre}}"' target="spotify-tab">
-                    {{ genre }} <span class="hit-count">({{ hit_count }}x)</span>
+                    {{ genre }} <span class="li-small-text">({{ hit_count }}x)</span>
                 </a>
             </li>
             {% endfor %}

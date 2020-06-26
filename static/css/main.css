@@ -152,31 +152,31 @@ html {
 
 .list {
   flex-direction: column; }
+  .list .li-small-text {
+    font-size: 10px;
+    color: gray; }
 
-  .ranking {
-    margin: 10px;
-    list-style: none;
-    counter-reset: rank-counter;
-    padding-inline-start: 0;
-    width: 350px; }
-    .ranking li {
-      counter-increment: rank-counter;
-      background-color: rgba(29, 185, 84, 0.1);
-      padding: 10px 40px;
-      margin: 5px 0;
-      transition: 0.5s; }
-      .ranking li::before {
-        content: counter(rank-counter);
-        margin: 0 20px 0 0; }
-        .ranking li:nth-child(1) {
-          background-color: rgba(29, 185, 84, 0.4); }
-          .ranking li:nth-child(2) {
-            background-color: rgba(29, 185, 84, 0.3); }
-            .ranking li:nth-child(3) {
-              background-color: rgba(29, 185, 84, 0.2); }
-    .ranking .hit-count {
-      font-size: 10px;
-      color: gray; }
+.ranking {
+  margin: 10px;
+  list-style: none;
+  counter-reset: rank-counter;
+  padding-inline-start: 0;
+  width: 350px; }
+  .ranking li {
+    counter-increment: rank-counter;
+    background-color: rgba(29, 185, 84, 0.1);
+    padding: 10px 40px;
+    margin: 5px 0;
+    transition: 0.5s; }
+    .ranking li::before {
+      content: counter(rank-counter);
+      margin: 0 20px 0 0; }
+      .ranking li:nth-child(1) {
+        background-color: rgba(29, 185, 84, 0.4); }
+        .ranking li:nth-child(2) {
+          background-color: rgba(29, 185, 84, 0.3); }
+          .ranking li:nth-child(3) {
+            background-color: rgba(29, 185, 84, 0.2); }
 
 @media (max-width: 544px) {
   .card {

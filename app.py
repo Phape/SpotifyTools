@@ -196,8 +196,8 @@ def recently_played():
         return render_template('sign_in.html')
 
     # move this to the spotifyApi class
-    recently_played = session.get('SPOTIFY').current_user_recently_played()
-    return recently_played
+    recently_played = spotifyApi.get_recently_played(session.get('SPOTIFY'))
+    return render_template('recently_played.html', recently_played=recently_played)
 
 
 @app.before_request

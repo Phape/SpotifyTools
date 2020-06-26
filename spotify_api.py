@@ -58,3 +58,7 @@ class SpotifyApi:
         top_tracks = spotify.current_user_top_tracks(
             limit, offset, time_range)
         return top_tracks
+
+    def get_recently_played(self, spotify):
+        recently_played = spotify.current_user_recently_played()
+        return recently_played
