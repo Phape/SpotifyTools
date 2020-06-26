@@ -95,32 +95,15 @@ def current_genres():
                 session['IS_AUTOREFRESH'] = True
             else:
                 session['IS_AUTOREFRESH'] = False
-
-    last_current_track = session.get('CURRENT_TRACK')
-    session['CURRENT_TRACK'] = session.get('SPOTIFY_API').get_current_track()
-
-    if not session.get('CURRENT_TRACK'):
-        current_track_name = "No Current Track, check whether you are listenig to Spotify with this account: " + \
-            session.get('SPOTIFY_API').get_spotify_me()['display_name']
-    else:
-        if session.get('CURRENT_TRACK')['currently_playing_type'] != 'track':
-            current_track_name = "You are not listening to a track. Make shure you don't listen to a podcast or something similar."
-        else:
-            current_track_name = session['CURRENT_TRACK']['item']['name']
-
-    # Only get new artist info from Spotify if current_track has changed and if playback type is 'track'
-    if session.get('CURRENT_TRACK') and session.get('CURRENT_TRACK')['currently_playing_type'] == 'track':
-        if not last_current_track or session.get('CURRENT_TRACK')['item'] != last_current_track['item']:
-            session['CURRENT_ARTISTS'] = session.get('SPOTIFY_API').get_current_artists_ids(current_track=session.get('CURRENT_TRACK'))
-    else:
-        session['CURRENT_ARTISTS'] = []
-
     if session.get('IS_AUTOREFRESH') == True:
         refresh_after_seconds = settings.refresh_after_seconds
     else:
         refresh_after_seconds = None
 
-    return render_template('current_genres.html', current_track_name=current_track_name, current_artists=session.get('CURRENT_ARTISTS'), refresh_after_seconds=refresh_after_seconds)
+    current_track_name = session.get('SPOTIFY_API').get_current_track_name()
+    current_artists = session.get('SPOTIFY_API').get_current_artists()  
+
+    return render_template('current_genres.html', current_track_name=current_track_name, current_artists=current_artists, refresh_after_seconds=refresh_after_seconds)
 
 
 @app.route('/top-artists')
@@ -132,8 +115,10 @@ def top_artists():
 
     time_range = request.args.get('time_range', default='short_term')
     offset = request.args.get('offset', default=0)
-    top_artists = session.get('SPOTIFY_API').get_top_artists(limit=50, time_range=time_range, offset=offset)
-    genre_rank = session.get('SPOTIFY_API').get_genre_rank_by_top_artists(top_artists)
+    top_artists = session.get('SPOTIFY_API').get_top_artists(
+        limit=50, time_range=time_range, offset=offset)
+    genre_rank = session.get(
+        'SPOTIFY_API').get_genre_rank_by_top_artists(top_artists)
 
     time_range_text = settings.time_range_dict[time_range]
     return render_template('top_artists.html', top_artists=top_artists, genre_rank=genre_rank, chosen_time_range=time_range_text)
@@ -148,7 +133,8 @@ def top_tracks():
 
     time_range = request.args.get('time_range', default='short_term')
     offset = request.args.get('offset', default=0)
-    top_tracks = session.get('SPOTIFY_API').get_top_tracks(limit=50, time_range=time_range, offset=offset)
+    top_tracks = session.get('SPOTIFY_API').get_top_tracks(
+        limit=50, time_range=time_range, offset=offset)
 
     time_range_text = settings.time_range_dict[time_range]
     return render_template('top_tracks.html', top_tracks=top_tracks, chosen_time_range=time_range_text)
@@ -161,26 +147,10 @@ def current_track_features():
         session['NEXT_URL'] = request.url
         return render_template('sign_in.html')
 
-    last_current_track = session.get('CURRENT_TRACK')
-    session['CURRENT_TRACK'] = session.get('SPOTIFY_API').get_current_track()
+    current_track_name = session.get('SPOTIFY_API').get_current_track_name()
+    current_track_features = session.get('SPOTIFY_API').get_current_track_features()
 
-    if not session.get('CURRENT_TRACK'):
-        current_track_name = "No Current Track, check whether you are listenig to Spotify with this account: " + \
-            session.get('SPOTIFY_API').get_spotify_me()['display_name']
-    else:
-        if session.get('CURRENT_TRACK')['currently_playing_type'] != 'track':
-            current_track_name = "You are not listening to a track. Make shure you don't listen to a podcast or something similar."
-        else:
-            current_track_name = session['CURRENT_TRACK']['item']['name']
-
-    # Only get new artist info from Spotify if current_track has changed and if playback type is 'track'
-    if session.get('CURRENT_TRACK') and session.get('CURRENT_TRACK')['currently_playing_type'] == 'track':
-        if not last_current_track or session.get('CURRENT_TRACK')['item'] != last_current_track['item']:
-            session['CURRENT_TRACK_FEATURES'] = session.get('SPOTIFY_API').get_current_track_features(current_track=session.get('CURRENT_TRACK'))
-    else:
-        session['CURRENT_TRACK_FEATURES'] = []
-    
-    return render_template('current_track_features.html', current_track_name=current_track_name, current_track_features=session.get('CURRENT_TRACK_FEATURES'))
+    return render_template('current_track_features.html', current_track_name=current_track_name, current_track_features=current_track_features)
 
 
 @app.route('/recently-played')

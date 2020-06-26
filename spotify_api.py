@@ -6,17 +6,39 @@ class SpotifyApi:
     def __init__(self, spotify):
         super().__init__()
         self.spotify = spotify
+        self.current_track = None
+        self.current_artists = None
+        self.current_track_features = None
+        self.last_current_track = None
+        self.last_artist_ids = None
+        self.last_features_id = None
+        self.spotify_me = self.spotify.me()
 
     def get_spotify_me(self):
-        spotify_me = self.spotify.me()
-        return spotify_me
+        return self.spotify_me
 
     def get_current_track(self):
-        current_track = self.spotify.currently_playing()
-        return current_track
+        self.last_current_track = self.current_track
+        self.current_track = self.spotify.currently_playing()
+        return self.current_track
 
-    def get_current_artists_ids(self, current_track):
+    def get_current_track_name(self):
+        self.get_current_track()
+        if self.current_track == None:
+            return "No Current Track, check whether you are listenig to Spotify with this account: " + self.spotify_me['display_name']
+        elif self.current_track['currently_playing_type'] != 'track':
+            return "You are not listening to a track. Make shure you don't listen to a podcast or something similar."
+        else:
+            return self.current_track['item']['name']
+
+    def is_new_track_playing(self):
+        if self.last_current_track != self.current_track:
+            return True
+        return False
+
+    def get_current_artists(self):
         """Gets the artists of the current track.
+        Only sends a request to Spotify if the artists for the current track were not already requested.
 
         Args:
             spotify: the spotify object from spotipy
@@ -26,22 +48,28 @@ class SpotifyApi:
             dict: The artists of the current track
         """
         artist_ids = []
-        for artist in current_track['item']['artists']:
+        if self.current_track == None or self.current_track['currently_playing_type'] != 'track':
+            return []
+
+        for artist in self.current_track['item']['artists']:
             artist_ids.append(artist['id'])
 
-        if artist_ids == [None]:  # Happens when listenig to local music
-            return []
-        else:
-            current_artists = self.spotify.artists(artist_ids)
-            return current_artists
+        if self.last_artist_ids != artist_ids:
+            if artist_ids == [None]:  # Happens when listenig to local music
+                return []
+            else:
+                self.current_artists = self.spotify.artists(artist_ids)
+                self.last_artist_ids = artist_ids
+        return self.current_artists
 
-    def get_current_track_features(self, current_track):
-        if current_track == None or current_track['item']['id'] == None:
+    def get_current_track_features(self):
+        if self.current_track == None or self.current_track['item']['id'] == None:
             return []
-        track_id = current_track['item']['id']
-        current_track_features = self.spotify.audio_features(track_id)
-        print(current_track_features)
-        return current_track_features
+        track_id = self.current_track['item']['id']
+        if self.last_features_id != track_id:
+            self.current_track_features = self.spotify.audio_features(track_id)
+            self.last_features_id = track_id
+        return self.current_track_features
 
     def get_top_artists(self, limit=20, offset=0, time_range='medium_term'):
         # read more about time ranges on Spotify docs, currently:
