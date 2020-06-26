@@ -17,7 +17,6 @@ scss = Bundle('css/main.scss', filters='pyscss', output='css/main.css')
 assets.register('scss_all', scss)
 
 Session(app)
-spotifyApi = SpotifyApi()
 
 
 @app.route('/')
@@ -26,7 +25,8 @@ def index():
         session['NEXT_URL'] = request.url
         return render_template('sign_in.html')
 
-    return render_template('index.html', spotify=session.get('SPOTIFY'))
+    spotify_me = session.get('SPOTIFY_API').get_spotify_me()
+    return render_template('index.html', spotify_me=spotify_me)
 
 
 @app.route('/sign-in')
@@ -49,8 +49,10 @@ def authorize():
         session['token_info'] = session.get('AUTH_MANAGER').get_access_token(
             code=request.args['code'], as_dict=False)
 
-        session['SPOTIFY'] = spotipy.Spotify(
+        spotify = spotipy.Spotify(
             auth_manager=session.get('AUTH_MANAGER'))
+
+        session['SPOTIFY_API'] = SpotifyApi(spotify)
 
         if session.get('NEXT_URL'):
             return redirect(session.get('NEXT_URL'))
@@ -69,14 +71,14 @@ def sign_out():
     return redirect(url_for('index'))
 
 
-@app.route('/playlists')
-def playlists():
-     # Check if user is signed in
-    if not session.get('uuid'):
-        session['NEXT_URL'] = request.url
-        return render_template('sign_in.html')
+# @app.route('/playlists')
+# def playlists():
+#      # Check if user is signed in
+#     if not session.get('uuid'):
+#         session['NEXT_URL'] = request.url
+#         return render_template('sign_in.html')
 
-    return session.get('SPOTIFY').current_user_playlists()
+#     return session.get('SPOTIFY').current_user_playlists() #session spotify is depricated
 
 
 @app.route('/current-genres', methods=['GET', 'POST'])
@@ -95,12 +97,11 @@ def current_genres():
                 session['IS_AUTOREFRESH'] = False
 
     last_current_track = session.get('CURRENT_TRACK')
-    session['CURRENT_TRACK'] = spotifyApi.get_current_track(
-        session.get('SPOTIFY'))
+    session['CURRENT_TRACK'] = session.get('SPOTIFY_API').get_current_track()
 
     if not session.get('CURRENT_TRACK'):
         current_track_name = "No Current Track, check whether you are listenig to Spotify with this account: " + \
-            session.get('SPOTIFY').me()['display_name']
+            session.get('SPOTIFY_API').get_spotify_me()['display_name']
     else:
         if session.get('CURRENT_TRACK')['currently_playing_type'] != 'track':
             current_track_name = "You are not listening to a track. Make shure you don't listen to a podcast or something similar."
@@ -110,8 +111,7 @@ def current_genres():
     # Only get new artist info from Spotify if current_track has changed and if playback type is 'track'
     if session.get('CURRENT_TRACK') and session.get('CURRENT_TRACK')['currently_playing_type'] == 'track':
         if not last_current_track or session.get('CURRENT_TRACK')['item'] != last_current_track['item']:
-            session['CURRENT_ARTISTS'] = spotifyApi.get_current_artists_ids(
-                spotify=session.get('SPOTIFY'), current_track=session.get('CURRENT_TRACK'))
+            session['CURRENT_ARTISTS'] = session.get('SPOTIFY_API').get_current_artists_ids(current_track=session.get('CURRENT_TRACK'))
     else:
         session['CURRENT_ARTISTS'] = []
 
@@ -132,9 +132,8 @@ def top_artists():
 
     time_range = request.args.get('time_range', default='short_term')
     offset = request.args.get('offset', default=0)
-    top_artists = spotifyApi.get_top_artists(session.get(
-        'SPOTIFY'), limit=50, time_range=time_range, offset=offset)
-    genre_rank = spotifyApi.get_genre_rank_by_top_artists(top_artists)
+    top_artists = session.get('SPOTIFY_API').get_top_artists(limit=50, time_range=time_range, offset=offset)
+    genre_rank = session.get('SPOTIFY_API').get_genre_rank_by_top_artists(top_artists)
 
     time_range_text = settings.time_range_dict[time_range]
     return render_template('top_artists.html', top_artists=top_artists, genre_rank=genre_rank, chosen_time_range=time_range_text)
@@ -149,8 +148,7 @@ def top_tracks():
 
     time_range = request.args.get('time_range', default='short_term')
     offset = request.args.get('offset', default=0)
-    top_tracks = spotifyApi.get_top_tracks(session.get(
-        'SPOTIFY'), limit=50, time_range=time_range, offset=offset)
+    top_tracks = session.get('SPOTIFY_API').get_top_tracks(limit=50, time_range=time_range, offset=offset)
 
     time_range_text = settings.time_range_dict[time_range]
     return render_template('top_tracks.html', top_tracks=top_tracks, chosen_time_range=time_range_text)
@@ -164,12 +162,11 @@ def current_track_features():
         return render_template('sign_in.html')
 
     last_current_track = session.get('CURRENT_TRACK')
-    session['CURRENT_TRACK'] = spotifyApi.get_current_track(
-        session.get('SPOTIFY'))
+    session['CURRENT_TRACK'] = session.get('SPOTIFY_API').get_current_track()
 
     if not session.get('CURRENT_TRACK'):
         current_track_name = "No Current Track, check whether you are listenig to Spotify with this account: " + \
-            session.get('SPOTIFY').me()['display_name']
+            session.get('SPOTIFY_API').get_spotify_me()['display_name']
     else:
         if session.get('CURRENT_TRACK')['currently_playing_type'] != 'track':
             current_track_name = "You are not listening to a track. Make shure you don't listen to a podcast or something similar."
@@ -179,8 +176,7 @@ def current_track_features():
     # Only get new artist info from Spotify if current_track has changed and if playback type is 'track'
     if session.get('CURRENT_TRACK') and session.get('CURRENT_TRACK')['currently_playing_type'] == 'track':
         if not last_current_track or session.get('CURRENT_TRACK')['item'] != last_current_track['item']:
-            session['CURRENT_TRACK_FEATURES'] = spotifyApi.get_current_track_features(
-                spotify=session.get('SPOTIFY'), current_track=session.get('CURRENT_TRACK'))
+            session['CURRENT_TRACK_FEATURES'] = session.get('SPOTIFY_API').get_current_track_features(current_track=session.get('CURRENT_TRACK'))
     else:
         session['CURRENT_TRACK_FEATURES'] = []
     
@@ -195,8 +191,7 @@ def recently_played():
         session['NEXT_URL'] = request.url
         return render_template('sign_in.html')
 
-    # move this to the spotifyApi class
-    recently_played = spotifyApi.get_recently_played(session.get('SPOTIFY'))
+    recently_played = session.get('SPOTIFY_API').get_recently_played()
     return render_template('recently_played.html', recently_played=recently_played)
 
 

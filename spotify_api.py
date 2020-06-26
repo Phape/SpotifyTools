@@ -3,14 +3,19 @@ from collections import Counter
 
 
 class SpotifyApi:
-    def __init__(self):
+    def __init__(self, spotify):
         super().__init__()
+        self.spotify = spotify
 
-    def get_current_track(self, spotify):
-        current_track = spotify.currently_playing()
-        return spotify.currently_playing()
+    def get_spotify_me(self):
+        spotify_me = self.spotify.me()
+        return spotify_me
 
-    def get_current_artists_ids(self, spotify, current_track):
+    def get_current_track(self):
+        current_track = self.spotify.currently_playing()
+        return current_track
+
+    def get_current_artists_ids(self, current_track):
         """Gets the artists of the current track.
 
         Args:
@@ -27,21 +32,21 @@ class SpotifyApi:
         if artist_ids == [None]:  # Happens when listenig to local music
             return []
         else:
-            current_artists = spotify.artists(artist_ids)
+            current_artists = self.spotify.artists(artist_ids)
             return current_artists
 
-    def get_current_track_features(self, spotify, current_track):
+    def get_current_track_features(self, current_track):
         if current_track == None or current_track['item']['id'] == None:
             return []
         track_id = current_track['item']['id']
-        current_track_features = spotify.audio_features(track_id)
+        current_track_features = self.spotify.audio_features(track_id)
         print(current_track_features)
         return current_track_features
 
-    def get_top_artists(self, spotify, limit=20, offset=0, time_range='medium_term'):
+    def get_top_artists(self, limit=20, offset=0, time_range='medium_term'):
         # read more about time ranges on Spotify docs, currently:
         # long_term: years, medium_term: 6mo, short_term: 4w
-        top_artists = spotify.current_user_top_artists(
+        top_artists = self.spotify.current_user_top_artists(
             limit, offset, time_range)
         return top_artists
 
@@ -54,13 +59,13 @@ class SpotifyApi:
         genre_rank = Counter(top_genres).most_common()
         return genre_rank
 
-    def get_top_tracks(self, spotify, limit=20, offset=0, time_range='medium_term'):
+    def get_top_tracks(self, limit=20, offset=0, time_range='medium_term'):
         # read more about time ranges on Spotify docs, currently:
         # long_term: years, medium_term: 6mo, short_term: 4w
-        top_tracks = spotify.current_user_top_tracks(
+        top_tracks = self.spotify.current_user_top_tracks(
             limit, offset, time_range)
         return top_tracks
 
-    def get_recently_played(self, spotify):
-        recently_played = spotify.current_user_recently_played()
+    def get_recently_played(self):
+        recently_played = self.spotify.current_user_recently_played()
         return recently_played
