@@ -29,7 +29,7 @@ def index():
     return render_template('index.html', spotify=session.get('SPOTIFY'))
 
 
-@app.route('/sign_in')
+@app.route('/sign-in')
 def sign_in():
     if 'uuid' not in session:
         session['uuid'] = uuid.uuid4()
@@ -60,7 +60,7 @@ def authorize():
         f"Didn't get a token from Spotify."
 
 
-@app.route('/sign_out')
+@app.route('/sign-out')
 def sign_out():
     cache_file = os.path.join(settings.cache_path, str(session.get('uuid')))
     if(os.path.exists(cache_file)):
@@ -79,7 +79,7 @@ def playlists():
     return session.get('SPOTIFY').current_user_playlists()
 
 
-@app.route('/current_genres', methods=['GET', 'POST'])
+@app.route('/current-genres', methods=['GET', 'POST'])
 def current_genres():
     # Check if user is signed in
     if not session.get('uuid'):
@@ -123,7 +123,7 @@ def current_genres():
     return render_template('current_genres.html', current_track_name=current_track_name, current_artists=session.get('CURRENT_ARTISTS'), refresh_after_seconds=refresh_after_seconds)
 
 
-@app.route('/top_artists')
+@app.route('/top-artists')
 def top_artists():
     # Check if user is signed in
     if not session.get('uuid'):
@@ -140,7 +140,7 @@ def top_artists():
     return render_template('top_artists.html', top_artists=top_artists, genre_rank=genre_rank, chosen_time_range=time_range_text)
 
 
-@app.route('/top_tracks')
+@app.route('/top-tracks')
 def top_tracks():
     # Check if user is signed in
     if not session.get('uuid'):
@@ -156,7 +156,7 @@ def top_tracks():
     return render_template('top_tracks.html', top_tracks=top_tracks, chosen_time_range=time_range_text)
 
 
-@app.route('/recently_played')
+@app.route('/recently-played')
 # not yet linked on the website
 def recently_played():
     # Check if user is signed in
