@@ -30,6 +30,12 @@ class SpotifyApi:
             current_artists = spotify.artists(artist_ids)
             return current_artists
 
+    def get_current_track_features(self, spotify, current_track):
+        track_id = current_track['item']['id']
+        current_track_features = spotify.audio_features(track_id)
+        print(current_track_features)
+        return current_track_features
+
     def get_top_artists(self, spotify, limit=20, offset=0, time_range='medium_term'):
         # read more about time ranges on Spotify docs, currently:
         # long_term: years, medium_term: 6mo, short_term: 4w
