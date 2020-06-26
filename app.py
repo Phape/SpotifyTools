@@ -2,6 +2,7 @@ import os
 from flask import Flask, session, request, redirect, render_template, url_for
 from flask_session import Session
 from flask_assets import Environment, Bundle
+from functools import wraps
 import spotipy
 import settings
 import uuid
@@ -19,14 +20,15 @@ assets.register('scss_all', scss)
 Session(app)
 
 
-@app.route('/')
-def index():
-    if 'uuid' not in session:
-        session['NEXT_URL'] = request.url
-        return render_template('sign_in.html')
-
-    spotify_me = session.get('SPOTIFY_API').get_spotify_me()
-    return render_template('index.html', spotify_me=spotify_me)
+def sign_in_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'uuid' not in session:
+            session['NEXT_URL'] = request.url
+            return render_template('sign_in.html')
+        else:
+            return f(*args, **kwargs)
+    return wrap
 
 
 @app.route('/sign-in')
@@ -71,6 +73,13 @@ def sign_out():
     return redirect(url_for('index'))
 
 
+@app.route('/')
+@sign_in_required
+def index():
+    spotify_me = session.get('SPOTIFY_API').get_spotify_me()
+    return render_template('index.html', spotify_me=spotify_me)
+
+
 # @app.route('/playlists')
 # def playlists():
 #      # Check if user is signed in
@@ -82,12 +91,8 @@ def sign_out():
 
 
 @app.route('/current-genres', methods=['GET', 'POST'])
+@sign_in_required
 def current_genres():
-    # Check if user is signed in
-    if not session.get('uuid'):
-        session['NEXT_URL'] = request.url
-        return render_template('sign_in.html')
-
     # Handler for the toggle auto_refresh_button
     if request.method == 'POST':
         if request.form['auto_refresh_button']:
@@ -101,18 +106,14 @@ def current_genres():
         refresh_after_seconds = None
 
     current_track_name = session.get('SPOTIFY_API').get_current_track_name()
-    current_artists = session.get('SPOTIFY_API').get_current_artists()  
+    current_artists = session.get('SPOTIFY_API').get_current_artists()
 
     return render_template('current_genres.html', current_track_name=current_track_name, current_artists=current_artists, refresh_after_seconds=refresh_after_seconds)
 
 
 @app.route('/top-artists')
+@sign_in_required
 def top_artists():
-    # Check if user is signed in
-    if not session.get('uuid'):
-        session['NEXT_URL'] = request.url
-        return render_template('sign_in.html')
-
     time_range = request.args.get('time_range', default='short_term')
     offset = request.args.get('offset', default=0)
     top_artists = session.get('SPOTIFY_API').get_top_artists(
@@ -125,12 +126,8 @@ def top_artists():
 
 
 @app.route('/top-tracks')
+@sign_in_required
 def top_tracks():
-    # Check if user is signed in
-    if not session.get('uuid'):
-        session['NEXT_URL'] = request.url
-        return render_template('sign_in.html')
-
     time_range = request.args.get('time_range', default='short_term')
     offset = request.args.get('offset', default=0)
     top_tracks = session.get('SPOTIFY_API').get_top_tracks(
@@ -141,26 +138,19 @@ def top_tracks():
 
 
 @app.route('/current-track-features')
+@sign_in_required
 def current_track_features():
-    # Check if user is signed in
-    if not session.get('uuid'):
-        session['NEXT_URL'] = request.url
-        return render_template('sign_in.html')
-
     current_track_name = session.get('SPOTIFY_API').get_current_track_name()
-    current_track_features = session.get('SPOTIFY_API').get_current_track_features()
+    current_track_features = session.get(
+        'SPOTIFY_API').get_current_track_features()
 
     return render_template('current_track_features.html', current_track_name=current_track_name, current_track_features=current_track_features)
 
 
 @app.route('/recently-played')
+@sign_in_required
 # not yet linked on the website
 def recently_played():
-    # Check if user is signed in
-    if not session.get('uuid'):
-        session['NEXT_URL'] = request.url
-        return render_template('sign_in.html')
-
     recently_played = session.get('SPOTIFY_API').get_recently_played()
     return render_template('recently_played.html', recently_played=recently_played)
 
