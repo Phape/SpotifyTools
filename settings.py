@@ -4,7 +4,7 @@ import datetime
 
 # Flask Settings
 SECRET_KEY = os.urandom(64)
-SESSION_TYPE = 'redis'
+SESSION_TYPE = 'filesystem' # redis would be preferred
 session_permanent = False
 permanent_session_lifetime = datetime.timedelta(days=30) #becomes effective when session_permanent is True
 

@@ -37,7 +37,11 @@
 <div class="content">
     {% for artist in current_artists['artists'] %}
     <div class="card">
+        {% if artist['images'][1] %}
         <img class="card-img-top" src="{{artist['images'][1]['url']}}" alt="Card image cap">
+        {% else %}
+        <img class="card-img-top" src="/static/images/placeholder_person_facepalm.svg" alt="Card image cap">
+        {% endif %}
         <div class="card-body">
             <h5 class="card-title">{{artist['name']}}</h5>
             <p>
@@ -55,8 +59,8 @@
                 <div class="icons">
                     <a href='spotify:search:genre:"{{genre}}"' target="spotify-tab"><img src="static/images/spotify.svg"
                             alt="spotify icon" class="inline-icon invert-color"></a>
-                    <a href="https://en.wikipedia.org/wiki/{{genre}}" target="wiki-tab"><img src="/static/images/wiki.svg"
-                            alt="wiki logo" class="inline-icon invert-color"></a>
+                    <a href="https://en.wikipedia.org/wiki/{{genre}}" target="wiki-tab"><img
+                            src="/static/images/wiki.svg" alt="wiki logo" class="inline-icon invert-color"></a>
                     <a href="https://www.urbandictionary.com/define.php?term={{genre}}" target="ud-tab"><img
                             src="/static/images/ud.svg" alt="urban dictionary logo" class="inline-icon"></a>
                 </div>

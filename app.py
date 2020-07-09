@@ -47,7 +47,7 @@ def sign_in():
 
 @app.route('/authorize')
 def authorize():
-    if request.args.get("code"):
+    if request.args.get('code'):
         session['token_info'] = session.get('AUTH_MANAGER').get_access_token(
             code=request.args['code'], as_dict=False)
 
