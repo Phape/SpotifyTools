@@ -10,7 +10,9 @@ pip3 install -r requirements.txt
 SERVICE="gunicorn"
 if pgrep -x "$SERVICE" >/dev/null
 then
-    echo "$SERVICE is already running"
+    echo "$SERVICE is already running, stopping, then restarting it"
+    pkill $service
+    $SERVICE -b localhost:8000 -w 4 app:app
 else
     echo "starting $SERVICE"
     $SERVICE -b localhost:8000 -w 4 app:app
