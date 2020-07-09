@@ -5,7 +5,7 @@
 Description=SpotifyTools Server Autostarter
 
 [Service]
-ExecStart=sh /home/pi/SpotifyTools/run_spotify_tools_server.sh
+ExecStart=/home/pi/SpotifyTools/run_spotify_tools_server.sh
 WorkingDirectory=/home/pi/SpotifyTools/
 
 [Install]
