@@ -151,10 +151,16 @@ html {
 }
 
 .list {
-  flex-direction: column; }
-  .list .li-small-text {
-    font-size: 10px;
-    color: gray; }
+  flex-direction: column;
+  margin: 10px;
+  list-style: none;
+  padding-inline-start: 0; }
+  .list li {
+    padding: 10px;
+    margin: 5px 0; }
+    .list .li-small-text {
+      font-size: 10px;
+      color: gray; }
 
 .ranking {
   margin: 10px;
