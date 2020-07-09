@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # make executable with: chmod +x run_spotify_tools_server.sh
 
 echo 'starting SpotifyTools'
