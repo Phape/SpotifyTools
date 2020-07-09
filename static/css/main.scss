@@ -199,6 +199,15 @@ p {
 
 .list {
     flex-direction: column;
+    margin: 10px;
+    list-style: none;
+    padding-inline-start: 0;
+
+    li {
+        padding: 10px;
+        margin: 5px 0;
+    }
+
     .li-small-text {
         font-size: $small-text-fs;
         color: gray;
