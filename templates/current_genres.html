@@ -40,7 +40,7 @@
         {% if artist['images'][1] %}
         <img class="card-img-top" src="{{artist['images'][1]['url']}}" alt="Card image cap">
         {% else %}
-        <img class="card-img-top" src="/static/images/placeholder_person_facepalm.svg" alt="Card image cap">
+        <img class="card-img-top" src="/static/images/placeholder_person_facepalm.svg" class="invert-color" alt="Card image cap">
         {% endif %}
         <div class="card-body">
             <h5 class="card-title">{{artist['name']}}</h5>
