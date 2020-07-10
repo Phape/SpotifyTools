@@ -62,7 +62,7 @@ p {
 }
 
 .page-heading {
-    margin-left: 20%;
+    margin: 0 10px 0 10px;
     font-size: $page-heading-fs;
 }
 
@@ -198,14 +198,19 @@ p {
 }
 
 .list {
-    flex-direction: column;
     margin: 10px;
-    list-style: none;
-    padding-inline-start: 0;
+    ol,
+    ul {
+        flex-direction: column;
+        list-style: none;
+        padding-inline-start: 0;
+    }
 
     li {
-        padding: 10px;
+        padding: 10px 40px;
         margin: 5px 0;
+        transition: 0.5s;
+        background-color: rgba($spotifycolor, 0.1);
     }
 
     .li-small-text {
@@ -215,18 +220,11 @@ p {
 }
 
 .ranking {
-    margin: 10px;
-    list-style: none;
     counter-reset: rank-counter;
-    padding-inline-start: 0;
     width: 350px;
 
     li {
         counter-increment: rank-counter;
-        background-color: rgba($spotifycolor, 0.1);
-        padding: 10px 40px;
-        margin: 5px 0;
-        transition: 0.5s;
 
         &::before {
             content: counter(rank-counter);
