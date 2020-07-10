@@ -31,7 +31,7 @@ def sign_in_required(f):
     return wrap
 
 
-@app.route('/sign-in')
+@app.route('/sign-in', methods=['GET'])
 def sign_in():
     if 'uuid' not in session:
         session['uuid'] = uuid.uuid4()
@@ -45,7 +45,7 @@ def sign_in():
         return redirect(auth_url)
 
 
-@app.route('/authorize')
+@app.route('/authorize', methods=['GET'])
 def authorize():
     if request.args.get('code'):
         session['token_info'] = session.get('AUTH_MANAGER').get_access_token(
@@ -64,7 +64,7 @@ def authorize():
         f"Didn't get a token from Spotify."
 
 
-@app.route('/sign-out')
+@app.route('/sign-out', methods=['GET'])
 def sign_out():
     cache_file = os.path.join(settings.cache_path, str(session.get('uuid')))
     if(os.path.exists(cache_file)):
@@ -73,14 +73,25 @@ def sign_out():
     return redirect(url_for('index'))
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 @sign_in_required
 def index():
     spotify_me = session.get('SPOTIFY_API').get_spotify_me()
     return render_template('index.html', spotify_me=spotify_me)
 
 
-# @app.route('/playlists')
+@app.route('/toggle-auto-refresh', methods=['GET'])
+def toggle_auto_refresh():
+    session['NEXT_URL'] = request.url
+
+    if not session.get('REFRESH_AFTER_SECONDS'):
+        session['REFRESH_AFTER_SECONDS'] = settings.refresh_after_seconds
+    else:
+        session.pop('REFRESH_AFTER_SECONDS')
+    return redirect(request.args.get('next', default='/'))
+
+
+# @app.route('/playlists', methods=['GET'])
 # def playlists():
 #      # Check if user is signed in
 #     if not session.get('uuid'):
@@ -90,28 +101,17 @@ def index():
 #     return session.get('SPOTIFY').current_user_playlists() #session spotify is depricated
 
 
-@app.route('/current-genres', methods=['GET', 'POST'])
+@app.route('/current-genres', methods=['GET'])
 @sign_in_required
 def current_genres():
-    # Handler for the toggle auto_refresh_button
-    if request.method == 'POST':
-        if request.form['auto_refresh_button']:
-            if not session.get('IS_AUTOREFRESH') or session.get('IS_AUTOREFRESH') == False:
-                session['IS_AUTOREFRESH'] = True
-            else:
-                session['IS_AUTOREFRESH'] = False
-    if session.get('IS_AUTOREFRESH') == True:
-        refresh_after_seconds = settings.refresh_after_seconds
-    else:
-        refresh_after_seconds = None
-
     current_track_name = session.get('SPOTIFY_API').get_current_track_name()
     current_artists = session.get('SPOTIFY_API').get_current_artists()
+    refresh_after_seconds = session.get('REFRESH_AFTER_SECONDS')
 
     return render_template('current_genres.html', current_track_name=current_track_name, current_artists=current_artists, refresh_after_seconds=refresh_after_seconds)
 
 
-@app.route('/top-artists')
+@app.route('/top-artists', methods=['GET'])
 @sign_in_required
 def top_artists():
     time_range = request.args.get('time_range', default='short_term')
@@ -125,7 +125,7 @@ def top_artists():
     return render_template('top_artists.html', top_artists=top_artists, genre_rank=genre_rank, chosen_time_range=time_range_text)
 
 
-@app.route('/top-tracks')
+@app.route('/top-tracks', methods=['GET'])
 @sign_in_required
 def top_tracks():
     time_range = request.args.get('time_range', default='short_term')
@@ -137,19 +137,19 @@ def top_tracks():
     return render_template('top_tracks.html', top_tracks=top_tracks, chosen_time_range=time_range_text)
 
 
-@app.route('/current-track-features')
+@app.route('/current-track-features', methods=['GET'])
 @sign_in_required
 def current_track_features():
     current_track_name = session.get('SPOTIFY_API').get_current_track_name()
     current_track_features = session.get(
         'SPOTIFY_API').get_current_track_features()
 
-    return render_template('current_track_features.html', current_track_name=current_track_name, current_track_features=current_track_features)
+    refresh_after_seconds = session.get('REFRESH_AFTER_SECONDS')
+    return render_template('current_track_features.html', current_track_name=current_track_name, current_track_features=current_track_features, refresh_after_seconds=refresh_after_seconds)
 
 
-@app.route('/recently-played')
+@app.route('/recently-played', methods=['GET'])
 @sign_in_required
-# not yet linked on the website
 def recently_played():
     recently_played = session.get('SPOTIFY_API').get_recently_played()
     return render_template('recently_played.html', recently_played=recently_played)

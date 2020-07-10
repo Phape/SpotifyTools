@@ -1,28 +1,26 @@
 {% extends '_base.html' %}
 
 {% block head %}
-<!-- <meta http-equiv="refresh" content='{{refresh_after_seconds}}'> -->
 <title>Track Features | SpotifyTools</title>
-<!-- {% if refresh_after_seconds %}
+{% if refresh_after_seconds %}
+<meta http-equiv="refresh" content='{{refresh_after_seconds}}'>
 <script>
     function change() {
         document.getElementById("progress_bar").style.webkitAnimation = 'progressBar {{refresh_after_seconds}}s linear reverse'
     }
     window.setTimeout(change, 0);
 </script>
-{% endif %} -->
+{% endif %}
 {% endblock %}
 
 {% block body %}
-<!-- {% if refresh_after_seconds %}
+{% if refresh_after_seconds %}
 <span class="progress" id="progress_bar"></span>
-{% endif %} -->
+{% endif %}
 
 <div class="button-row">
-    <!-- <form action="/current-track-features" method="post">
-        <input type="submit" name="auto_refresh_button" , value="toggle auto refresh" class="spotify-button">
-    </form> -->
-
+    <a href="/toggle-auto-refresh?next=current-track-features"><button class="spotify-button">toggle auto
+            refresh</button></a>
     <a href="/current-track-features"><button class="spotify-button">refresh</button></a>
 </div>
 
@@ -39,7 +37,6 @@
         <!-- <img class="card-img-top" src="" alt="Card image cap"> -->
         <div class="card-body">
             <h5 class="card-title">{{ current_track_name }}</h5>
-            
         </div>
         <ul class="list-group list-group-flush">
             {% if current_track_features | length %}
