@@ -40,10 +40,6 @@ class SpotifyApi:
         """Gets the artists of the current track.
         Only sends a request to Spotify if the artists for the current track were not already requested.
 
-        Args:
-            spotify: the spotify object from spotipy
-            current_track (dict): a track retrieved from the Spotify API (via spotipy)
-
         Returns:
             dict: The artists of the current track
         """
@@ -63,7 +59,7 @@ class SpotifyApi:
         return self.current_artists
 
     def get_current_track_features(self):
-        if self.current_track == None or self.current_track['item']['id'] == None:
+        if self.current_track == None or self.current_track['currently_playing_type'] != 'track' or self.current_track['item']['id'] == None:
             return []
         track_id = self.current_track['item']['id']
         if self.last_features_id != track_id:
