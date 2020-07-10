@@ -6,6 +6,7 @@
 * on mobile: fix overlapping texts (especially the center-info headings) --> use the headings in the right order
 * create a method which checks if the current track has changed and whether something is playing and whether the current playback  is a track (currently duplicates in methods current_genres and current_track_features)
 * implement a method that toggles the auto refresh setting of the current session
+* Pin requirements to a specific version in [requirements.txt](/requirements.txt)
 
 ## fixme's
 

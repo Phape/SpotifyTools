@@ -34,11 +34,12 @@ If you're using VS Code and new to Flask, I recommend reading the [Flask Tutoria
 
     ```powershell
     # Environment Variables for the SpotifyTools app
-    $env:SPOTIPY_CLIENT_ID = "your_client_id_here"
-    $env:SPOTIPY_CLIENT_SECRET = "your_client_secret_here"
-    $env:SPOTIPY_REDIRECT_URI = "http://127.0.0.1:5000"
-    $env:REDIS_HOST = "your.redis.host.here"
-    $env:REDIS_PASSWORD = "your_redis_password_here"
+    $env:FLASK_SECRET_KEY="your_secret_key_generated_with_os.urandom(24)"
+    $env:SPOTIPY_CLIENT_ID="your_spotify_client_id_here"
+    $env:SPOTIPY_CLIENT_SECRET="your_spotify_client_secret_here"
+    $env:SPOTIPY_REDIRECT_URI="http://127.0.0.1:5000"
+    $env:REDIS_HOST="your.redis.host.here"
+    $env:REDIS_PASSWORD="your_redis_password_here"
     # The following lines are only for the development environment (debugging)
     $env:FLASK_ENV="development"
     $env:FLASK_DEBUG="True"

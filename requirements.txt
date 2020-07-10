@@ -1,6 +1,8 @@
 # Create a virtual environment, then
 # Install with
-# $ pip install -r requirements.txt
+# pip install -r requirements.txt
+# If you want to update all reqirements:
+# pip3 install --upgrade --force-reinstall -r requirements.txt
 flask
 flask_session
 flask_assets
