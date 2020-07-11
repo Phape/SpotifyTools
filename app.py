@@ -5,6 +5,7 @@ from flask_assets import Environment, Bundle
 from functools import wraps
 import spotipy
 import settings
+import dicts
 import uuid
 import time
 from spotify_api import SpotifyApi
@@ -121,7 +122,7 @@ def top_artists():
     genre_rank = session.get(
         'SPOTIFY_API').get_genre_rank_by_top_artists(top_artists)
 
-    time_range_text = settings.time_range_dict[time_range]
+    time_range_text = dicts.time_ranges[time_range]
     return render_template('top_artists.html', top_artists=top_artists, genre_rank=genre_rank, chosen_time_range=time_range_text)
 
 
@@ -133,7 +134,7 @@ def top_tracks():
     top_tracks = session.get('SPOTIFY_API').get_top_tracks(
         limit=50, time_range=time_range, offset=offset)
 
-    time_range_text = settings.time_range_dict[time_range]
+    time_range_text = dicts.time_ranges[time_range]
     return render_template('top_tracks.html', top_tracks=top_tracks, chosen_time_range=time_range_text)
 
 
@@ -143,9 +144,13 @@ def current_track_features():
     current_track_name = session.get('SPOTIFY_API').get_current_track_name()
     current_track_features = session.get(
         'SPOTIFY_API').get_current_track_features()
+    current_track_features_human_readable = session.get(
+        'SPOTIFY_API').get_current_track_features_human_readable()
+
+    session.get('SPOTIFY_API').get_current_track_features_human_readable()
 
     refresh_after_seconds = session.get('REFRESH_AFTER_SECONDS')
-    return render_template('current_track_features.html', current_track_name=current_track_name, current_track_features=current_track_features, refresh_after_seconds=refresh_after_seconds)
+    return render_template('current_track_features.html', current_track_name=current_track_name, current_track_features=current_track_features, current_track_features_human_readable=current_track_features_human_readable, refresh_after_seconds=refresh_after_seconds)
 
 
 @app.route('/recently-played', methods=['GET'])

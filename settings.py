@@ -21,10 +21,3 @@ scopes = 'user-read-currently-playing user-top-read user-read-recently-played'
 
 cache_path = 'cache'
 refresh_after_seconds = 30
-
-# Dicts
-time_range_dict = {
-    "short_term": "last 4 weeks",
-    "medium_term": "last 6 months",
-    "long_term": "total"
-}

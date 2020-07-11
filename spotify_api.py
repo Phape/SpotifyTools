@@ -1,5 +1,6 @@
 import spotipy
 from collections import Counter
+import dicts
 
 
 class SpotifyApi:
@@ -66,6 +67,36 @@ class SpotifyApi:
             self.current_track_features = self.spotify.audio_features(track_id)
             self.last_features_id = track_id
         return self.current_track_features
+
+    def get_current_track_features_human_readable(self):
+        features = self.get_current_track_features()[0]
+
+        percentage_values = {'danceability', 'energy', 'speechiness',
+                             'acousticness', 'instrumentalness', 'liveness', 'valence'}
+
+        result = []
+        for feature in features:
+            result_entry = {}
+            result_entry['name'] = feature
+            result_entry['icon'] = '/static/images/feature_icons/{}.svg'.format(
+                feature)
+
+            value = features[feature]
+            if feature == 'key':
+                value = dicts.musical_keys[value]
+            elif feature == "mode":
+                value = dicts.musical_modes[value]
+            elif feature in percentage_values:
+                value = value * 100
+
+            if type(value) is float:
+                value = round(value, 2)
+            result_entry['value'] = value
+
+            result.append(result_entry)
+
+        print('result:', result)
+        return result
 
     def get_top_artists(self, limit=20, offset=0, time_range='medium_term'):
         # read more about time ranges on Spotify docs, currently:

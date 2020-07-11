@@ -33,20 +33,28 @@
 
 
 <div class="content">
-    <div class="card">
-        <!-- <img class="card-img-top" src="" alt="Card image cap"> -->
-        <div class="card-body">
-            <h5 class="card-title">{{ current_track_name }}</h5>
-        </div>
-        <ul class="list-group list-group-flush">
+    <!-- <div class="list">
+        <ol>
             {% if current_track_features | length %}
             {% for feature, value in current_track_features[0].items() %}
-            <li class="list-group-item">{{feature}}: {{value}}</li>
+            <li>{{feature}}: {{value}}</li>
             {% endfor %}
             {% else %}
-            <li class="list-group-item">No features available from Spotify</li>
+            <li>No features available from Spotify</li>
             {% endif %}
-        </ul>
+        </ol>
+    </div> -->
+
+    <div class="list">
+        <ol>
+            {% if current_track_features_human_readable | length %}
+            {% for feature in current_track_features_human_readable %}
+            <li><img src="{{feature['icon']}}" alt="{{feature['name']}} icon" class="inline-icon invert-color">{{feature['name']}}: {{feature['value']}}</li>
+            {% endfor %}
+            {% else %}
+            <li>No features available from Spotify</li>
+            {% endif %}
+        </ol>
     </div>
 </div>
 {% endblock %}
