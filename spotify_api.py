@@ -69,13 +69,19 @@ class SpotifyApi:
         return self.current_track_features
 
     def get_current_track_features_human_readable(self):
-        features = self.get_current_track_features()[0]
+        features = self.get_current_track_features()[0] if self.get_current_track_features() != [] else []
 
         percentage_values = {'danceability', 'energy', 'speechiness',
                              'acousticness', 'instrumentalness', 'liveness', 'valence'}
 
+        not_displayed_features = {'type', 'id', 'track_href', 'analysis_url'}
+
         result = []
         for feature in features:
+            if feature in not_displayed_features:
+                features.pop(feature)
+                break
+
             result_entry = {}
             result_entry['name'] = feature
             result_entry['icon'] = '/static/images/feature_icons/{}.svg'.format(
@@ -95,7 +101,6 @@ class SpotifyApi:
 
             result.append(result_entry)
 
-        print('result:', result)
         return result
 
     def get_top_artists(self, limit=20, offset=0, time_range='medium_term'):
