@@ -79,8 +79,7 @@ class SpotifyApi:
         result = []
         for feature in features:
             if feature in not_displayed_features:
-                features.pop(feature)
-                break
+                continue
 
             result_entry = {}
             result_entry['name'] = feature
