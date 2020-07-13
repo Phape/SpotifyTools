@@ -138,15 +138,15 @@ def top_tracks():
     return render_template('top_tracks.html', top_tracks=top_tracks, chosen_time_range=time_range_text)
 
 
-@app.route('/current-track-features', methods=['GET'])
+@app.route('/current-features', methods=['GET'])
 @sign_in_required
-def current_track_features():
+def current_features():
     current_track_name = session.get('SPOTIFY_API').get_current_track_name()
     current_track_features_human_readable = session.get(
         'SPOTIFY_API').get_current_track_features_human_readable()
 
     refresh_after_seconds = session.get('REFRESH_AFTER_SECONDS')
-    return render_template('current_track_features.html', current_track_name=current_track_name, current_track_features_human_readable=current_track_features_human_readable, refresh_after_seconds=refresh_after_seconds)
+    return render_template('current_features.html', current_track_name=current_track_name, current_track_features_human_readable=current_track_features_human_readable, refresh_after_seconds=refresh_after_seconds)
 
 
 @app.route('/recently-played', methods=['GET'])

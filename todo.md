@@ -2,15 +2,11 @@
 
 ## todo's
 
-* on the top artists page: make the numbers smaller which indicate how often a genre has been found
 * on mobile: fix overlapping texts (especially the center-info headings) --> use the headings in the right order
-* create a method which checks if the current track has changed and whether something is playing and whether the current playback  is a track (currently duplicates in methods current_genres and current_track_features)
-* implement a method that toggles the auto refresh setting of the current session
 * Pin requirements to a specific version in [requirements.txt](/requirements.txt)
 
 ## fixme's
 
-* if the user had turned on auto refresh and turned it off again, then reloads the page, the form is submitted again and auto refresh is active again --> it should be off
 * When making too many requests to spotify, it gives a timeout --> Handle the timeout
 * Make the transitions of the list items in a ranking work every time, not only when hard-reloading
 
@@ -22,6 +18,7 @@
 * Use Spotify search API to display top songs of a genre on the website
 * deactivate auto refresh if the user switches the tab
   * activate auto refresh again if user comes back to the tab
+* visualize the (percentage) values on the current-features page and the popularity of an artist on the current-genres page
 
 ## third party issues
 
