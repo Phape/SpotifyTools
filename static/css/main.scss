@@ -251,6 +251,10 @@ p {
     .list {
         width: inherit;
     }
+    
+    iframe {
+        width: inherit;
+    }
 }
 
 @media (max-width: 768px) {
