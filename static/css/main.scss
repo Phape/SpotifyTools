@@ -68,6 +68,7 @@ p {
 
 .body-content {
     width: 100%;
+    height: auto;
     margin-top: 3px;
     display: flex;
     flex-direction: column;
@@ -132,6 +133,7 @@ p {
 .centered-info {
     display: flex;
     justify-content: center;
+    text-align: center;
     padding: 3px;
     margin: 10px 5px;
     p {
@@ -146,7 +148,7 @@ p {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: flex-start;
+    // align-items: flex-start;
 }
 
 .card {
