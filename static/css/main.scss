@@ -68,7 +68,6 @@ p {
 
 .body-content {
     width: 100%;
-    height: auto;
     margin-top: 3px;
     display: flex;
     flex-direction: column;
@@ -111,19 +110,6 @@ p {
     font-weight: 700;
     touch-action: manipulation;
     cursor: pointer;
-}
-
-.overview-btns {
-    margin-top: 70px;
-
-    .row {
-        width: 100%;
-    }
-    .col-md-4 {
-        display: flex;
-        justify-content: center;
-        padding-bottom: 10px;
-    }
 }
 
 .invert-color {
@@ -245,6 +231,17 @@ p {
     }
 }
 
+.homepage-tab {
+    width: 300px;
+    border-radius: 0.5rem;
+    margin: 20px;
+
+    &:hover {
+        filter: url("/static/images/homepage_icons/filters.svg#green-shadow");
+        box-shadow: 0 16px 32px 0 rgba($spotifycolor, 0.3);
+    }
+}
+
 @media (max-width: 544px) {
     .card {
         width: inherit;
@@ -253,7 +250,7 @@ p {
     .list {
         width: inherit;
     }
-    
+
     iframe {
         width: inherit;
     }

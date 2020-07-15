@@ -7,29 +7,11 @@
 {% block body %}
 <h1 class="page-heading">N1c3 to see you, {{spotify_me['display_name']}}!</h1>
 
-<div class="overview-btns">
-    <div class="row">
-        <div class="col-md-4">
-            <input type="button" onclick="location.href='/current-genres';" value="Genres Of Current Track"
-                class="spotify-button" />
-        </div>
-        <div class="col-md-4">
-            <input type="button" onclick="location.href='/top-tracks';" value="My Top Tracks" class="spotify-button" />
-        </div>
-        <div class="col-md-4">
-            <input type="button" onclick="location.href='/top-artists';" value="My Top Artists"
-                class="spotify-button" />
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <input type="button" onclick="location.href='/current-features';" value="Features Of Current Track"
-                class="spotify-button" />
-        </div>
-        <div class="col-md-4">
-            <input type="button" onclick="location.href='/recently-played';" value="Recently Played Tracks"
-                class="spotify-button" />
-        </div>
-    </div>
+<div class="content">
+    <a href="current-genres"><img src="/static/images/homepage_icons/current_genres.svg" alt="Genres of current Track" class="homepage-tab"></a>
+    <a href="current-features"><img src="/static/images/homepage_icons/current_features.svg" alt="Features of current Track" class="homepage-tab"></a>
+    <a href="recently-played"><img src="/static/images/homepage_icons/recently_played.svg" alt="Recently played Tracks" class="homepage-tab"></a>
+    <a href="top-artists"><img src="/static/images/homepage_icons/top_artists.svg" alt="Your most listened Artists" class="homepage-tab"></a>
+    <a href="top-tracks"><img src="/static/images/homepage_icons/top_tracks.svg" alt="Your most listened Tracks" class="homepage-tab"></a>
 </div>
 {% endblock %}
