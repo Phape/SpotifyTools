@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet"
+        href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css" />
     {% assets "scss_all" %}
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/main.css') }}">
     {% endassets %}
@@ -14,15 +16,24 @@
 </head>
 
 <body>
-    <div class="navi">
+    <header>
         <ul>
-            <li><a href="/" class="home-button">&#8962; Home</a></li>
-            <li><a href="/sign-out" class="sign-out-button">Sign out</a></li>
+            <!-- <li><a href="/" id="sidebarCollapse"><i class="ms-Icon ms-Icon--GlobalNavButton" aria-hidden="false"></i></a></li> -->
+            <li><a href="/"><i class="ms-Icon ms-Icon--Home" aria-hidden="false"></i></a></li>
+            <li><a href="/sign-out"><i class="ms-Icon ms-Icon--SignOut" aria-hidden="false"></i></a></li>
         </ul>
-    </div>
+    </header>
+
     <div class="body-content">
         {% block body %}{% endblock %}
     </div>
+
+    <footer>
+        <ul>
+            <p>Author: Phape</p>
+            <li><img src="/static/images/company_logos/spotify.svg" alt="" class="inline-icon invert-color"></li>
+        </ul>
+    </footer>
 </body>
 
 </html>

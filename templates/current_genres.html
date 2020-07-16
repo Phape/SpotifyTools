@@ -37,7 +37,8 @@
         {% if artist['images'][1] %}
         <img class="card-img-top" src="{{artist['images'][1]['url']}}" alt="Card image cap">
         {% else %}
-        <img class="card-img-top invert-color" src="/static/images/placeholder_person_facepalm.svg" alt="Card image cap">
+        <img class="card-img-top invert-color" src="/static/images/placeholder_person_facepalm.svg"
+            alt="Card image cap">
         {% endif %}
         <div class="card-body">
             <h5 class="card-title">{{artist['name']}}</h5>
@@ -54,12 +55,15 @@
             {% for genre in artist['genres'] %}
             <li class="list-group-item">{{genre}}
                 <div class="icons">
-                    <a href='spotify:search:genre:"{{genre}}"' target="spotify-tab"><img src="static/images/spotify.svg"
-                            alt="spotify icon" class="inline-icon invert-color"></a>
+                    <a href='spotify:search:genre:"{{genre}}"' target="spotify-tab"><img
+                            src="static/images/company_logos/spotify.svg" alt="spotify icon"
+                            class="inline-icon invert-color"></a>
                     <a href="https://en.wikipedia.org/wiki/{{genre}}" target="wiki-tab"><img
-                            src="/static/images/wiki.svg" alt="wiki logo" class="inline-icon invert-color"></a>
+                            src="/static/images/company_logos/wiki.svg" alt="wiki logo"
+                            class="inline-icon invert-color"></a>
                     <a href="https://www.urbandictionary.com/define.php?term={{genre}}" target="ud-tab"><img
-                            src="/static/images/ud.svg" alt="urban dictionary logo" class="inline-icon"></a>
+                            src="/static/images/company_logos/ud.svg" alt="urban dictionary logo"
+                            class="inline-icon"></a>
                 </div>
             </li>
             {% endfor %}
@@ -68,10 +72,12 @@
             {% endif %}
         </ul>
         <div class="card-body">
-            <a href="{{artist['uri']}}" class="card-link" target="spotify-tab"><img src="static/images/spotify.svg"
-                    alt="spotify icon" class="inline-icon invert-color"> Artist</a>
+            <a href="{{artist['uri']}}" class="card-link" target="spotify-tab"><img
+                    src="static/images/company_logos/spotify.svg" alt="spotify icon" class="inline-icon invert-color">
+                Artist</a>
             <a href="https://en.wikipedia.org/wiki/{{artist['name']}}" class="card-link" target="wiki-tab"><img
-                    src="/static/images/wiki.svg" alt="wiki logo" class="inline-icon invert-color"> Artist</a>
+                    src="/static/images/company_logos/wiki.svg" alt="wiki logo" class="inline-icon invert-color">
+                Artist</a>
         </div>
     </div>
     {% endfor %}
