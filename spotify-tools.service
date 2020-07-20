@@ -1,16 +1,17 @@
 # sudo cp spotify-tools.service /etc/systemd/system/spotify-tools.service
 # activate starting on reboot: sudo systemctl enable spotify-tools.service
+# systemd-analyze verify spotify-tools.service
 
 [Unit]
 Description=SpotifyTools Server Autostarter
+StartLimitBurst=5
+StartLimitIntervalSec=1min
 
 [Service]
 ExecStart=/home/pi/SpotifyTools/run_spotify_tools_server.sh
 WorkingDirectory=/home/pi/SpotifyTools/
 Restart=on-failure
 RestartSec=3s
-StartLimitBurst=5
-StartLimitIntervalSec=1min
 
 [Install]
 WantedBy=multi-user.target
