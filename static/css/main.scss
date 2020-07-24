@@ -102,8 +102,8 @@ footer {
 }
 
 .button-row {
-    margin: 0 3px 0;
-    padding: 10px 0;
+    margin: 0;
+    padding: 10px 3px;
     list-style: none;
     display: flex;
     justify-content: space-between;
@@ -132,11 +132,11 @@ footer {
 }
 
 .centered-info {
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    padding: 3px;
     margin: 10px 5px;
+    padding: 3px;
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
     p {
         font-size: $centered-info-fs;
     }
@@ -202,6 +202,7 @@ footer {
 
 .list {
     margin: 10px;
+    width: 350px;
     ol,
     ul {
         flex-direction: column;
@@ -214,6 +215,7 @@ footer {
         margin: 5px 0;
         transition: 0.5s;
         background-color: rgba($spotifycolor, 0.1);
+        width: 100%;
     }
 
     .li-small-text {
@@ -224,7 +226,6 @@ footer {
 
 .ranking {
     counter-reset: rank-counter;
-    width: 350px;
 
     li {
         counter-increment: rank-counter;
@@ -258,26 +259,27 @@ footer {
 }
 
 @media (max-width: 544px) {
-    // .card {
-    //     width: inherit;
-    // }
+    .card {
+        width: 100%;
+    }
 
-    // .list {
-    //     width: inherit;
-    // }
+    .list {
+        width: 100%;
+    }
 
-    // iframe {
-    //     width: inherit;
-    // }
-}
+    iframe {
+        width: 100%;
+    }
 
-@media (max-width: 768px) {
     .spotify-button {
         padding: 10px 8px 10px;
         font-size: $button-fs-mobile;
         letter-spacing: 1px;
         min-width: 75px;
     }
+}
+
+@media (max-width: 768px) {
 }
 
 @media (min-width: 768px) {
