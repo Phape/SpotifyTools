@@ -19,6 +19,7 @@ These Links should help you understandig this project and help you to get to rel
 * [Flask-Session](https://flask-session.readthedocs.io)
 * [redis in python](https://docs.redislabs.com/latest/rs/references/client_references/client_python/)
 * [markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+* [nginx Let's Encrypt https](https://www.nginx.com/blog/using-free-ssltls-certificates-from-lets-encrypt-with-nginx/#:~:text=%20Update%3A%20Using%20Free%20Let%E2%80%99s%20Encrypt%20SSL%2FTLS%20Certificates,takes%20care%20of%20reconfiguring%20NGINX%20and...%20More%20)
 
 ## How to set up the project locally
 
