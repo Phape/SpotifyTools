@@ -10,3 +10,4 @@ pyScss
 redis
 spotipy
 gunicorn
+beautifulsoup4
