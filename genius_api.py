@@ -25,6 +25,7 @@ class GeniusApi:
         response = self.request_song_info(song_title, artist_name)
         json = response.json()
         remote_song_info = None
+        song_url = None
 
         for hit in json['response']['hits']:
             if artist_name.lower() in hit['result']['primary_artist']['name'].lower():
@@ -40,13 +41,20 @@ class GeniusApi:
     def get_song_lyrics_from_url(self, url):
         page = requests.get(url)
         html = BeautifulSoup(page.text, 'html.parser')
-        lyrics = html.find('div', class_='lyrics').get_text()
+        html_lyrics = html.find('div', class_='lyrics')
+        if html_lyrics is not None:
+            lyrics = html_lyrics.get_text()
+        else:
+            lyrics = "Could not obtain lyrics, please try again.\nAlternatively, you could see them here: " + url
 
         return lyrics
 
     def get_lyrics_from_artist_and_title(self, song_title, artist_name):
         url = self.get_remote_song_url(song_title, artist_name)
-        lyrics = self.get_song_lyrics_from_url(url)
+        if url == None:
+            lyrics = "No lyrics were found for this track"
+        else:
+            lyrics = self.get_song_lyrics_from_url(url)
 
         return lyrics
 
@@ -54,5 +62,5 @@ class GeniusApi:
 if __name__ == "__main__":
     genius_api = GeniusApi()
     lyrics = genius_api.get_lyrics_from_artist_and_title(
-        song_title="Hotline Bling", artist_name="Drake")
+        song_title="Come With Me", artist_name="Nitro Fun")
     print(lyrics)
