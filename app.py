@@ -9,6 +9,7 @@ import dicts
 import uuid
 import time
 from spotify_api import SpotifyApi
+from genius_api import GeniusApi
 
 app = Flask(__name__)
 app.config.from_object(settings)
@@ -154,6 +155,17 @@ def current_features():
 def recently_played():
     recently_played = session.get('SPOTIFY_API').get_recently_played()
     return render_template('recently_played.html', recently_played=recently_played)
+
+
+@app.route('/current-lyrics', methods=['GET'])
+@sign_in_required
+def current_lyrics():
+    current_track_name = session.get('SPOTIFY_API').get_current_track()['item']['name']
+    current_artist = session.get('SPOTIFY_API').get_current_track()['item']['artists'][0]['name']
+    session['GENIUS_API'] = GeniusApi()
+    current_lyrics = session.get('GENIUS_API').get_lyrics_from_artist_and_title(
+        song_title=current_track_name, artist_name=current_artist)
+    return render_template('current_lyrics.html', lyrics=current_lyrics)
 
 
 @app.before_request
