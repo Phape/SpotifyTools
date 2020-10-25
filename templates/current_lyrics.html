@@ -1,14 +1,22 @@
 {% extends '_base.html' %}
+{% from '_macros.html' import auto_refresh %}
 
 {% block head %}
 <title>Lyrics | SpotifyTools</title>
+{{ auto_refresh(refresh_after_seconds) }}
 {% endblock %}
 
 {% block body %}
-<h1 class="page-heading">Lyrics</h1>
+{% if refresh_after_seconds %}
+<span class="progress" id="progress_bar"></span>
+{% endif %}
+<div class="button-row">
+    <a href="/toggle-auto-refresh?next=current-lyrics"><button class="spotify-button">toggle auto refresh</button></a>
+    <a href="/current-lyrics"><button class="spotify-button">refresh</button></a>
+</div>
 
 <div class="content">
-    <p id="lyrics" style="white-space: pre-wrap;">{{ lyrics }}</p> 
-    
+    <p id="lyrics" style="white-space: pre-wrap;">{{ lyrics }}</p>
+
 </div>
 {% endblock %}

@@ -1,16 +1,9 @@
 {% extends '_base.html' %}
+{% from '_macros.html' import auto_refresh %}
 
 {% block head %}
 <title>Current Genres | SpotifyTools</title>
-{% if refresh_after_seconds %}
-<meta http-equiv="refresh" content='{{refresh_after_seconds}}'>
-<script>
-    function change() {
-        document.getElementById("progress_bar").style.webkitAnimation = 'progressBar {{refresh_after_seconds}}s linear reverse'
-    }
-    window.setTimeout(change, 0);
-</script>
-{% endif %}
+{{ auto_refresh(refresh_after_seconds) }}
 {% endblock %}
 
 {% block body %}

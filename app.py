@@ -165,7 +165,9 @@ def current_lyrics():
     session['GENIUS_API'] = GeniusApi()
     current_lyrics = session.get('GENIUS_API').get_lyrics_from_artist_and_title(
         song_title=current_track_name, artist_name=current_artist)
-    return render_template('current_lyrics.html', lyrics=current_lyrics)
+
+    refresh_after_seconds = session.get('REFRESH_AFTER_SECONDS')
+    return render_template('current_lyrics.html', lyrics=current_lyrics, refresh_after_seconds=refresh_after_seconds)
 
 
 @app.before_request
