@@ -1,43 +1,19 @@
-{% extends '_base.html' %}
-{% from '_macros.html' import auto_refresh %}
+{% extends '_current_base.html' %}
 
-{% block head %}
-<title>Track Features | SpotifyTools</title>
-{{ auto_refresh(refresh_after_seconds) }}
-{% endblock %}
+{% block title %}Track Features | SpotifyTools{% endblock %}
 
-{% block body %}
-{% if refresh_after_seconds %}
-<span class="progress" id="progress_bar"></span>
-{% endif %}
-
-<div class="button-row">
-    <a href="/toggle-auto-refresh?next=current-features"><button class="spotify-button">toggle auto
-            refresh</button></a>
-    <a href="/current-features"><button class="spotify-button">refresh</button></a>
-</div>
-
-<div class="centered-info">
-    <p>
-        <img src="/static/images/equalizer-3.svg" alt="animated equalizer, now playing:" class="inline-icon">
-        {{current_track_name}}
-    </p>
-</div>
-
-
-<div class="content">
-    <div class="list">
-        <h2>Current Track Features</h2>
-        <ol>
-            {% if current_track_features_human_readable | length %}
-            {% for feature in current_track_features_human_readable %}
-            <li><img src="{{feature['icon']}}" alt="{{feature['name']}} icon"
-                    class="inline-icon invert-color">{{feature['name']}}: {{feature['value']}}</li>
-            {% endfor %}
-            {% else %}
-            <li>No features available from Spotify</li>
-            {% endif %}
-        </ol>
-    </div>
+{% block current_content %}
+<div class="list">
+    <h2>Current Track Features</h2>
+    <ol>
+        {% if current_track_features_human_readable | length %}
+        {% for feature in current_track_features_human_readable %}
+        <li><img src="{{feature['icon']}}" alt="{{feature['name']}} icon"
+                class="inline-icon invert-color">{{feature['name']}}: {{feature['value']}}</li>
+        {% endfor %}
+        {% else %}
+        <li>No features available from Spotify</li>
+        {% endif %}
+    </ol>
 </div>
 {% endblock %}

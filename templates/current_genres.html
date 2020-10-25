@@ -1,78 +1,53 @@
-{% extends '_base.html' %}
-{% from '_macros.html' import auto_refresh %}
+{% extends '_current_base.html' %}
 
-{% block head %}
-<title>Current Genres | SpotifyTools</title>
-{{ auto_refresh(refresh_after_seconds) }}
-{% endblock %}
+{% block title %}Current Genres | SpotifyTools{% endblock %}
 
-{% block body %}
-{% if refresh_after_seconds %}
-<span class="progress" id="progress_bar"></span>
-{% endif %}
-
-<div class="button-row">
-    <a href="/toggle-auto-refresh?next=current-genres"><button class="spotify-button">toggle auto refresh</button></a>
-    <a href="/current-genres"><button class="spotify-button">refresh</button></a>
-</div>
-
-<div class="centered-info">
-    <p>
-        <img src="/static/images/equalizer-3.svg" alt="animated equalizer, now playing:" class="inline-icon">
-        {{current_track_name}}
-    </p>
-</div>
-
-
-<div class="content">
-    {% for artist in current_artists['artists'] %}
-    <div class="card">
-        {% if artist['images'][1] %}
-        <img class="card-img-top" src="{{artist['images'][1]['url']}}" alt="Card image cap">
-        {% else %}
-        <img class="card-img-top invert-color" src="/static/images/placeholder_person_facepalm.svg"
-            alt="Card image cap">
-        {% endif %}
-        <div class="card-body">
-            <h5 class="card-title">{{artist['name']}}</h5>
-            <p>
-                <script type="text/javascript">
-                    var num = new Number("{{artist['followers']['total']}}");
-                    document.write("Followers: ", num.toLocaleString()); 
-                </script>
-            </p>
-            <p class="card-text">Popularity: {{artist['popularity']}}</p>
-        </div>
-        <ul class="list-group list-group-flush">
-            {% if artist['genres']|length %}
-            {% for genre in artist['genres'] %}
-            <li class="list-group-item">{{genre}}
-                <div class="icons">
-                    <a href='spotify:search:genre:"{{genre}}"' target="spotify-tab"><img
-                            src="static/images/company_logos/spotify.svg" alt="spotify icon"
-                            class="inline-icon invert-color"></a>
-                    <a href="https://en.wikipedia.org/wiki/{{genre}}" target="wiki-tab"><img
-                            src="/static/images/company_logos/wiki.svg" alt="wiki logo"
-                            class="inline-icon invert-color"></a>
-                    <a href="https://www.urbandictionary.com/define.php?term={{genre}}" target="ud-tab"><img
-                            src="/static/images/company_logos/ud.svg" alt="urban dictionary logo"
-                            class="inline-icon"></a>
-                </div>
-            </li>
-            {% endfor %}
-            {% else %}
-            <li class="list-group-item">Spotify currently has no genres listed for {{artist['name']}}.</li>
-            {% endif %}
-        </ul>
-        <div class="card-body">
-            <a href="{{artist['uri']}}" class="card-link" target="spotify-tab"><img
-                    src="static/images/company_logos/spotify.svg" alt="spotify icon" class="inline-icon invert-color">
-                Artist</a>
-            <a href="https://en.wikipedia.org/wiki/{{artist['name']}}" class="card-link" target="wiki-tab"><img
-                    src="/static/images/company_logos/wiki.svg" alt="wiki logo" class="inline-icon invert-color">
-                Artist</a>
-        </div>
+{% block current_content %}
+{% for artist in current_artists['artists'] %}
+<div class="card">
+    {% if artist['images'][1] %}
+    <img class="card-img-top" src="{{artist['images'][1]['url']}}" alt="Card image cap">
+    {% else %}
+    <img class="card-img-top invert-color" src="/static/images/placeholder_person_facepalm.svg" alt="Card image cap">
+    {% endif %}
+    <div class="card-body">
+        <h5 class="card-title">{{artist['name']}}</h5>
+        <p>
+            <script type="text/javascript">
+                var num = new Number("{{artist['followers']['total']}}");
+                document.write("Followers: ", num.toLocaleString()); 
+            </script>
+        </p>
+        <p class="card-text">Popularity: {{artist['popularity']}}</p>
     </div>
-    {% endfor %}
+    <ul class="list-group list-group-flush">
+        {% if artist['genres']|length %}
+        {% for genre in artist['genres'] %}
+        <li class="list-group-item">{{genre}}
+            <div class="icons">
+                <a href='spotify:search:genre:"{{genre}}"' target="spotify-tab"><img
+                        src="static/images/company_logos/spotify.svg" alt="spotify icon"
+                        class="inline-icon invert-color"></a>
+                <a href="https://en.wikipedia.org/wiki/{{genre}}" target="wiki-tab"><img
+                        src="/static/images/company_logos/wiki.svg" alt="wiki logo"
+                        class="inline-icon invert-color"></a>
+                <a href="https://www.urbandictionary.com/define.php?term={{genre}}" target="ud-tab"><img
+                        src="/static/images/company_logos/ud.svg" alt="urban dictionary logo" class="inline-icon"></a>
+            </div>
+        </li>
+        {% endfor %}
+        {% else %}
+        <li class="list-group-item">Spotify currently has no genres listed for {{artist['name']}}.</li>
+        {% endif %}
+    </ul>
+    <div class="card-body">
+        <a href="{{artist['uri']}}" class="card-link" target="spotify-tab"><img
+                src="static/images/company_logos/spotify.svg" alt="spotify icon" class="inline-icon invert-color">
+            Artist</a>
+        <a href="https://en.wikipedia.org/wiki/{{artist['name']}}" class="card-link" target="wiki-tab"><img
+                src="/static/images/company_logos/wiki.svg" alt="wiki logo" class="inline-icon invert-color">
+            Artist</a>
+    </div>
 </div>
+{% endfor %}
 {% endblock %}

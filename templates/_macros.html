@@ -9,3 +9,12 @@
 </script>
 {% endif %}
 {% endmacro %}
+
+{% macro track_name_centered_info(current_track_name) %}
+<div class="centered-info">
+    <p>
+        <img src="/static/images/equalizer-3.svg" alt="animated equalizer, now playing:" class="inline-icon">
+        {{current_track_name}}
+    </p>
+</div>
+{% endmacro %}

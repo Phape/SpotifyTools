@@ -1,0 +1,26 @@
+{% extends '_base.html' %}
+{% from '_macros.html' import auto_refresh, track_name_centered_info %}
+
+{% block head %}
+<title>{% block title %} {% endblock %}</title>
+{{ auto_refresh(refresh_after_seconds) }}
+{% endblock %}
+
+{% block body %}
+{% if refresh_after_seconds %}
+<span class="progress" id="progress_bar"></span>
+{% endif %}
+
+<div class="button-row">
+    <a href="/toggle-auto-refresh"><button class="spotify-button">toggle auto
+            refresh</button></a>
+    <button class="spotify-button" onClick="window.location.reload();">refresh</button>
+</div>
+
+{{ track_name_centered_info(current_track_name) }}
+
+<div class="content">
+    {% block current_content %}{% endblock %}
+</div>
+
+{% endblock %}

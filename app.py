@@ -84,13 +84,14 @@ def index():
 
 @app.route('/toggle-auto-refresh', methods=['GET'])
 def toggle_auto_refresh():
-    session['NEXT_URL'] = request.url
-
+    next_url = session.get('NEXT_URL')
+    if next_url == None:
+        next_url = '/'
     if not session.get('REFRESH_AFTER_SECONDS'):
         session['REFRESH_AFTER_SECONDS'] = settings.refresh_after_seconds
     else:
         session.pop('REFRESH_AFTER_SECONDS')
-    return redirect(request.args.get('next', default='/'))
+    return redirect(next_url)
 
 
 # @app.route('/playlists', methods=['GET'])
@@ -106,6 +107,7 @@ def toggle_auto_refresh():
 @app.route('/current-genres', methods=['GET'])
 @sign_in_required
 def current_genres():
+    session['NEXT_URL'] = request.url
     current_track_name = session.get('SPOTIFY_API').get_current_track_name()
     current_artists = session.get('SPOTIFY_API').get_current_artists()
     refresh_after_seconds = session.get('REFRESH_AFTER_SECONDS')
@@ -142,6 +144,7 @@ def top_tracks():
 @app.route('/current-features', methods=['GET'])
 @sign_in_required
 def current_features():
+    session['NEXT_URL'] = request.url
     current_track_name = session.get('SPOTIFY_API').get_current_track_name()
     current_track_features_human_readable = session.get(
         'SPOTIFY_API').get_current_track_features_human_readable()
@@ -160,14 +163,20 @@ def recently_played():
 @app.route('/current-lyrics', methods=['GET'])
 @sign_in_required
 def current_lyrics():
-    current_track_name = session.get('SPOTIFY_API').get_current_track()['item']['name']
-    current_artist = session.get('SPOTIFY_API').get_current_track()['item']['artists'][0]['name']
-    session['GENIUS_API'] = GeniusApi()
-    current_lyrics = session.get('GENIUS_API').get_lyrics_from_artist_and_title(
-        song_title=current_track_name, artist_name=current_artist)
+    session['NEXT_URL'] = request.url
+    current_track = session.get('SPOTIFY_API').get_current_track()
+    if current_track:
+        current_track_name = current_track['item']['name']
+        current_artist = current_track['item']['artists'][0]['name']
+        session['GENIUS_API'] = GeniusApi()
+        current_lyrics = session.get('GENIUS_API').get_lyrics_from_artist_and_title(
+            song_title=current_track_name, artist_name=current_artist)
+    else:
+        current_lyrics = ""
 
+    current_track_name = session.get('SPOTIFY_API').get_current_track_name()
     refresh_after_seconds = session.get('REFRESH_AFTER_SECONDS')
-    return render_template('current_lyrics.html', lyrics=current_lyrics, refresh_after_seconds=refresh_after_seconds)
+    return render_template('current_lyrics.html', current_track_name = current_track_name, lyrics=current_lyrics, refresh_after_seconds=refresh_after_seconds)
 
 
 @app.before_request
