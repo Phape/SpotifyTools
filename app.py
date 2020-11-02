@@ -10,6 +10,7 @@ import uuid
 import time
 from spotify_api import SpotifyApi
 from genius_api import GeniusApi
+from wikipedia_api import WikipediaApi
 
 app = Flask(__name__)
 app.config.from_object(settings)
@@ -112,7 +113,12 @@ def current_genres():
     current_artists = session.get('SPOTIFY_API').get_current_artists()
     refresh_after_seconds = session.get('REFRESH_AFTER_SECONDS')
 
-    return render_template('current_genres.html', current_track_name=current_track_name, current_artists=current_artists, refresh_after_seconds=refresh_after_seconds)
+    session['WIKIPEDIA_API'] = WikipediaApi()
+    current_genres = session.get('SPOTIFY_API').get_current_genres()
+    wiki_links = session.get('WIKIPEDIA_API').get_wiki_genre_urls_dict(current_genres)
+    print(wiki_links)
+
+    return render_template('current_genres.html', current_track_name=current_track_name, current_artists=current_artists, refresh_after_seconds=refresh_after_seconds, wiki_links=wiki_links)
 
 
 @app.route('/top-artists', methods=['GET'])

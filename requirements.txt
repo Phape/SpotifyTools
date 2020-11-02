@@ -11,3 +11,5 @@ redis
 spotipy
 gunicorn
 beautifulsoup4
+wikipedia
+Wikipedia-API

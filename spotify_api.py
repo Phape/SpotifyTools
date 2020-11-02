@@ -59,6 +59,15 @@ class SpotifyApi:
                 self.last_artist_ids = artist_ids
         return self.current_artists
 
+    def get_current_genres(self):
+        current_genres = []
+        if self.current_artists:
+            # print(self.current_artists)
+            for artist in self.current_artists['artists']:
+                # print(artist)
+                current_genres.extend(artist['genres'])
+        return current_genres
+
     def get_current_track_features(self):
         if self.current_track == None or self.current_track['currently_playing_type'] != 'track' or self.current_track['item']['id'] == None:
             return []
@@ -69,7 +78,8 @@ class SpotifyApi:
         return self.current_track_features
 
     def get_current_track_features_human_readable(self):
-        features = self.get_current_track_features()[0] if self.get_current_track_features() != [] else []
+        features = self.get_current_track_features(
+        )[0] if self.get_current_track_features() != [] else []
 
         percentage_values = {'danceability', 'energy', 'speechiness',
                              'acousticness', 'instrumentalness', 'liveness', 'valence'}
