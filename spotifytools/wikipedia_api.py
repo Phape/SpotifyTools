@@ -1,3 +1,4 @@
+from sqlalchemy.orm import backref
 import wikipediaapi
 import wikipedia
 
@@ -40,7 +41,7 @@ class WikipediaApi:
         # https://en.wikipedia.org/wiki/List_of_music_styles
         all_genre_page = self.wiki.page('List of music styles')
         all_genre_links = list(self.wiki.links(all_genre_page).keys())
-        link_filter = ['List of', ':', 's in music', '-century', 'Music_genre',
+        link_filter = ['List of', ':', 's in music', '-century', 'Music_genre', 'Styles of'
                        'AllMusic', 'Genealogy_of_musical_genres', 'Simon_Frith']
         all_genre_list = [link for link in all_genre_links if not any(
             filtered_symbol in link for filtered_symbol in link_filter)]
@@ -49,8 +50,8 @@ class WikipediaApi:
     def update_genres(self):
         self.genres = []
         wiki_genre_list = self.get_wiki_genre_list()
-        first_three = wiki_genre_list[:30]
-        for genre_name in first_three:
+        first_three = wiki_genre_list[:3]
+        for genre_name in wiki_genre_list:
             page = self.wiki.page(genre_name)
             description = page.summary
             super_genres = None
@@ -60,12 +61,12 @@ class WikipediaApi:
             except:
                 wiki_url = None
 
-            genre = Genre(name=genre_name, description=description,
-                          super_genres=super_genres, sub_genres=sub_genres, wiki_url=wiki_url)
+            genre = GenreNotInDb(name=genre_name, description=description,
+                                 super_genres=super_genres, sub_genres=sub_genres, wiki_url=wiki_url)
             self.genres.append(genre)
 
 
-class Genre():
+class GenreNotInDb():
     def __init__(self, name, description, super_genres, sub_genres, wiki_url):
         self.name = name
         self.description = description
@@ -73,7 +74,7 @@ class Genre():
         self.sub_genres = sub_genres
         self.wiki_url = wiki_url
 
-    def __str__(self):
+    def __repr__(self):
         return 'Genre named \"{self.name}\" with url \'{self.wiki_url}\'. The SuperGenres are {self.super_genres} and the SubGenres are {self.sub_genres}.\nDescription: {self.description}'.format(self=self)
 
 

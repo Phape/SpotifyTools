@@ -1,26 +1,15 @@
 import os
-from flask import Flask, session, request, redirect, render_template, url_for
-from flask_session import Session
-from flask_assets import Environment, Bundle
+from spotifytools import app
+from flask import session, request, redirect, render_template, url_for
 from functools import wraps
 import spotipy
-import settings
-import dicts
+import spotifytools.settings as settings
+import spotifytools.dicts as dicts
 import uuid
 import time
-from spotify_api import SpotifyApi
-from genius_api import GeniusApi
-from wikipedia_api import WikipediaApi
-
-app = Flask(__name__)
-app.config.from_object(settings)
-
-assets = Environment(app)
-assets.url = app.static_url_path
-scss = Bundle('css/main.scss', filters='pyscss', output='css/main.css')
-assets.register('scss_all', scss)
-
-Session(app)
+from spotifytools.spotify_api import SpotifyApi
+from spotifytools.genius_api import GeniusApi
+from spotifytools.wikipedia_api import WikipediaApi
 
 
 def sign_in_required(f):
@@ -115,7 +104,8 @@ def current_genres():
 
     session['WIKIPEDIA_API'] = WikipediaApi()
     current_genres = session.get('SPOTIFY_API').get_current_genres()
-    wiki_links = session.get('WIKIPEDIA_API').get_wiki_genre_urls_dict(current_genres)
+    wiki_links = session.get(
+        'WIKIPEDIA_API').get_wiki_genre_urls_dict(current_genres)
     print(wiki_links)
 
     return render_template('current_genres.html', current_track_name=current_track_name, current_artists=current_artists, refresh_after_seconds=refresh_after_seconds, wiki_links=wiki_links)
@@ -182,7 +172,7 @@ def current_lyrics():
 
     current_track_name = session.get('SPOTIFY_API').get_current_track_name()
     refresh_after_seconds = session.get('REFRESH_AFTER_SECONDS')
-    return render_template('current_lyrics.html', current_track_name = current_track_name, lyrics=current_lyrics, refresh_after_seconds=refresh_after_seconds)
+    return render_template('current_lyrics.html', current_track_name=current_track_name, lyrics=current_lyrics, refresh_after_seconds=refresh_after_seconds)
 
 
 @app.before_request
@@ -208,7 +198,3 @@ for f in os.listdir(settings.cache_path):
     # remove cache that is older than x days
     if (current_time - creation_time) // (24 * 3600) >= 1:
         os.remove(f)
-
-
-if __name__ == "__main__":
-    app.run()

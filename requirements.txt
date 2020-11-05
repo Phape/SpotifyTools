@@ -6,6 +6,7 @@
 flask
 flask_session
 flask_assets
+flask-sqlalchemy
 pyScss
 redis
 spotipy

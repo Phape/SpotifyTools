@@ -5,6 +5,7 @@ import datetime
 # Flask Settings
 SECRET_KEY = os.environ.get('FLASK_SECRET_KEY') # generate one with os.urandom(24) and set as environment variable
 SESSION_TYPE = 'filesystem' # redis would be preferred
+SQLALCHEMY_DATABASE_URI = 'sqlite:///spotifytools.db'
 session_permanent = False
 permanent_session_lifetime = datetime.timedelta(days=30) #becomes effective when session_permanent is True
 

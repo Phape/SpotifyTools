@@ -1,6 +1,5 @@
-import spotipy
 from collections import Counter
-import dicts
+import spotifytools.dicts as dicts
 
 
 class SpotifyApi:
