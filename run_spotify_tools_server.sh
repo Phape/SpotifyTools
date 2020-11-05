@@ -12,8 +12,8 @@ if pgrep -x "$SERVICE" >/dev/null
 then
     echo "$SERVICE is already running, stopping, then restarting it"
     pkill $service
-    $SERVICE -b localhost:8000 -w 4 app:app
+    $SERVICE -b localhost:8000 -w 4 spotifytools:run
 else
     echo "starting $SERVICE"
-    $SERVICE -b localhost:8000 -w 4 app:app
+    $SERVICE -b localhost:8000 -w 4 spotifytools:run
 fi
