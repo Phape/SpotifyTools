@@ -13,6 +13,5 @@ scss = Bundle('css/main.scss', filters='pyscss', output='css/main.css')
 assets.register('scss_all', scss)
 
 Session(app)
-db = SQLAlchemy(app)
 
 from spotifytools import routes

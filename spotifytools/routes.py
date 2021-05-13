@@ -9,7 +9,6 @@ import uuid
 import time
 from spotifytools.spotify_api import SpotifyApi
 from spotifytools.genius_api import GeniusApi
-from spotifytools.wikipedia_api import WikipediaApi
 
 
 def sign_in_required(f):
@@ -102,13 +101,7 @@ def current_genres():
     current_artists = session.get('SPOTIFY_API').get_current_artists()
     refresh_after_seconds = session.get('REFRESH_AFTER_SECONDS')
 
-    session['WIKIPEDIA_API'] = WikipediaApi()
-    current_genres = session.get('SPOTIFY_API').get_current_genres()
-    wiki_links = session.get(
-        'WIKIPEDIA_API').get_wiki_genre_urls_dict(current_genres)
-    print(wiki_links)
-
-    return render_template('current_genres.html', current_track_name=current_track_name, current_artists=current_artists, refresh_after_seconds=refresh_after_seconds, wiki_links=wiki_links)
+    return render_template('current_genres.html', current_track_name=current_track_name, current_artists=current_artists, refresh_after_seconds=refresh_after_seconds)
 
 
 @app.route('/top-artists', methods=['GET'])
