@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_assets import Environment, Bundle
 from flask_session import Session
-import spotifytools.settings as settings
+from . import settings
 
 app = Flask(__name__)
 app.config.from_object(settings)
@@ -14,4 +14,4 @@ assets.register('scss_all', scss)
 
 Session(app)
 
-from spotifytools import routes
+from . import routes

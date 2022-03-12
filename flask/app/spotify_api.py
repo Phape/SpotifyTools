@@ -1,5 +1,5 @@
 from collections import Counter
-import spotifytools.dicts as dicts
+import app.dicts as dicts
 
 
 class SpotifyApi:
