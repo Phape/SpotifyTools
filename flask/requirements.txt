@@ -10,7 +10,7 @@ flask_sqlalchemy
 pyScss
 redis
 spotipy
-gunicorn
+uwsgi
 beautifulsoup4
 wikipedia
 Wikipedia-API

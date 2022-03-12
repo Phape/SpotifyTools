@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  flask:
+    build: ./flask
+    restart: always
+    environment:
+      - APP_NAME=spotifytools
+    networks:
+      - "net"
+
+networks:
+  net:
+    external: true

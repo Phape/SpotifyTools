@@ -1,4 +1,4 @@
-from spotifytools import db
+from app import db
 
 
 class Genre(db.Model):
