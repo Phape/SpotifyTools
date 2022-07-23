@@ -4,6 +4,7 @@ from flask import session, request, redirect, render_template, url_for
 from functools import wraps
 import uuid
 import time
+import spotipy
 from .spotify_api import SpotifyApi
 from .genius_api import GeniusApi
 
