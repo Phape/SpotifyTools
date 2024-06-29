@@ -1,10 +1,5 @@
-#
-name: Demo Push
+name: Build Docker Image and deploy to ghcr
 
-# This workflow runs when any of the following occur:
-# - A push is made to a branch called `main` or `seed`
-# - A tag starting with "v" is created
-# - A pull request is created or updated
 on:
   push:
     branches:
@@ -16,7 +11,7 @@ on:
 
 env:
   IMAGE_NAME: spotify-tools
-#
+
 jobs:
   # This pushes the image to GitHub Packages (ghcr).
   push:
@@ -24,7 +19,6 @@ jobs:
     permissions:
       packages: write
       contents: read
-      #
     steps:
       - uses: actions/checkout@v4
 
