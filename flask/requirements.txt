@@ -7,10 +7,9 @@ flask
 flask_session
 flask_assets
 flask_sqlalchemy
-pyScss
-redis
+libsass
 spotipy
-uwsgi
 beautifulsoup4
 wikipedia
 Wikipedia-API
+python-dotenv

@@ -178,8 +178,7 @@ def not_found_error(error):
 
 
 # Initialize Cache
-if not os.path.exists(settings.cache_path):
-    os.makedirs(settings.cache_path)
+os.makedirs(settings.cache_path, exist_ok=True)
 
 current_time = time.time()
 
