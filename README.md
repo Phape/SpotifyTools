@@ -1,71 +1,199 @@
-# Phapes Spotify Tools
+# 🎵 Spotify Tools
 
-A Website that uses the Spotify API to get additional information for your favorite songs on Spotify.
+A modern web application that enhances your Spotify experience by providing additional information about your favorite songs using the Spotify and Genius APIs.
 
-## Local Dev Setup
+## 🌟 Features
 
-### With Python (venv)
+- **Track Analysis**: Get detailed information about your currently playing tracks
+- **Lyrics Integration**: Fetch lyrics from Genius API
+- **User Statistics**: View your top tracks and recently played songs
+- **Modern UI**: Clean and responsive web interface
 
-> This might not work with windows at the moment bc. there is no uwsgi for windows. Comment out uwsgi in [requirements](flask/requirements.txt) to develop this way
+## 🚀 Quick Start
 
-If you're using VS Code and new to Flask, I recommend reading the [Flask Tutorial in Visual Studio Code](https://code.visualstudio.com/docs/python/tutorial-flask). It can help with step 2 and 3 of the following list.
+### Prerequisites
 
-1. Clone the repository from GitHub
-2. Create a virtual environment with `python -m venv venv` while in the [flask](flask/) directory
-3. From that environment, install the requirements from [requirements.txt](requirements.txt)
-   1. Example in VS Code: after step 2, in the bottom left corner or via VS Code Command, change your python interpreter to the one with 'venv' in its name
-   2. with the VS Code Command 'Terminal: Create New Integrated Terminal', create a new terminal for your virtual environment
-   3. Install the requirements from that terminal
-4. Set the environment Variables:
+- Python 3.11+ or Docker
+- Spotify Developer Account
+- Genius API Account
 
-   **Option A: Using .env file (Recommended)**
-   1. Copy `.env.example` to `.env`: `cp .env.example .env`
-   2. Fill in your actual API credentials in the `.env` file
+### 🐳 Docker (Recommended)
 
-   **Option B: Using virtual environment activation script**
-   If you chose to work with VS Code and use PowerShell as your Terminal, you can set the environment variables by modifying the [Activate.ps1](flask/venv/Scripts/Activate.ps1) script. If you don't use PS, just adapt the [activate (bash)](flask/venv/Scripts/activate) or [activate.bat (cmd)](flask/venv/Scripts/activate.bat). I suggest setting the environment variables after the "VIRTUAL_ENV" Variable has been set (l. 215). It could look like this:
+1. **Clone the repository**
 
-    ```powershell
-    # Environment Variables for the SpotifyTools app
-    $env:FLASK_SECRET_KEY="your_secret_key_generated_with_os.urandom(24)"
-    $env:SPOTIPY_CLIENT_ID="your_spotify_client_id_here"
-    $env:SPOTIPY_CLIENT_SECRET="your_spotify_client_secret_here"
-    $env:SPOTIPY_REDIRECT_URI="http://127.0.0.1:5000/authorize"
-    $env:GENIUS_CLIENT_ACCESS_TOKEN="your_genius_client_access_token_here"
-    # The following lines are only for the development environment (debugging)
-    $env:FLASK_ENV="development"
-    $env:FLASK_DEBUG="True"
-    ```
+   ```bash
+   git clone https://github.com/Phape/SpotifyTools.git
+   cd SpotifyTools
+   ```
 
-### With Docker
+2. **Set up environment variables**
 
-1. create Network ```net``` if not exists
+   ```bash
+   cp .env.example .env
+   # Edit .env with your API credentials
+   ```
 
-   ```shell
+3. **Create Docker network**
+
+   ```bash
    docker network create net
    ```
 
-2. Start the application (old Syntax: ```docker-compose up```)
+4. **Start the application**
 
-   ```shell
-   docker compose up
+   ```bash
+   docker compose up --build
    ```
 
-## Links
+5. **Access the application**
+   - Open your browser and go to: `http://localhost:5000`
 
-These Links should help you understandig this project and help you to get to relevant websites quickly.
+### 🐍 Local Python Development
 
-### Project Links
+1. **Clone and navigate**
 
-* [Website](https://spotifytools.phape.de/)
-* [Azure Portal](https://portal.azure.com/)
-* [GitHub Repo](https://github.com/Phape/SpotifyTools)
+   ```bash
+   git clone https://github.com/Phape/SpotifyTools.git
+   cd SpotifyTools/flask
+   ```
 
-### Docs & CheatSheets
+2. **Create virtual environment**
 
-* [Flask](https://flask.palletsprojects.com)
-* [spotipy](https://spotipy.readthedocs.io)
-* [Flask-Session](https://flask-session.readthedocs.io)
-* [python-dotenv](https://github.com/theskumar/python-dotenv)
-* [markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
-* [nginx Let's Encrypt https](https://www.nginx.com/blog/using-free-ssltls-certificates-from-lets-encrypt-with-nginx/#:~:text=%20Update%3A%20Using%20Free%20Let%E2%80%99s%20Encrypt%20SSL%2FTLS%20Certificates,takes%20care%20of%20reconfiguring%20NGINX%20and...%20More%20)
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. **Install dependencies**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Set up environment**
+
+   ```bash
+   cp ../.env.example ../.env
+   # Edit .env with your API credentials
+   ```
+
+5. **Run the application**
+
+   ```bash
+   python app.py
+   ```
+
+## 🔑 API Setup
+
+### Spotify API
+
+1. Go to [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/applications)
+2. Create a new application
+3. Copy your `Client ID` and `Client Secret`
+4. Add `http://127.0.0.1:5000/authorize` to Redirect URIs
+
+### Genius API
+
+1. Go to [Genius API Clients](https://genius.com/api-clients)
+2. Create a new API client
+3. Copy your `Client Access Token`
+
+### Environment Variables
+
+Update your `.env` file with your credentials:
+
+```env
+# Flask Configuration
+FLASK_SECRET_KEY=your_secret_key_here
+
+# Spotify API
+SPOTIPY_CLIENT_ID=your_spotify_client_id
+SPOTIPY_CLIENT_SECRET=your_spotify_client_secret
+SPOTIPY_REDIRECT_URI=http://127.0.0.1:5000/authorize
+
+# Genius API
+GENIUS_CLIENT_ACCESS_TOKEN=your_genius_access_token
+```
+
+## 🛠️ Technology Stack
+
+- **Backend**: Python, Flask
+- **Frontend**: HTML, CSS, JavaScript
+- **APIs**: Spotify Web API, Genius API
+- **Deployment**: Docker, Gunicorn
+- **Session Management**: Flask-Session (filesystem)
+
+## 📁 Project Structure
+
+```
+SpotifyTools/
+├── flask/                  # Main application
+│   ├── app/               # Flask application
+│   │   ├── __init__.py    # App initialization
+│   │   ├── routes.py      # URL routes
+│   │   └── settings.py    # Configuration
+│   ├── static/            # CSS, JS, images
+│   ├── templates/         # HTML templates
+│   ├── requirements.txt   # Python dependencies
+│   └── Dockerfile         # Docker configuration
+├── .env.example           # Environment template
+├── docker-compose.yml     # Production compose
+└── docker-compose.override.yml  # Development overrides
+```
+
+## 🔧 Development
+
+### VS Code Setup
+
+If you're using VS Code, check out the [Flask Tutorial in Visual Studio Code](https://code.visualstudio.com/docs/python/tutorial-flask) for detailed setup instructions.
+
+### Production vs Development
+
+- **Development**: Uses `docker-compose.override.yml` with debug mode
+- **Production**: Uses `requirements-prod.txt` with Gunicorn and optimizations
+
+## 🌐 Deployment
+
+The application is deployed at: [spotifytools.phape.de](https://spotifytools.phape.de/)
+
+## 📚 Documentation & Resources
+
+### APIs & Libraries
+
+- [Spotify Web API](https://developer.spotify.com/documentation/web-api/)
+- [Spotipy Documentation](https://spotipy.readthedocs.io)
+- [Genius API](https://docs.genius.com/)
+
+### Framework Documentation
+
+- [Flask Documentation](https://flask.palletsprojects.com)
+- [Flask-Session](https://flask-session.readthedocs.io)
+- [python-dotenv](https://github.com/theskumar/python-dotenv)
+
+### Deployment & DevOps
+
+- [Docker Compose](https://docs.docker.com/compose/)
+- [Gunicorn Documentation](https://gunicorn.org/)
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 🐛 Issues & Support
+
+If you encounter any issues or have questions:
+
+- Open an issue on [GitHub Issues](https://github.com/Phape/SpotifyTools/issues)
+- Check existing issues for solutions
+
+---
+
+Made with ❤️ by [Phape](https://github.com/Phape)
