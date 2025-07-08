@@ -194,8 +194,8 @@ def current_lyrics():
 
 @app.before_request
 def make_session_permanent():
-    session.permanent = settings.session_permanent
-    app.permanent_session_lifetime = settings.permanent_session_lifetime
+    session.permanent = settings.SESSION_PERMANENT
+    app.permanent_session_lifetime = settings.PERMANENT_SESSION_LIFETIME
 
 
 @app.errorhandler(404)
