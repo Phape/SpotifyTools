@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-import app.settings as settings
+from . import settings
 
 # heavily inspired by https://dev.to/willamesoares/how-to-integrate-spotify-and-genius-api-to-easily-crawl-song-lyrics-with-python-4o62
 # thanks to https://github.com/willamesoares
