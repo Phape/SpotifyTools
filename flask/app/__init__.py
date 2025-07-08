@@ -1,7 +1,9 @@
-from flask import Flask
+from flask_assets import Bundle, Environment
 from flask_sqlalchemy import SQLAlchemy
-from flask_assets import Environment, Bundle
+
+from flask import Flask
 from flask_session import Session
+
 from . import settings
 
 app = Flask(__name__)

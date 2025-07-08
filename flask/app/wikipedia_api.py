@@ -1,6 +1,6 @@
-from sqlalchemy.orm import backref
-import wikipediaapi
 import wikipedia
+import wikipediaapi
+from sqlalchemy.orm import backref
 
 
 class WikipediaApi:

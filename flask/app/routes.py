@@ -1,12 +1,15 @@
 import os
-from . import app, settings, dicts
-from flask import session, request, redirect, render_template, url_for
-from functools import wraps
-import uuid
 import time
+import uuid
+from functools import wraps
+
 import spotipy
-from .spotify_api import SpotifyApi
+
+from flask import redirect, render_template, request, session, url_for
+
+from . import app, dicts, settings
 from .genius_api import GeniusApi
+from .spotify_api import SpotifyApi
 
 
 def sign_in_required(f):
