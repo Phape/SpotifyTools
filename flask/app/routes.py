@@ -27,9 +27,9 @@ def sign_in():
         session["uuid"] = uuid.uuid4()
 
     if "token_info" not in session:
-        cache_path = os.path.join(settings.cache_path, str(session.get("uuid")))
+        cache_path = os.path.join(settings.CACHE_PATH, str(session.get("uuid")))
         session["AUTH_MANAGER"] = spotipy.oauth2.SpotifyOAuth(
-            username=session.get("uuid"), cache_path=cache_path, scope=settings.scopes
+            username=session.get("uuid"), cache_path=cache_path, scope=settings.SCOPES
         )
         auth_url = session.get("AUTH_MANAGER").get_authorize_url()
         return redirect(auth_url)
@@ -56,7 +56,7 @@ def authorize():
 
 @app.route("/sign-out", methods=["GET"])
 def sign_out():
-    cache_file = os.path.join(settings.cache_path, str(session.get("uuid")))
+    cache_file = os.path.join(settings.CACHE_PATH, str(session.get("uuid")))
     if os.path.exists(cache_file):
         os.remove(cache_file)
     session.clear()
@@ -76,7 +76,7 @@ def toggle_auto_refresh():
     if next_url == None:
         next_url = "/"
     if not session.get("REFRESH_AFTER_SECONDS"):
-        session["REFRESH_AFTER_SECONDS"] = settings.refresh_after_seconds
+        session["REFRESH_AFTER_SECONDS"] = settings.REFRESH_AFTER_SECONDS
     else:
         session.pop("REFRESH_AFTER_SECONDS")
     return redirect(next_url)
@@ -204,12 +204,12 @@ def not_found_error(error):
 
 
 # Initialize Cache
-os.makedirs(settings.cache_path, exist_ok=True)
+os.makedirs(settings.CACHE_PATH, exist_ok=True)
 
 current_time = time.time()
 
-for f in os.listdir(settings.cache_path):
-    f = os.path.join(settings.cache_path, f)
+for f in os.listdir(settings.CACHE_PATH):
+    f = os.path.join(settings.CACHE_PATH, f)
     creation_time = os.path.getctime(f)
     # remove cache that is older than x days
     if (current_time - creation_time) // (24 * 3600) >= 1:
