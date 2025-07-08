@@ -10,15 +10,18 @@ load_dotenv(dotenv_path=os.path.join(os.path.dirname(
 # generate one with os.urandom(24) and set as environment variable
 SECRET_KEY = os.environ.get('FLASK_SECRET_KEY')
 SESSION_TYPE = 'filesystem'
-session_permanent = False
-# becomes effective when session_permanent is True
-permanent_session_lifetime = datetime.timedelta(days=30)
+SESSION_PERMANENT = False
+# becomes effective when SESSION_PERMANENT is True
+PERMANENT_SESSION_LIFETIME = datetime.timedelta(days=30)
+
+# Flask Environment Settings
+ENV = os.environ.get('FLASK_ENV', 'production')
+DEBUG = os.environ.get('FLASK_DEBUG', 'False').lower() in ('true', '1', 'yes')
 
 # Genius Settings
 GENIUS_ACCESS_TOKEN = os.environ.get('GENIUS_CLIENT_ACCESS_TOKEN')
 
 # App Settings
-scopes = 'user-read-currently-playing user-top-read user-read-recently-played'
-
-cache_path = 'cache'
-refresh_after_seconds = 30
+SCOPES = 'user-read-currently-playing user-top-read user-read-recently-played'
+CACHE_PATH = 'cache'
+REFRESH_AFTER_SECONDS = 30
