@@ -4,7 +4,6 @@ import uuid
 from functools import wraps
 
 import spotipy
-
 from flask import redirect, render_template, request, session, url_for
 
 from . import app, dicts, settings

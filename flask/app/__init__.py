@@ -1,8 +1,7 @@
-from flask_assets import Bundle, Environment
-from flask_sqlalchemy import SQLAlchemy
-
 from flask import Flask
+from flask_assets import Bundle, Environment
 from flask_session import Session
+from flask_sqlalchemy import SQLAlchemy
 
 from . import settings
 

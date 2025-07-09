@@ -43,7 +43,7 @@ jobs:
         run: black --check flask/
 
       - name: 📋 Check import sorting with isort
-        run: isort --check-only --profile black flask/ --diff
+        run: isort --check-only flask/
 
       - name: 🔬 Type checking with mypy
         run: |
