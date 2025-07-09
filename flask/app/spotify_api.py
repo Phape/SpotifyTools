@@ -1,5 +1,6 @@
 from collections import Counter
-import app.dicts as dicts
+
+from . import dicts
 
 
 class SpotifyApi:
@@ -25,11 +26,14 @@ class SpotifyApi:
     def get_current_track_name(self):
         self.get_current_track()
         if self.current_track == None:
-            return "No Current Track, check whether you are listenig to Spotify with this account: " + self.spotify_me['display_name']
-        elif self.current_track['currently_playing_type'] != 'track':
+            return (
+                "No Current Track, check whether you are listenig to Spotify with this account: "
+                + self.spotify_me["display_name"]
+            )
+        elif self.current_track["currently_playing_type"] != "track":
             return "You are not listening to a track. Make shure you don't listen to a podcast or something similar."
         else:
-            return self.current_track['item']['name']
+            return self.current_track["item"]["name"]
 
     def is_new_track_playing(self):
         if self.last_current_track != self.current_track:
@@ -44,11 +48,14 @@ class SpotifyApi:
             dict: The artists of the current track
         """
         artist_ids = []
-        if self.current_track == None or self.current_track['currently_playing_type'] != 'track':
+        if (
+            self.current_track == None
+            or self.current_track["currently_playing_type"] != "track"
+        ):
             return []
 
-        for artist in self.current_track['item']['artists']:
-            artist_ids.append(artist['id'])
+        for artist in self.current_track["item"]["artists"]:
+            artist_ids.append(artist["id"])
 
         if self.last_artist_ids != artist_ids:
             if artist_ids == [None]:  # Happens when listenig to local music
@@ -62,28 +69,42 @@ class SpotifyApi:
         current_genres = []
         if self.current_artists:
             # print(self.current_artists)
-            for artist in self.current_artists['artists']:
+            for artist in self.current_artists["artists"]:
                 # print(artist)
-                current_genres.extend(artist['genres'])
+                current_genres.extend(artist["genres"])
         return current_genres
 
     def get_current_track_features(self):
-        if self.current_track == None or self.current_track['currently_playing_type'] != 'track' or self.current_track['item']['id'] == None:
+        if (
+            self.current_track == None
+            or self.current_track["currently_playing_type"] != "track"
+            or self.current_track["item"]["id"] == None
+        ):
             return []
-        track_id = self.current_track['item']['id']
+        track_id = self.current_track["item"]["id"]
         if self.last_features_id != track_id:
             self.current_track_features = self.spotify.audio_features(track_id)
             self.last_features_id = track_id
         return self.current_track_features
 
     def get_current_track_features_human_readable(self):
-        features = self.get_current_track_features(
-        )[0] if self.get_current_track_features() != [] else []
+        features = (
+            self.get_current_track_features()[0]
+            if self.get_current_track_features() != []
+            else []
+        )
 
-        percentage_values = {'danceability', 'energy', 'speechiness',
-                             'acousticness', 'instrumentalness', 'liveness', 'valence'}
+        percentage_values = {
+            "danceability",
+            "energy",
+            "speechiness",
+            "acousticness",
+            "instrumentalness",
+            "liveness",
+            "valence",
+        }
 
-        not_displayed_features = {'type', 'id', 'track_href', 'analysis_url'}
+        not_displayed_features = {"type", "id", "track_href", "analysis_url"}
 
         result = []
         for feature in features:
@@ -91,12 +112,11 @@ class SpotifyApi:
                 continue
 
             result_entry = {}
-            result_entry['name'] = feature
-            result_entry['icon'] = '/static/images/feature_icons/{}.svg'.format(
-                feature)
+            result_entry["name"] = feature
+            result_entry["icon"] = "/static/images/feature_icons/{}.svg".format(feature)
 
             value = features[feature]
-            if feature == 'key':
+            if feature == "key":
                 value = dicts.musical_keys[value]
             elif feature == "mode":
                 value = dicts.musical_modes[value]
@@ -105,33 +125,31 @@ class SpotifyApi:
 
             if type(value) is float:
                 value = round(value, 2)
-            result_entry['value'] = value
+            result_entry["value"] = value
 
             result.append(result_entry)
 
         return result
 
-    def get_top_artists(self, limit=20, offset=0, time_range='medium_term'):
+    def get_top_artists(self, limit=20, offset=0, time_range="medium_term"):
         # read more about time ranges on Spotify docs, currently:
         # long_term: years, medium_term: 6mo, short_term: 4w
-        top_artists = self.spotify.current_user_top_artists(
-            limit, offset, time_range)
+        top_artists = self.spotify.current_user_top_artists(limit, offset, time_range)
         return top_artists
 
     def get_genre_rank_by_top_artists(self, top_artists):
         top_genres = []
-        for artist in top_artists['items']:
-            genres_of_artist = artist['genres']
+        for artist in top_artists["items"]:
+            genres_of_artist = artist["genres"]
             for genre in genres_of_artist:
                 top_genres.append(genre)
         genre_rank = Counter(top_genres).most_common()
         return genre_rank
 
-    def get_top_tracks(self, limit=20, offset=0, time_range='medium_term'):
+    def get_top_tracks(self, limit=20, offset=0, time_range="medium_term"):
         # read more about time ranges on Spotify docs, currently:
         # long_term: years, medium_term: 6mo, short_term: 4w
-        top_tracks = self.spotify.current_user_top_tracks(
-            limit, offset, time_range)
+        top_tracks = self.spotify.current_user_top_tracks(limit, offset, time_range)
         return top_tracks
 
     def get_recently_played(self):

@@ -3,14 +3,13 @@
 # pip install -r requirements.txt
 # If you want to update all reqirements:
 # pip3 install --upgrade --force-reinstall -r requirements.txt
-flask
-flask_session
-flask_assets
-flask_sqlalchemy
-pyScss
-redis
-spotipy
-uwsgi
-beautifulsoup4
-wikipedia
-Wikipedia-API
+Flask==3.1.1
+Flask-Session==0.8.0
+Flask-SQLAlchemy==3.1.1
+Flask-Assets==2.1.0
+libsass==0.23.0
+spotipy==2.25.1
+beautifulsoup4==4.13.4
+wikipedia==1.4.0
+Wikipedia-API==0.8.1
+python-dotenv==1.1.1

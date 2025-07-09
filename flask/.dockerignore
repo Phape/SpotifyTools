@@ -1,2 +1,39 @@
-venv
+# Development files
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+venv_old/
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Cache and logs
+cache/
 *cache*
+*.log
+flask_session/
+
+# Environment files (will be handled via docker-compose)
+.env
+
+# Documentation
+README.md
+todo.md

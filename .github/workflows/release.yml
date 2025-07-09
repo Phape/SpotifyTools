@@ -1,0 +1,66 @@
+name: 🚀 Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  create-release:
+    name: 📦 Create Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 📋 Generate changelog
+        id: changelog
+        run: |
+          # Get the latest tag before this one
+          PREVIOUS_TAG=$(git tag --sort=-version:refname | grep -v "^${{ github.ref_name }}$" | head -n 1)
+
+          if [ -z "$PREVIOUS_TAG" ]; then
+            PREVIOUS_TAG=$(git rev-list --max-parents=0 HEAD)
+          fi
+
+          # Generate changelog
+          echo "## 🎉 What's Changed" > CHANGELOG.md
+          echo "" >> CHANGELOG.md
+
+          # Get commits since last tag
+          git log ${PREVIOUS_TAG}..${{ github.ref_name }} --pretty=format:"- %s (%h)" --no-merges >> CHANGELOG.md
+
+          # Add Docker image info
+          echo "" >> CHANGELOG.md
+          echo "## 🐳 Docker Image" >> CHANGELOG.md
+          echo "" >> CHANGELOG.md
+          echo "\`\`\`bash" >> CHANGELOG.md
+          echo "docker pull ghcr.io/${{ github.repository_owner }}/spotify-tools:${{ github.ref_name }}" >> CHANGELOG.md
+          echo "\`\`\`" >> CHANGELOG.md
+
+      - name: 🏷️ Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: CHANGELOG.md
+          generate_release_notes: true
+          prerelease: ${{ contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  notify-deployment:
+    name: 📢 Notify Deployment
+    runs-on: ubuntu-latest
+    needs: create-release
+    if: always()
+
+    steps:
+      - name: 🎉 Deployment notification
+        run: |
+          echo "🚀 Release ${{ github.ref_name }} has been created!"
+          echo "🐳 Docker image: ghcr.io/${{ github.repository_owner }}/spotify-tools:${{ github.ref_name }}"
+          echo "📦 Release page: https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}"

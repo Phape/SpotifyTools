@@ -3,7 +3,7 @@
 time_ranges = {
     "short_term": "last 4 weeks",
     "medium_term": "last 6 months",
-    "long_term": "total"
+    "long_term": "total",
 }
 
 musical_keys = {
@@ -19,10 +19,7 @@ musical_keys = {
     8: "G♯",
     9: "A",
     10: "A♯",
-    11: "B"
+    11: "B",
 }
 
-musical_modes = {
-    0: "minor",
-    1: "major"
-}
+musical_modes = {0: "minor", 1: "major"}

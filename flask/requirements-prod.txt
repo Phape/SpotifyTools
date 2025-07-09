@@ -1,0 +1,11 @@
+# Production requirements - extends base requirements.txt
+-r requirements.txt
+
+# Production WSGI Server
+gunicorn==23.0.0
+
+# Async Workers for better performance
+gevent==24.11.1
+
+# PostgreSQL support (if needed)
+psycopg2-binary==2.9.10
