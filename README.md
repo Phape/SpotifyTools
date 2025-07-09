@@ -41,14 +41,46 @@ A modern web application that enhances your Spotify experience by providing addi
 
 4. **Start the application**
 
+   **For Development (default - includes hot reload):**
+
    ```bash
-   docker compose up --build
+   docker compose up -d --build
+   ```
+
+   **For Production (uses pre-built image):**
+
+   ```bash
+   docker compose -f docker-compose.yml up -d
    ```
 
 5. **Access the application**
    - Open your browser and go to: `http://localhost:5000`
 
-### 🐍 Local Python Development
+### 🐳 Docker Usage
+
+Docker Compose automatically loads `docker-compose.override.yml` for development. To run in different modes:
+
+**Development Mode (Default):**
+
+```bash
+docker-compose up -d --build    # Uses override file automatically (hot reload)
+docker-compose logs -f flask    # Watch logs to see hot reload working
+```
+
+**Production Mode:**
+
+```bash
+docker-compose -f docker-compose.yml up -d     # Explicitly use only base file
+docker-compose -f docker-compose.yml pull      # Update to newest version
+```
+
+**Key Differences:**
+
+- **Development**: Uses `docker-compose.override.yml` → local build, hot reload, Flask dev server
+- **Production**: Uses only `docker-compose.yml` → pre-built image, Gunicorn, stable
+
+
+## 🐍 Local Python Development
 
 1. **Clone and navigate**
 
@@ -125,7 +157,7 @@ GENIUS_CLIENT_ACCESS_TOKEN=your_genius_access_token
 
 ## 📁 Project Structure
 
-```
+```plaintext
 SpotifyTools/
 ├── flask/                  # Main application
 │   ├── app/               # Flask application
