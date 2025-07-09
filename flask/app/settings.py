@@ -4,11 +4,7 @@ import os
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
-load_dotenv(
-    dotenv_path=os.path.join(
-        os.path.dirname(os.path.dirname(os.path.dirname(__file__))), ".env"
-    )
-)
+load_dotenv()
 
 # Flask Settings
 # generate one with os.urandom(24) and set as environment variable
