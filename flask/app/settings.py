@@ -21,6 +21,8 @@ PERMANENT_SESSION_LIFETIME = datetime.timedelta(days=30)
 # Flask Environment Settings
 ENV = os.environ.get("FLASK_ENV", "production")
 DEBUG = os.environ.get("FLASK_DEBUG", "False").lower() in ("true", "1", "yes")
+HOST = os.environ.get("FLASK_HOST", "127.0.0.1")
+PORT = int(os.environ.get("FLASK_PORT", "5000"))
 
 # Genius Settings
 GENIUS_ACCESS_TOKEN = os.environ.get("GENIUS_CLIENT_ACCESS_TOKEN")
