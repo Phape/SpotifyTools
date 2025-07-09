@@ -1,18 +1,15 @@
-version: "3.7"
-
 services:
   flask:
-    build: ./flask
+    image: ghcr.io/phape/spotify-tools:latest
     container_name: spotifytools
     restart: always
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"
     environment:
       - APP_NAME=spotifytools
       - FLASK_ENV=production
-      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
-      - SPOTIPY_CLIENT_ID=${SPOTIPY_CLIENT_ID}
-      - SPOTIPY_CLIENT_SECRET=${SPOTIPY_CLIENT_SECRET}
-      - SPOTIPY_REDIRECT_URI=${SPOTIPY_REDIRECT_URI}
-      - GENIUS_CLIENT_ACCESS_TOKEN=${GENIUS_CLIENT_ACCESS_TOKEN}
     networks:
       - "net"
 

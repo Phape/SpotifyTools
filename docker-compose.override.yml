@@ -1,15 +1,17 @@
-# This is for local development. It supplements / overwrites the docker-compose.yml file.
-# 
-
-version: "3.7"
+# This file is automatically loaded by Docker Compose
+# To run in production mode, use: docker-compose -f docker-compose.yml up -d
 
 services:
   flask:
-    ports:
-      - "5000:5000"
+    build: ./flask
+    env_file:
+      - .env
+    volumes:
+      - ./flask:/app
     environment:
       - FLASK_ENV=development
-      - FLASK_DEBUG=True
+      - FLASK_DEBUG=1
+    command: ["python", "app.py"]  # Use Flask dev server with hot reload
 
 networks:
   net:
