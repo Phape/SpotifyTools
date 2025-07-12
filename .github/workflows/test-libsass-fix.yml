@@ -41,7 +41,7 @@ jobs:
           COPY . .
 
           # Test Dart Sass CLI and Flask-Assets integration
-          CMD ["bash", "-c", "echo '=== DART SASS VERSION ===' && sass --version && echo && echo '=== TESTING SCSS COMPILATION ===' && echo '\\$primary-color: #1db954; .test { color: \\$primary-color; &:hover { opacity: 0.8; } }' > test.scss && sass --style=compressed --no-source-map test.scss test.css && echo 'Generated CSS:' && cat test.css && echo && echo '=== TESTING FLASK-ASSETS INTEGRATION ===' && python -c \"import sys; print(f'Python: {sys.version}'); exec(open('/tmp/test_script.py').read())\""]
+          CMD ["bash", "-c", "echo '=== DART SASS VERSION ===' && sass --version && echo && echo '=== TESTING SCSS COMPILATION ===' && echo '$primary-color: #1db954; .test { color: $primary-color; &:hover { opacity: 0.8; } }' > test.scss && sass --style=compressed --no-source-map test.scss test.css && echo 'Generated CSS:' && cat test.css && echo && echo '=== TESTING FLASK-ASSETS INTEGRATION ===' && python -c \"import sys; print(f'Python: {sys.version}'); exec(open('/tmp/test_script.py').read())\""]
 
           # Create the test script separately to avoid quoting issues
           RUN echo 'try:' > /tmp/test_script.py && \
