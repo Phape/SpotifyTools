@@ -1,0 +1,322 @@
+name: 🔍 Debug Pipeline SCSS Issue
+
+on:
+  push:
+    branches: [ main, master, debug-pipeline-scss, 'debug-*' ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  debug-environment:
+    name: 🌍 Environment Debug
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔍 Debug Environment Info
+        run: |
+          echo "=== ENVIRONMENT DEBUG ==="
+          echo "OS: $(uname -a)"
+          echo "Docker: $(docker version)"
+          echo "Python: $(python3 --version)"
+          echo "Architecture: $(uname -m)"
+          echo "Available platforms:"
+          docker buildx ls
+          echo ""
+          echo "=== FILE STRUCTURE ==="
+          ls -la flask/
+          ls -la flask/app/static/css/
+          echo ""
+          echo "=== SCSS CONTENT ==="
+          head -20 flask/app/static/css/main.scss
+
+  debug-single-platform:
+    name: 🧪 Single Platform Tests
+    runs-on: ubuntu-latest
+    needs: debug-environment
+    strategy:
+      matrix:
+        platform: [linux/amd64, linux/arm64]
+      fail-fast: false
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 🏗️ Build for ${{ matrix.platform }}
+        run: |
+          echo "=== BUILDING FOR ${{ matrix.platform }} ==="
+          docker buildx build \
+            --platform ${{ matrix.platform }} \
+            --progress=plain \
+            --file ./flask/Dockerfile \
+            ./flask \
+            --tag test-${{ matrix.platform }} \
+            --load 2>&1 | tee build-${{ matrix.platform }}.log || echo "Build failed for ${{ matrix.platform }}"
+
+      - name: 📋 Upload Build Logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: build-logs-${{ matrix.platform }}
+          path: build-*.log
+
+  debug-scss-compilation:
+    name: 🎨 SCSS Compilation Debug
+    runs-on: ubuntu-latest
+    needs: debug-single-platform
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 🏗️ Build Debug Container (AMD64)
+        run: |
+          echo "=== BUILDING DEBUG CONTAINER ==="
+          docker buildx build \
+            --platform linux/amd64 \
+            --progress=plain \
+            --file ./flask/Dockerfile \
+            ./flask \
+            --tag debug-scss \
+            --load
+
+      - name: 🧪 Test SCSS in Container
+        run: |
+          echo "=== STARTING CONTAINER FOR DEBUG ==="
+          docker run --rm -d --name debug-scss \
+            -e FLASK_SECRET_KEY=debug-secret \
+            -e FLASK_ENV=production \
+            -e FLASK_DEBUG=1 \
+            debug-scss
+
+          sleep 10
+
+          echo "=== CONTAINER LOGS ==="
+          docker logs debug-scss
+
+          echo "=== PYTHON VERSION IN CONTAINER ==="
+          docker exec debug-scss python --version
+
+          echo "=== INSTALLED PACKAGES ==="
+          docker exec debug-scss pip list | grep -E "(scss|sass|flask-assets)"
+
+          echo "=== SCSS FILE CONTENT ==="
+          docker exec debug-scss cat /app/app/static/css/main.scss | head -30
+
+          echo "=== TESTING SCSS COMPILATION MANUALLY ==="
+          docker exec debug-scss python -c "
+          import sys
+          print(f'Python version: {sys.version}')
+          
+          try:
+              import scss
+              print(f'pyScss version: {scss.__version__}')
+          except Exception as e:
+              print(f'pyScss import error: {e}')
+          
+          try:
+              from scss import Scss
+              compiler = Scss()
+              print('✅ SCSS compiler created')
+              
+              with open('/app/app/static/css/main.scss', 'r') as f:
+                  scss_content = f.read()
+              
+              print('📄 SCSS file read successfully')
+              print(f'📄 Content length: {len(scss_content)} chars')
+              
+              # Try to compile
+              result = compiler.compile(scss_content)
+              print('✅ SCSS compilation successful!')
+              print(f'📄 Result length: {len(result)} chars')
+              
+          except Exception as e:
+              print(f'❌ SCSS compilation failed: {e}')
+              import traceback
+              traceback.print_exc()
+          "
+
+          echo "=== TESTING FLASK ASSETS ==="
+          docker exec debug-scss python -c "
+          import os
+          os.chdir('/app')
+          
+          try:
+              from app import app
+              print('✅ App imported')
+              
+              with app.app_context():
+                  print('✅ App context created')
+                  
+                  from flask_assets import Environment
+                  assets = Environment(app)
+                  print('✅ Assets environment created')
+                  
+                  bundle = assets['scss_all']
+                  print('✅ SCSS bundle found')
+                  
+                  # This should trigger compilation
+                  urls = bundle.urls()
+                  print(f'✅ Bundle URLs: {urls}')
+                  
+          except Exception as e:
+              print(f'❌ Flask Assets test failed: {e}')
+              import traceback
+              traceback.print_exc()
+          "
+
+          echo "=== HTTP TEST ==="
+          docker exec debug-scss python -c "
+          import os
+          import requests
+          import time
+          os.chdir('/app')
+          
+          # Start Flask in background
+          import subprocess
+          proc = subprocess.Popen(['python', 'app.py'], 
+                                stdout=subprocess.PIPE, 
+                                stderr=subprocess.PIPE)
+          
+          time.sleep(5)
+          
+          try:
+              response = requests.get('http://localhost:5000/')
+              if 'SassError' in response.text:
+                  print('❌ SassError found in response')
+                  # Extract error details
+                  import re
+                  error_match = re.search(r'SassError: (.*?)(?=on line)', response.text, re.DOTALL)
+                  if error_match:
+                      print(f'Error details: {error_match.group(1)[:500]}...')
+              else:
+                  print('✅ No SassError in response')
+                  print(f'Response status: {response.status_code}')
+                  print(f'Response length: {len(response.text)}')
+          except Exception as e:
+              print(f'❌ HTTP test failed: {e}')
+          finally:
+              proc.terminate()
+          " || echo "HTTP test failed"
+
+          echo "=== STOPPING CONTAINER ==="
+          docker stop debug-scss || true
+
+  debug-multi-platform:
+    name: 🌐 Multi-Platform Debug
+    runs-on: ubuntu-latest
+    needs: debug-scss-compilation
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 🏗️ Multi-Platform Build (Original Pipeline)
+        run: |
+          echo "=== ORIGINAL MULTI-PLATFORM BUILD ==="
+          docker buildx build \
+            --platform linux/amd64,linux/arm64 \
+            --progress=plain \
+            --file ./flask/Dockerfile \
+            ./flask \
+            --tag test-multi 2>&1 | tee multi-platform.log || echo "Multi-platform build failed as expected"
+
+      - name: 📋 Upload Multi-Platform Logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: multi-platform-logs
+          path: multi-platform.log
+
+  test-theories:
+    name: 🔬 Test Theories
+    runs-on: ubuntu-latest
+    needs: debug-environment
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 🧪 Theory 1 - Python Version Differences
+        run: |
+          echo "=== THEORY 1: PYTHON VERSION DIFFERENCES ==="
+          cat > flask/Dockerfile.test << 'EOF'
+          FROM python:3.11-slim
+          WORKDIR /app
+          COPY requirements-prod.txt .
+          RUN pip install --no-cache-dir -r requirements-prod.txt
+          COPY . .
+          CMD python -c "import sys; print(f'Python: {sys.version}'); import scss; print(f'pyScss: {scss.__version__}')"
+          EOF
+          docker buildx build --platform linux/amd64 --file ./flask/Dockerfile.test ./flask --tag test-python-311 --load
+          docker run --rm test-python-311
+
+      - name: 🧪 Theory 2 - ARM64 Emulation Issues
+        run: |
+          echo "=== THEORY 2: ARM64 EMULATION ISSUES ==="
+          cat > flask/Dockerfile.simple << 'EOF'
+          FROM python:3.11-slim
+          WORKDIR /app
+          RUN pip install flask
+          COPY app.py .
+          COPY app/ ./app/
+          CMD python -c "print('Simple ARM64 test successful')"
+          EOF
+          docker buildx build --platform linux/arm64 --file ./flask/Dockerfile.simple ./flask --tag test-arm64-simple || echo "ARM64 build failed"
+
+      - name: 🧪 Theory 3 - Requirements Differences
+        run: |
+          echo "=== THEORY 3: REQUIREMENTS DIFFERENCES ==="
+          echo "Production requirements:"
+          cat flask/requirements-prod.txt
+          echo "Development requirements:"
+          cat flask/requirements.txt
+
+      - name: 🧪 Theory 4 - SCSS Syntax Compatibility
+        run: |
+          echo "=== THEORY 4: SCSS SYNTAX COMPATIBILITY ==="
+          mkdir -p test-scss
+          cat > test-scss/test.scss << 'EOF'
+          $color: #1db954;
+          .test { 
+              color: $color; 
+              background: rgba($color, 0.2);
+          }
+          EOF
+          cat > test-scss/Dockerfile << 'EOF'
+          FROM python:3.11-slim
+          WORKDIR /app
+          RUN pip install pyScss
+          COPY test.scss .
+          CMD python -c "
+          from scss import Scss
+          compiler = Scss()
+          with open('test.scss', 'r') as f:
+              content = f.read()
+          try:
+              result = compiler.compile(content)
+              print('✅ Minimal SCSS test passed')
+              print(result)
+          except Exception as e:
+              print(f'❌ Minimal SCSS test failed: {e}')
+              import traceback
+              traceback.print_exc()
+          "
+          EOF
+          docker buildx build --platform linux/amd64 --file ./test-scss/Dockerfile ./test-scss --tag test-scss-minimal --load
+          docker run --rm test-scss-minimal
