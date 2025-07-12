@@ -1,0 +1,80 @@
+name: 🧪 Test Python 3.12 Fix
+
+on:
+  push:
+    branches: [debug-pipeline-scss]
+  workflow_dispatch:
+
+jobs:
+  test-python312-fix:
+    name: 🔧 Test Python 3.12 + pyScss
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 🧪 Test Python 3.12 with pyScss
+        run: |
+          echo "=== TESTING PYTHON 3.12 + pyScss FIX ==="
+          cat > flask/Dockerfile.python312-test << 'EOF'
+          FROM python:3.12-slim
+          WORKDIR /app
+          
+          COPY requirements.txt .
+          COPY requirements-prod.txt .
+          RUN pip install --no-cache-dir -r requirements-prod.txt
+          
+          COPY . .
+          
+          # Test pyScss compilation with Python 3.12
+          CMD python -c "
+          import sys
+          print(f'Python: {sys.version}')
+          try:
+              import scss
+              print(f'✅ pyScss version: {scss.__version__}')
+              
+              # Test simple SCSS compilation (same test that failed with Python 3.11)
+              from scss import Scss
+              compiler = Scss()
+              scss_code = '''
+              \$color: #1db954;
+              .test { 
+                  color: \$color; 
+                  background: rgba(\$color, 0.2);
+              }
+              '''
+              result = compiler.compile(scss_code)
+              print('✅ pyScss compilation successful with Python 3.12!')
+              print('Compiled CSS:')
+              print(result)
+              
+              # Test Flask-Assets integration
+              from app import app
+              with app.app_context():
+                  from flask_assets import Environment
+                  assets = Environment(app)
+                  bundle = assets['scss_all']
+                  urls = bundle.urls()
+                  print(f'✅ Flask-Assets bundle URLs: {urls}')
+                  print('✅ ALL TESTS PASSED! Python 3.12 fixes the regex issue!')
+          except Exception as e:
+              print(f'❌ Test failed: {e}')
+              import traceback
+              traceback.print_exc()
+              exit(1)
+          "
+          EOF
+          
+          docker buildx build \
+            --platform linux/amd64 \
+            --file ./flask/Dockerfile.python312-test \
+            ./flask \
+            --tag test-python312-fix \
+            --load
+          
+          docker run --rm test-python312-fix
