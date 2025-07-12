@@ -299,12 +299,7 @@ jobs:
               background: rgba($color, 0.2);
           }
           EOF
-          cat > test-scss/Dockerfile << 'EOF'
-          FROM python:3.11-slim
-          WORKDIR /app
-          RUN pip install pyScss
-          COPY test.scss .
-          CMD python -c "
+          cat > test-scss/test_scss.py << 'EOF'
           from scss import Scss
           compiler = Scss()
           with open('test.scss', 'r') as f:
@@ -317,7 +312,13 @@ jobs:
               print(f'❌ Minimal SCSS test failed: {e}')
               import traceback
               traceback.print_exc()
-          "
+          EOF
+          cat > test-scss/Dockerfile << 'EOF'
+          FROM python:3.11-slim
+          WORKDIR /app
+          RUN pip install pyScss
+          COPY test.scss test_scss.py ./
+          CMD python test_scss.py
           EOF
           docker buildx build --platform linux/amd64 --file ./test-scss/Dockerfile ./test-scss --tag test-scss-minimal --load
           docker run --rm test-scss-minimal
