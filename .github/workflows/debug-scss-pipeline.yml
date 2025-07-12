@@ -107,7 +107,8 @@ jobs:
           docker exec debug-scss python --version
 
           echo "=== INSTALLED PACKAGES ==="
-          docker exec debug-scss pip list | grep -E "(scss|sass|flask-assets)"
+          docker exec debug-scss pip list | grep -i -E "(pyscss|scss|sass|flask-assets|Flask-Assets)" || echo "No SCSS/Assets packages found with grep, showing all packages:"
+          docker exec debug-scss pip list
 
           echo "=== SCSS FILE CONTENT ==="
           docker exec debug-scss cat /app/app/static/css/main.scss | head -30
