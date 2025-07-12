@@ -5,10 +5,11 @@ on:
     branches:
       - master
       - main
+      - debug-pipeline-scss
     tags:
       - v*
   pull_request:
-    branches: ["master", "main"]
+    branches: ["master", "main", "debug-pipeline-scss"]
 
 env:
   REGISTRY: ghcr.io
@@ -69,7 +70,20 @@ jobs:
       - name: 🔧 Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: 🔑 Log in to Container Registry
+      - name: � Debug Build Environment
+        if: contains(github.ref, 'debug-pipeline-scss')
+        run: |
+          echo "=== BUILD ENVIRONMENT DEBUG ==="
+          echo "Branch: ${{ github.ref }}"
+          echo "Architecture: $(uname -m)"
+          echo "Docker version: $(docker version)"
+          echo "Buildx platforms: $(docker buildx ls)"
+          echo "Available space: $(df -h)"
+          echo "=== SCSS FILE CHECK ==="
+          ls -la flask/app/static/css/
+          head -10 flask/app/static/css/main.scss
+
+      - name: �🔑 Log in to Container Registry
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
@@ -98,7 +112,58 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          platforms: linux/amd64,linux/arm64
+          platforms: ${{ contains(github.ref, 'debug-pipeline-scss') && 'linux/amd64' || 'linux/amd64,linux/arm64' }}
+          outputs: ${{ contains(github.ref, 'debug-pipeline-scss') && 'type=docker' || 'type=registry' }}
+
+      - name: 🧪 Test Built Image (Debug only)
+        if: contains(github.ref, 'debug-pipeline-scss')
+        run: |
+          echo "=== TESTING BUILT IMAGE ==="
+          # Get the image tag
+          IMAGE_TAG=$(echo "${{ steps.meta.outputs.tags }}" | head -n1)
+          echo "Testing image: $IMAGE_TAG"
+          
+          # Run container in background
+          docker run -d --name test-container \
+            -e FLASK_SECRET_KEY=test-secret \
+            -e FLASK_ENV=production \
+            -p 5000:5000 \
+            $IMAGE_TAG
+          
+          # Wait for startup
+          sleep 10
+          
+          # Check logs
+          echo "=== CONTAINER LOGS ==="
+          docker logs test-container
+          
+          # Test SCSS compilation
+          echo "=== TESTING SCSS COMPILATION ==="
+          docker exec test-container python -c "
+          import sys
+          print(f'Python version: {sys.version}')
+          try:
+              from app import app
+              with app.app_context():
+                  from flask_assets import Environment
+                  assets = Environment(app)
+                  bundle = assets['scss_all']
+                  urls = bundle.urls()
+                  print(f'✅ SCSS compilation successful: {urls}')
+          except Exception as e:
+              print(f'❌ SCSS compilation failed: {e}')
+              import traceback
+              traceback.print_exc()
+              exit(1)
+          "
+          
+          # HTTP test
+          echo "=== HTTP TEST ==="
+          curl -f http://localhost:5000/ || echo "HTTP test failed"
+          
+          # Cleanup
+          docker stop test-container
+          docker rm test-container
 
   security-scan:
     name: 🛡️ Security Scan
