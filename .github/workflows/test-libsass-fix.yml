@@ -1,4 +1,4 @@
-name: 🧪 Test Python 3.12 Fix
+name: 🧪 Test Dart Sass CLI
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-python312-fix:
-    name: 🔧 Test Python 3.12 + pyScss
+  test-dart-sass:
+    name: 🔧 Test Dart Sass CLI Integration
     runs-on: ubuntu-latest
 
     steps:
@@ -17,12 +17,22 @@ jobs:
       - name: 🔧 Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: 🧪 Test Python 3.12 with pyScss
+      - name: 🧪 Test Dart Sass CLI Integration
         run: |
-          echo "=== TESTING PYTHON 3.12 + pyScss FIX ==="
-          cat > flask/Dockerfile.python312-test << 'EOF'
+          echo "=== TESTING DART SASS CLI INTEGRATION ==="
+          cat > flask/Dockerfile.dart-sass-test << 'EOF'
           FROM python:3.12-slim
           WORKDIR /app
+          
+          # Install Dart Sass CLI
+          RUN apt-get update && apt-get install -y \
+              curl \
+              && curl -fsSL https://github.com/sass/dart-sass/releases/download/1.89.2/dart-sass-1.89.2-linux-x64.tar.gz \
+              | tar -xz -C /opt \
+              && ln -s /opt/dart-sass/sass /usr/local/bin/sass \
+              && apt-get remove -y curl \
+              && apt-get autoremove -y \
+              && rm -rf /var/lib/apt/lists/*
           
           COPY requirements.txt .
           COPY requirements-prod.txt .
@@ -30,30 +40,22 @@ jobs:
           
           COPY . .
           
-          # Test pyScss compilation with Python 3.12
-          CMD python -c "
+          # Test Dart Sass CLI and Flask-Assets integration
+          CMD bash -c "
+          echo '=== DART SASS VERSION ===' && \
+          sass --version && \
+          echo && \
+          echo '=== TESTING SCSS COMPILATION ===' && \
+          echo '\$primary-color: #1db954; .test { color: \$primary-color; &:hover { opacity: 0.8; } }' > test.scss && \
+          sass --style=compressed --no-source-map test.scss test.css && \
+          echo 'Generated CSS:' && \
+          cat test.css && \
+          echo && \
+          echo '=== TESTING FLASK-ASSETS INTEGRATION ===' && \
+          python -c \"
           import sys
           print(f'Python: {sys.version}')
           try:
-              import scss
-              print(f'✅ pyScss version: {scss.__version__}')
-              
-              # Test simple SCSS compilation (same test that failed with Python 3.11)
-              from scss import Scss
-              compiler = Scss()
-              scss_code = '''
-              \$color: #1db954;
-              .test { 
-                  color: \$color; 
-                  background: rgba(\$color, 0.2);
-              }
-              '''
-              result = compiler.compile(scss_code)
-              print('✅ pyScss compilation successful with Python 3.12!')
-              print('Compiled CSS:')
-              print(result)
-              
-              # Test Flask-Assets integration
               from app import app
               with app.app_context():
                   from flask_assets import Environment
@@ -61,20 +63,21 @@ jobs:
                   bundle = assets['scss_all']
                   urls = bundle.urls()
                   print(f'✅ Flask-Assets bundle URLs: {urls}')
-                  print('✅ ALL TESTS PASSED! Python 3.12 fixes the regex issue!')
+                  print('✅ ALL TESTS PASSED! Dart Sass CLI works perfectly!')
           except Exception as e:
-              print(f'❌ Test failed: {e}')
+              print(f'❌ Flask-Assets test failed: {e}')
               import traceback
               traceback.print_exc()
               exit(1)
+          \"
           "
           EOF
           
           docker buildx build \
             --platform linux/amd64 \
-            --file ./flask/Dockerfile.python312-test \
+            --file ./flask/Dockerfile.dart-sass-test \
             ./flask \
-            --tag test-python312-fix \
+            --tag test-dart-sass \
             --load
           
-          docker run --rm test-python312-fix
+          docker run --rm test-dart-sass
