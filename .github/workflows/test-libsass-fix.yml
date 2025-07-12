@@ -23,7 +23,7 @@ jobs:
           cat > flask/Dockerfile.dart-sass-test << 'EOF'
           FROM python:3.12-slim
           WORKDIR /app
-          
+
           # Install Dart Sass CLI
           RUN apt-get update && apt-get install -y \
               curl \
@@ -33,51 +33,38 @@ jobs:
               && apt-get remove -y curl \
               && apt-get autoremove -y \
               && rm -rf /var/lib/apt/lists/*
-          
+
           COPY requirements.txt .
           COPY requirements-prod.txt .
           RUN pip install --no-cache-dir -r requirements-prod.txt
-          
+
           COPY . .
-          
+
           # Test Dart Sass CLI and Flask-Assets integration
-          CMD bash -c "
-          echo '=== DART SASS VERSION ===' && \
-          sass --version && \
-          echo && \
-          echo '=== TESTING SCSS COMPILATION ===' && \
-          echo '\$primary-color: #1db954; .test { color: \$primary-color; &:hover { opacity: 0.8; } }' > test.scss && \
-          sass --style=compressed --no-source-map test.scss test.css && \
-          echo 'Generated CSS:' && \
-          cat test.css && \
-          echo && \
-          echo '=== TESTING FLASK-ASSETS INTEGRATION ===' && \
-          python -c \"
-          import sys
-          print(f'Python: {sys.version}')
-          try:
-              from app import app
-              with app.app_context():
-                  from flask_assets import Environment
-                  assets = Environment(app)
-                  bundle = assets['scss_all']
-                  urls = bundle.urls()
-                  print(f'✅ Flask-Assets bundle URLs: {urls}')
-                  print('✅ ALL TESTS PASSED! Dart Sass CLI works perfectly!')
-          except Exception as e:
-              print(f'❌ Flask-Assets test failed: {e}')
-              import traceback
-              traceback.print_exc()
-              exit(1)
-          \"
-          "
+          CMD ["bash", "-c", "echo '=== DART SASS VERSION ===' && sass --version && echo && echo '=== TESTING SCSS COMPILATION ===' && echo '\\$primary-color: #1db954; .test { color: \\$primary-color; &:hover { opacity: 0.8; } }' > test.scss && sass --style=compressed --no-source-map test.scss test.css && echo 'Generated CSS:' && cat test.css && echo && echo '=== TESTING FLASK-ASSETS INTEGRATION ===' && python -c \"import sys; print(f'Python: {sys.version}'); exec(open('/tmp/test_script.py').read())\""]
+
+          # Create the test script separately to avoid quoting issues
+          RUN echo 'try:' > /tmp/test_script.py && \
+              echo '    from app import app' >> /tmp/test_script.py && \
+              echo '    with app.app_context():' >> /tmp/test_script.py && \
+              echo '        from flask_assets import Environment' >> /tmp/test_script.py && \
+              echo '        assets = Environment(app)' >> /tmp/test_script.py && \
+              echo '        bundle = assets[\"scss_all\"]' >> /tmp/test_script.py && \
+              echo '        urls = bundle.urls()' >> /tmp/test_script.py && \
+              echo '        print(f\"✅ Flask-Assets bundle URLs: {urls}\")' >> /tmp/test_script.py && \
+              echo '        print(\"✅ ALL TESTS PASSED! Dart Sass CLI works perfectly!\")' >> /tmp/test_script.py && \
+              echo 'except Exception as e:' >> /tmp/test_script.py && \
+              echo '    print(f\"❌ Flask-Assets test failed: {e}\")' >> /tmp/test_script.py && \
+              echo '    import traceback' >> /tmp/test_script.py && \
+              echo '    traceback.print_exc()' >> /tmp/test_script.py && \
+              echo '    exit(1)' >> /tmp/test_script.py
           EOF
-          
+
           docker buildx build \
             --platform linux/amd64 \
             --file ./flask/Dockerfile.dart-sass-test \
             ./flask \
             --tag test-dart-sass \
             --load
-          
+
           docker run --rm test-dart-sass
