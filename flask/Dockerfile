@@ -21,14 +21,9 @@ RUN pip install --no-cache-dir -r requirements-prod.txt
 # Copy application code
 COPY . /app
 
-# Copy and set permissions for entrypoint script
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
 # Create non-root user for security
 RUN adduser --disabled-password --gecos '' appuser && chown -R appuser:appuser /app
 USER appuser
 
-# Use entrypoint script to compile SCSS and start gunicorn
-ENTRYPOINT ["/entrypoint.sh"]
+# Start gunicorn directly - SCSS compilation handled by Flask-Assets DartSassFilter
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "4", "--worker-class", "gevent", "app:app"]
