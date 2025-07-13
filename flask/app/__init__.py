@@ -17,7 +17,7 @@ assets.url = app.static_url_path
 # Compile SCSS file
 compile_file(
     os.path.join(app.static_folder, "css/main.scss"),
-    dest=os.path.join(app.static_folder, "css/main.css")
+    dest=os.path.join(app.static_folder, "css/main.css"),
 )  # todo maybe deactivate source map generation in prod
 css_bundle = Bundle("css/main.css")
 assets.register("scss_all", css_bundle)
