@@ -5,7 +5,7 @@
 gunicorn==23.0.0
 
 # Async Workers for better performance
-gevent==24.11.1
+gevent==25.5.1
 
 # PostgreSQL support (if needed)
 psycopg2-binary==2.9.10
