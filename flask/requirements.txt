@@ -3,7 +3,7 @@
 # pip install -r requirements.txt
 # If you want to update all reqirements:
 # pip3 install --upgrade --force-reinstall -r requirements.txt
-Flask==3.1.1
+Flask==3.1.2
 Flask-Session==0.8.0
 Flask-SQLAlchemy==3.1.1
 Flask-Assets==2.1.0
