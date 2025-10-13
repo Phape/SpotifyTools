@@ -8,4 +8,4 @@ gunicorn==23.0.0
 gevent==24.11.1
 
 # PostgreSQL support (if needed)
-psycopg2-binary==2.9.10
+psycopg2-binary==2.9.11
