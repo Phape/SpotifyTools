@@ -8,7 +8,7 @@ Flask-Session==0.8.0
 Flask-SQLAlchemy==3.1.1
 Flask-Assets==2.1.0
 sass-embedded==0.1.2
-spotipy==2.25.1
+spotipy==2.25.2
 beautifulsoup4==4.13.4
 wikipedia==1.4.0
 Wikipedia-API==0.8.1
